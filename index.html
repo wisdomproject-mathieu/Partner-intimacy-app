@@ -2016,11 +2016,7 @@ function addThread(){
 }
 function exportThread(){
   if(threadEntries.length===0) return;
-  var text =
-  'Our Thread — A Love Letter\n\n' +
-  threadEntries.map(function(e){
-    return e.date + '\n' + e.text;
-  }).join('\n\n');
+  var text = 'Our Thread — A Love Letter\n\n' + threadEntries.map(function(e){ return e.date+'\n'+e.text; }).join('\n\n');
   var blob = new Blob([text], {type:'text/plain'});
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -2105,8 +2101,7 @@ function copyInviteLink(){
 function shareWhatsApp(){
   var code=document.getElementById('invite-code').textContent;
   var link=document.getElementById('invite-share-link').value;
-  var msg='I've been using Sacred Path for Couples — a beautiful app for our intimacy practice. Join me: '+link+' (Couple Code: '+code+')';
-  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+  var msg="I've been using Sacred Path for Couples — a beautiful app for our intimacy practice. Join me: "+link+" (Couple Code: "+code+")";
 }
 function showCoupleBar(show){
   var bar=document.getElementById('couple-bar');
@@ -2199,7 +2194,7 @@ var _currentChallenge=null;
 var _challengeConfig={
   week:{title:'Week of Gratitude',days:7,icon:'🌱',prompt:'What moment of love or beauty did you notice today?'},
   month:{title:'Month of Gratitude',days:30,icon:'🌕',prompt:'One thing you are grateful for in your partner or relationship today...'},
-  presence:{title:'Week of Seeing',days:7,icon:'👁️',prompt:'What did you notice about your partner today that you've never noticed before?'},
+  presence:{title:'Week of Seeing',days:7,icon:'👁️',prompt:"What did you notice about your partner today that you've never noticed before?"},
   touch:{title:'Week of Touch',days:7,icon:'🤲',prompt:'What intentional touch did you share today, and how did it feel?'}
 };
 
@@ -2229,7 +2224,7 @@ function renderChallengeEntries(type){
   if(progFill) progFill.style.width=pct+'%';
   if(!list) return;
   if(entries.length===0){
-    list.innerHTML='<div style="text-align:center;padding:16px 0;color:#6a4858;font-style:italic;font-size:.86rem">No entries yet. Be the first to add today's moment.</div>';
+    list.innerHTML="<div style=\"text-align:center;padding:16px 0;color:#6a4858;font-style:italic;font-size:.86rem\">No entries yet. Be the first to add today's moment.</div>";
     return;
   }
   list.innerHTML=entries.map((e,i)=>'<div class="challenge-day-row"><div class="challenge-day-num done">'+(i+1)+'</div><div style="flex:1"><div class="challenge-entry-text">'+e.text+'</div><div class="challenge-entry-author">'+(e.authorName||'Partner')+'  ·  '+e.date+'</div></div></div>').join('');
