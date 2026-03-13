@@ -2650,83 +2650,77 @@ function pickRN(mood){
 </div>
 
 <!-- SUBSCRIPTION MODAL -->
-
-<div id="sub-overlay" class="sub-overlay">
-  <div class="sub-modal">
-    <div class="sub-header">
-      <div class="sub-icon">✦</div>
-      <h2>Sacred Path Premium</h2>
-      <p>Deepen your practice. A complete 30-day couples journey, guided audio, and new practices every week.</p>
-    </div>
-    <div class="sub-features">
-      <div class="sub-feat">
-        <span class="sub-feat-icon">🌡️</span>
-        <div class="sub-feat-text">
-          <strong>Intimacy Weather</strong>
-          <span>Each morning, see each other's inner state. One glance, no words needed.</span>
-        </div>
-      </div>
-      <div class="sub-feat">
-        <span class="sub-feat-icon">🤫</span>
-        <div class="sub-feat-text">
-          <strong>The Unsaid</strong>
-          <span>A private space for the things hardest to say. Share when ready — or simply acknowledge them.</span>
-        </div>
-      </div>
-      <div class="sub-feat">
-        <span class="sub-feat-icon">🧵</span>
-        <div class="sub-feat-text">
-          <strong>The Thread</strong>
-          <span>One micro-moment of gratitude each day. Becomes a love letter over months.</span>
-        </div>
-      </div>
-      <div class="sub-feat">
-        <span class="sub-feat-icon">🌿</span>
-        <div class="sub-feat-text">
-          <strong>30-Day Couples Journey</strong>
-          <span>A complete day-by-day program across all four traditions</span>
-        </div>
-      </div>
-      <div class="sub-feat">
-        <span class="sub-feat-icon">🎧</span>
-        <div class="sub-feat-text">
-          <strong>Guided Audio Practices</strong>
-          <span>Listen together — no reading required during practice</span>
-        </div>
-      </div>
-      <div class="sub-feat">
-        <span class="sub-feat-icon">🌙</span>
-        <div class="sub-feat-text">
-          <strong>Full Ritual Library</strong>
-          <span>Seasonal rituals, moon cycle practices, anniversary ceremonies</span>
-        </div>
-      </div>
-      <div class="sub-feat">
-        <span class="sub-feat-icon">💌</span>
-        <div class="sub-feat-text">
-          <strong>Monthly Newsletter</strong>
-          <span>Curated wisdom, new practices and seasonal rituals delivered to both of you</span>
-        </div>
-      </div>
-      <div class="sub-feat">
-        <span class="sub-feat-icon">♾️</span>
-        <div class="sub-feat-text">
-          <strong>Everything free stays free</strong>
-          <span>All current content always free — premium adds depth</span>
-        </div>
-      </div>
-    </div>
-    <div class="sub-plan">
-      <div class="sub-plan-price">$2.99</div>
-      <div class="sub-plan-period">per month</div>
-      <div class="sub-plan-note">Cancel anytime · 7-day free trial</div>
-    </div>
-    <button class="sub-cta" onclick="startTrial()">Start 7-Day Free Trial</button>
-    <button class="sub-restore" onclick="restorePurchase()">Restore Purchase</button>
-    <button class="sub-close" onclick="closeSubscription()">Maybe later</button>
-    <p class="sub-legal">Subscription automatically renews at $2.99/month unless cancelled at least 24 hours before the end of the current period. Manage or cancel in your App Store account settings.</p>
+<div id="subscription-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+  <div class="sub-card" style="background: var(--card); padding: 30px; border-radius: 20px; max-width: 90%; border: 1px solid var(--gold);">
+    <h2 class="serif text-2xl gold-text">Go Deeper Together</h2>
+    <p class="text-sm mt-4">Unlock the 30-Day Journey and the full Ritual Library.</p>
+    <button class="btn-gold mt-6" onclick="startTrial()">Start 7-Day Free Trial</button>
+    <button class="mt-4 text-xs opacity-50 uppercase" onclick="closeSubscription()">Maybe Later</button>
   </div>
 </div>
 
-</body>
-</html>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Force everything to be closed/hidden on start except the Home page
+    closeSubscription();
+    if(typeof showPage === 'function') showPage('home');
+});
+
+// MASTER NAVIGATION: This is what makes your 2,700 lines work again
+window.showPage = function(pageId) {
+    console.log("Navigating to:", pageId);
+
+    // This finds every section you have (Home, Paths, Teachers, Connect, etc.)
+    const sections = document.querySelectorAll('section, .page, .pg, [id^="page-"]');
+    
+    sections.forEach(s => {
+        s.style.display = 'none'; 
+        s.classList.remove('active');
+    });
+
+    const target = document.getElementById(pageId);
+    if (target) {
+        target.style.display = 'block';
+        target.classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    // Update Bottom Nav Button Highlight
+    document.querySelectorAll('.bn, .nav-btn').forEach(btn => {
+        btn.style.color = 'var(--text-dim)';
+        btn.classList.remove('active');
+    });
+    
+    const activeBtn = document.querySelector(`[onclick*="${pageId}"]`);
+    if (activeBtn) {
+        activeBtn.style.color = 'var(--gold)';
+        activeBtn.classList.add('active');
+    }
+};
+
+// SUBSCRIPTION LOGIC: Fixed to ensure it doesn't "freeze" the app
+window.openSubscription = function() {
+    const overlay = document.getElementById('subscription-overlay');
+    if (overlay) {
+        overlay.style.display = 'flex';
+        // Disable scrolling on the main page while modal is open
+        document.body.style.overflow = 'hidden';
+    }
+};
+
+window.closeSubscription = function() {
+    const overlay = document.getElementById('subscription-overlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+        // Re-enable scrolling
+        document.body.style.overflow = 'auto';
+    }
+};
+
+// SIGN IN LOGIC
+window.openSignIn = function() {
+    // Replace 'signin-modal' with the actual ID you used yesterday
+    const modal = document.getElementById('signin-modal');
+    if (modal) modal.style.display = 'flex';
+};
+</script>
