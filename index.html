@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Sacred Path for Couples — Working Rebuild</title>
+<meta name="theme-color" content="#09040a" />
+<style>
+:root{
+  --bg:#0b060b;
+  --panel:#140c14;
+  --panel-2:#1c1220;
+  --line:#3b2438;
+  --text:#f6ebf3;
+  --muted:#d0b8c5;
+  --soft:#9b7b8f;
+  --accent:#f2b5d4;
+  --accent-2:#c792ea;
+  --gold:#f7ddb2;
+  --ok:#8ee6b2;
+  --warn:#ffd18a;
+  --danger:#ff9eb1;
+  --shadow:0 12px 40px rgba(0,0,0,.28);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:
+radial-gradient(circle at top, rgba(199,146,234,.16), transparent 28%),
+radial-gradient(circle at 80% 0%, rgba(242,181,212,.10), transparent 20%),
+linear-gradient(180deg,#0a050a,#120912 45%,#0c070d);
+color:var(--text);
+font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,textarea,select{font:inherit}
+a{color:inherit;text-decoration:none}
+.hidden{display:none !important}
+
+.app{max-width:1180px;margin:0 auto;padding:14px 14px 110px}
+.top-banner{
+  position:sticky;top:0;z-index:30;
+  margin:0 auto 14px;
+  background:linear-gradient(135deg, rgba(242,181,212,.18), rgba(199,146,234,.16));
+  border:1px solid rgba(255,255,255,.09);
+  backdrop-filter: blur(14px);
+  box-shadow:var(--shadow);
+  border-radius:18px;
+  padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px
+}
+.banner-copy{font-size:.95rem;color:#f8e8f1}
+.banner-copy strong{color:var(--gold)}
+.banner-actions{display:flex;gap:8px;align-items:center}
+.btn,.chip,.nav-btn,.tab-btn,.mini-btn{
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  color:var(--text);
+  border-radius:999px;
+  cursor:pointer;
+  transition:.18s ease;
+}
+.btn:hover,.chip:hover,.nav-btn:hover,.tab-btn:hover,.mini-btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.16)}
+.btn{padding:11px 16px;font-weight:600}
+.btn.primary{background:linear-gradient(135deg,#efb3d2,#c392ea);color:#160d16;border:none}
+.btn.ghost{background:transparent}
+.btn.subtle{background:rgba(255,255,255,.03)}
+.btn.small{padding:8px 12px;font-size:.9rem}
+.btn.block{width:100%;justify-content:center}
+
+.header{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px 0 18px
+}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{
+  width:46px;height:46px;border-radius:16px;
+  background:radial-gradient(circle at 30% 30%, #f6d2e3, #c792ea 55%, #6e4b85);
+  box-shadow:0 0 0 1px rgba(255,255,255,.08), 0 12px 30px rgba(199,146,234,.28)
+}
+.brand-copy h1{margin:0;font-size:1.1rem}
+.brand-copy p{margin:2px 0 0;color:var(--muted);font-size:.92rem}
+.header-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pill{
+  padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);font-size:.92rem;color:var(--muted)
+}
+.nav{
+  display:flex;gap:8px;overflow:auto;padding:4px 0 18px;scrollbar-width:none
+}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{padding:11px 15px;white-space:nowrap}
+.nav-btn.active{background:linear-gradient(135deg, rgba(242,181,212,.25), rgba(199,146,234,.22));border-color:rgba(255,255,255,.18)}
+
+.grid{display:grid;gap:16px}
+.hero{grid-template-columns:1.25fr .95fr}
+.two-col{grid-template-columns:1fr 1fr}
+.three-col{grid-template-columns:repeat(3,1fr)}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:var(--shadow);
+  border-radius:var(--radius);
+  padding:18px
+}
+.card h2,.card h3,.card h4,.card h5{margin:0 0 10px}
+.kicker{font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.muted{color:var(--muted)}
+.soft{color:var(--soft)}
+.big{font-size:clamp(1.7rem,4vw,2.7rem);line-height:1.04;margin:.2rem 0 .7rem}
+.lead{font-size:1.02rem;color:var(--muted);line-height:1.6}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.space{height:14px}
+.list{display:grid;gap:10px}
+.tile{
+  padding:14px;border-radius:18px;background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07)
+}
+.tile h4{margin:0 0 8px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:8px 12px;font-size:.9rem}
+.section{display:none}
+.section.active{display:block}
+.tabs{display:flex;gap:8px;overflow:auto;padding-bottom:10px}
+.tab-btn{padding:10px 14px;white-space:nowrap}
+.tab-btn.active{background:linear-gradient(135deg, rgba(242,181,212,.22), rgba(199,146,234,.20))}
+.practice{
+  padding:16px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.07)
+}
+.quote{font-size:1.03rem;line-height:1.7}
+.meta{font-size:.9rem;color:var(--soft)}
+.locked{
+  position:relative;overflow:hidden
+}
+.locked::after{
+  content:"Premium";
+  position:absolute;top:14px;right:14px;
+  background:rgba(16,10,16,.72);border:1px solid rgba(255,255,255,.16);
+  border-radius:999px;padding:7px 10px;font-size:.76rem;color:var(--gold)
+}
+.blur{
+  filter:blur(4px);opacity:.7;user-select:none;pointer-events:none
+}
+.overlay-cta{
+  margin-top:-86px;position:relative;z-index:2;text-align:center
+}
+.input, .textarea, .select{
+  width:100%;border-radius:16px;padding:12px 14px;
+  border:1px solid rgba(255,255,255,.08);outline:none;
+  color:var(--text);background:rgba(255,255,255,.04)
+}
+.textarea{min-height:130px;resize:vertical}
+.kv{display:grid;gap:10px}
+.kv .line{
+  display:flex;justify-content:space-between;gap:12px;padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.07)
+}
+.code-box{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.12em;
+  font-size:1.3rem;font-weight:700;
+  padding:16px;border-radius:18px;background:#0f0910;
+  border:1px dashed rgba(255,255,255,.18);text-align:center
+}
+.weather-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:8px
+}
+.weather-btn{
+  border-radius:14px;padding:12px 8px;text-align:center;
+  border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);cursor:pointer
+}
+.weather-btn.active{outline:2px solid rgba(242,181,212,.55);background:rgba(242,181,212,.14)}
+.result-box{
+  margin-top:12px;padding:14px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)
+}
+.thread-list{display:grid;gap:10px;max-height:340px;overflow:auto;padding-right:6px}
+.thread-item{
+  padding:12px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)
+}
+.thread-date{font-size:.82rem;color:var(--soft);margin-bottom:6px}
+.badge{padding:6px 10px;border-radius:999px;background:rgba(142,230,178,.12);color:var(--ok);font-size:.82rem;border:1px solid rgba(142,230,178,.18)}
+.notice{padding:12px 14px;border-radius:16px;background:rgba(255,209,138,.08);color:var(--warn);border:1px solid rgba(255,209,138,.16)}
+.success{padding:12px 14px;border-radius:16px;background:rgba(142,230,178,.08);color:var(--ok);border:1px solid rgba(142,230,178,.16)}
+.footer-nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:28;
+  backdrop-filter:blur(14px);
+  background:rgba(8,4,9,.78);border-top:1px solid rgba(255,255,255,.08);
+  display:none
+}
+.footer-nav .inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:10px 12px}
+.footer-nav button{
+  background:none;border:none;color:var(--muted);padding:10px 4px;border-radius:14px;cursor:pointer
+}
+.footer-nav button.active{background:rgba(255,255,255,.06);color:var(--text)}
+.modal-backdrop{
+  position:fixed;inset:0;background:rgba(4,2,5,.68);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;padding:18px;z-index:60
+}
+.modal-backdrop.show{display:flex}
+.modal{
+  width:min(760px,100%);
+  max-height:min(92vh,900px);overflow:auto;
+  background:linear-gradient(180deg,#171019,#120c13);
+  border:1px solid rgba(255,255,255,.10);box-shadow:var(--shadow);
+  border-radius:28px;padding:20px
+}
+.close-row{display:flex;justify-content:flex-end}
+.modal h3{margin-top:0}
+.auth-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.auth-option{
+  padding:18px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);cursor:pointer
+}
+.auth-option.active{outline:2px solid rgba(242,181,212,.45)}
+.price{font-size:2rem;font-weight:800}
+.sub-list{display:grid;gap:10px}
+.sub-item{padding:12px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+hr.sep{border:none;border-top:1px solid rgba(255,255,255,.07);margin:16px 0}
+.small{font-size:.9rem}
+.center{text-align:center}
+@media (max-width: 980px){
+  .hero,.two-col,.three-col,.auth-grid{grid-template-columns:1fr}
+}
+@media (max-width: 760px){
+  .header{align-items:flex-start;flex-direction:column}
+  .footer-nav{display:block}
+  .app{padding-bottom:94px}
+  .weather-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div id="premiumBanner" class="top-banner hidden">
+    <div class="banner-copy"><strong>Intimacy Weather · The Unsaid · 30-Day Journey — $2.99/mo</strong></div>
+    <div class="banner-actions">
+      <button class="btn primary small" data-open-premium>Try Free</button>
+      <button class="btn ghost small" id="dismissBanner">✕</button>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-copy">
+        <h1>Our Sacred Path</h1>
+        <p>A private sanctuary for two — rebuilt as a single, stable file.</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="pill" id="connectionStatus">You &amp; Partner · Solo</div>
+      <button class="btn subtle small" id="authOpenBtn">✦ Sign In</button>
+      <button class="btn ghost small hidden" id="signOutBtn">Sign out</button>
+    </div>
+  </header>
+
+  <nav class="nav" id="mainNav">
+    <button class="nav-btn active" data-section="home">Home</button>
+    <button class="nav-btn" data-section="tantra">Tantra</button>
+    <button class="nav-btn" data-section="tao">Tao</button>
+    <button class="nav-btn" data-section="deida">Deida</button>
+    <button class="nav-btn" data-section="richardson">Richardson</button>
+    <button class="nav-btn" data-section="connect">Connect</button>
+    <button class="nav-btn" data-section="premium">Premium</button>
+  </nav>
+
+  <section class="section active" id="section-home">
+    <div class="grid hero">
+      <div class="card">
+        <div class="kicker">A Sanctuary for Two</div>
+        <div class="big">Sacred intimacy with structure, beauty, and zero brittle code.</div>
+        <p class="lead">Free content stays free. Premium adds depth, guided journeys, and shared couple tools.</p>
+        <div class="row">
+          <button class="btn primary" data-section-link="connect">Open Connect</button>
+          <button class="btn" data-open-premium>See Premium</button>
+        </div>
+        <div class="space"></div>
+        <div class="practice">
+          <div class="row" style="justify-content:space-between">
+            <div>
+              <div class="kicker">Right Now</div>
+              <h3 id="practiceTitle">The Arrival</h3>
+            </div>
+            <div class="badge" id="practiceCounter">1 / 6</div>
+          </div>
+          <p class="muted" id="practiceText">Sit facing each other for 5 minutes. No fixing, no talking, no performance. Just arrive.</p>
+          <div class="row">
+            <button class="btn small" id="prevPracticeBtn">←</button>
+            <button class="btn small" id="nextPracticeBtn">→</button>
+            <button class="btn subtle small" id="sharePracticeBtn">Copy practice</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="kicker">Today</div>
+        <h3>Morning & Evening</h3>
+        <div class="tile">
+          <h4>🌅 Morning</h4>
+          <div class="muted">Before you leave today, hold each other for 60 full seconds. A real breathing embrace.</div>
+        </div>
+        <div class="space"></div>
+        <div class="tile">
+          <h4>🌙 Evening</h4>
+          <div class="muted">Before bed, undress slowly — not seductively, mindfully. Let your body be seen without hurry.</div>
+        </div>
+        <div class="space"></div>
+        <div class="chips">
+          <div class="chip">Tantra</div><div class="chip">Tao</div><div class="chip">Deida</div><div class="chip">Richardson</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="space"></div>
+
+    <div class="grid three-col">
+      <div class="card">
+        <div class="kicker">Ancient Traditions</div>
+        <h3>Tantra</h3>
+        <p class="muted">Sacred union, breath, Kundalini, and the body as instrument of consciousness.</p>
+        <button class="btn small" data-section-link="tantra">Explore</button>
+      </div>
+      <div class="card">
+        <div class="kicker">Ancient Traditions</div>
+        <h3>Tao</h3>
+        <p class="muted">Yin-yang harmony, chi cultivation, loving longevity, and effortless nourishing flow.</p>
+        <button class="btn small" data-section-link="tao">Explore</button>
+      </div>
+      <div class="card">
+        <div class="kicker">Modern Guides</div>
+        <h3>Teachers</h3>
+        <p class="muted">Deida for polarity. Richardson for stillness, softness, and slow love.</p>
+        <button class="btn small" data-section-link="deida">Open teachers</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="section-tantra">
+    <div class="card">
+      <div class="kicker">Sacred Path</div>
+      <h2>Tantra</h2>
+      <p class="lead">From the Sanskrit “to weave” — body, breath, energy, and consciousness united.</p>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab-group="tantra" data-tab="tantra-wisdom">Wisdom</button>
+        <button class="tab-btn" data-tab-group="tantra" data-tab="tantra-practice">Positions & Sequences</button>
+      </div>
+
+      <div class="tab-panel" id="tab-tantra-wisdom">
+        <div class="list">
+          <div class="tile">
+            <h4>Osho — Tantric Wisdom</h4>
+            <div class="quote">“Tantra says: accept yourself as you are. The moment you accept yourself totally, something relaxes.”</div>
+            <div class="meta">Acceptance · energy · consciousness</div>
+          </div>
+          <div class="tile">
+            <h4>Shiva–Shakti</h4>
+            <div class="quote">The feminine is not a problem to regulate but a power to meet consciously. Presence is the masculine offering.</div>
+            <div class="meta">Shiva · Shakti · reverence</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel hidden" id="tab-tantra-practice">
+        <div class="tile">
+          <h4>Yab-Yum</h4>
+          <div class="muted">10–20 min · breathwork · heart-to-heart stillness</div>
+          <ol class="muted">
+            <li>Sit face to face with foreheads touching.</li>
+            <li>Breathe in sync for four counts in, four counts out.</li>
+            <li>Stay still long enough for urgency to soften into connection.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="section-tao">
+    <div class="card">
+      <div class="kicker">Sacred Path</div>
+      <h2>Tao</h2>
+      <p class="lead">The path of natural flow. Chi cultivation, yin-yang balance, and loving longevity.</p>
+      <div class="list">
+        <div class="tile">
+          <h4>Core Principle</h4>
+          <p class="muted">Energy conserved becomes vitality. Slow circulation creates depth without collapse.</p>
+        </div>
+        <div class="tile">
+          <h4>Tonight’s Tao Practice</h4>
+          <p class="muted">Lie back to back for 10 minutes and breathe together. Feel warmth instead of performance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="section-deida">
+    <div class="card">
+      <div class="kicker">Teacher</div>
+      <h2>David Deida</h2>
+      <div class="list">
+        <div class="tile">
+          <h4>Polarity</h4>
+          <p class="muted">Electricity grows when each partner inhabits their deepest truth rather than flattening themselves for comfort.</p>
+        </div>
+        <div class="tile">
+          <h4>Practice</h4>
+          <p class="muted">Five minutes of eye contact. No joking, no softening. Stay present enough to feel where you usually escape.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="section-richardson">
+    <div class="card">
+      <div class="kicker">Teacher</div>
+      <h2>Diana Richardson</h2>
+      <div class="list">
+        <div class="tile">
+          <h4>Slow Love</h4>
+          <p class="muted">The point is not climax. The point is exquisite presence. When the body stops rushing, the heart can arrive.</p>
+        </div>
+        <div class="tile">
+          <h4>Practice</h4>
+          <p class="muted">One partner receives still touch for 10 minutes while doing nothing. Then switch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="section-connect">
+    <div class="grid two-col">
+      <div class="card">
+        <div class="kicker">Invite Partner</div>
+        <h2>Your Couple Code</h2>
+        <div class="code-box" id="coupleCode">------</div>
+        <div class="space"></div>
+        <input class="input" id="inviteShareLink" readonly />
+        <div class="space"></div>
+        <div class="row">
+          <button class="btn small" id="shareCodeBtn">Share Code</button>
+          <button class="btn small" id="copyInviteLinkBtn">Copy Link</button>
+          <button class="btn small" id="sendWhatsappBtn">Send via WhatsApp</button>
+        </div>
+        <div class="space"></div>
+        <div class="notice">The app works immediately for you. Shared couple features activate once your partner joins with your code.</div>
+      </div>
+
+      <div class="card">
+        <div class="kicker">Join Partner</div>
+        <h2>Connect with a shared code</h2>
+        <div class="kv">
+          <input class="input" id="joinCodeInput" placeholder="Enter partner code" />
+          <button class="btn primary" id="joinPartnerBtn">Join Partner</button>
+          <button class="btn ghost" id="continueSoloBtn">Continue without account</button>
+        </div>
+        <div class="space"></div>
+        <div id="connectStatusBox" class="success hidden"></div>
+      </div>
+    </div>
+
+    <div class="space"></div>
+
+    <div class="card">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab-group="connect" data-tab="connect-weather">Intimacy Weather</button>
+        <button class="tab-btn" data-tab-group="connect" data-tab="connect-unsaid">The Unsaid</button>
+        <button class="tab-btn" data-tab-group="connect" data-tab="connect-thread">The Thread</button>
+      </div>
+
+      <div class="tab-panel" id="tab-connect-weather">
+        <div class="grid two-col">
+          <div class="tile">
+            <h4>Your state</h4>
+            <div class="weather-grid" id="weatherMe"></div>
+          </div>
+          <div class="tile">
+            <h4>Partner state</h4>
+            <div class="weather-grid" id="weatherPartner"></div>
+          </div>
+        </div>
+        <div class="result-box" id="weatherResult">Choose both states to receive tonight’s practice.</div>
+      </div>
+
+      <div class="tab-panel hidden" id="tab-connect-unsaid">
+        <div class="tile">
+          <h4>Write what has been hard to say</h4>
+          <textarea class="textarea" id="unsaidText" placeholder="Write the thing you have not been able to say."></textarea>
+          <div class="space"></div>
+          <div class="row">
+            <button class="btn small" id="unsaidShareBtn">Share with partner now</button>
+            <button class="btn small" id="unsaidSealBtn">Seal for 30 days</button>
+            <button class="btn small" id="unsaidReleaseBtn">Release & let go</button>
+          </div>
+          <div class="space"></div>
+          <div id="unsaidFeedback" class="muted">Nothing stored yet.</div>
+        </div>
+      </div>
+
+      <div class="tab-panel hidden" id="tab-connect-thread">
+        <div class="grid two-col">
+          <div class="tile">
+            <h4>Add today’s micro-gratitude</h4>
+            <textarea class="textarea" id="threadInput" placeholder="A look. A gesture. A word they said."></textarea>
+            <div class="space"></div>
+            <div class="row">
+              <button class="btn primary small" id="addThreadBtn">Add entry</button>
+              <button class="btn small" id="exportThreadBtn">Export as love letter</button>
+            </div>
+          </div>
+          <div class="tile">
+            <h4>Your Thread</h4>
+            <div class="thread-list" id="threadList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="section-premium">
+    <div class="grid two-col">
+      <div class="card">
+        <div class="kicker">Premium</div>
+        <h2>Go deeper together</h2>
+        <div class="sub-list">
+          <div class="sub-item"><strong>Intimacy Weather</strong> — shared emotional state plus tailored practice suggestion.</div>
+          <div class="sub-item"><strong>The Unsaid</strong> — write, share, seal, or release difficult truths.</div>
+          <div class="sub-item"><strong>The Thread</strong> — one micro-gratitude per day, exportable as a love letter.</div>
+          <div class="sub-item"><strong>30-Day Journey</strong> — a complete day-by-day couple path.</div>
+          <div class="sub-item"><strong>Guided Audio, Ritual Library, Monthly Newsletter</strong>.</div>
+        </div>
+        <hr class="sep" />
+        <div class="price">$2.99<span class="small">/mo</span></div>
+        <div class="muted">7-day free trial · cancel anytime</div>
+        <div class="space"></div>
+        <button class="btn primary" id="startTrialBtn">Start 7-Day Free Trial</button>
+      </div>
+
+      <div class="card locked">
+        <div class="kicker">30-Day Journey</div>
+        <h3>Days 1–3 stay free. Days 4–30 unlock with premium.</h3>
+        <div class="blur">
+          <div class="tile"><strong>Day 4 — The Touch</strong><br/>One partner receives full-presence touch without agenda. Ten minutes each side.</div>
+          <div class="space"></div>
+          <div class="tile"><strong>Day 5 — Chakra Awakening</strong><br/>A seated Yab-Yum sequence moving awareness from root to crown.</div>
+          <div class="space"></div>
+          <div class="tile"><strong>Day 6 — Polarity Reset</strong><br/>A guided masculine/feminine reset after friction or emotional fatigue.</div>
+        </div>
+        <div class="overlay-cta">
+          <button class="btn primary" data-open-premium>Unlock full journey</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="footer-nav">
+  <div class="inner">
+    <button class="active" data-section="home">Home</button>
+    <button data-section="tantra">Tantra</button>
+    <button data-section="tao">Tao</button>
+    <button data-section="deida">Deida</button>
+    <button data-section="connect">Connect</button>
+    <button data-section="premium">Premium</button>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="authModal">
+  <div class="modal">
+    <div class="close-row"><button class="btn ghost small" id="closeAuthModal">Close</button></div>
+    <div class="kicker">Sign In</div>
+    <h3>Enter gracefully — without breaking the site</h3>
+    <div class="auth-grid">
+      <div class="auth-option active" data-auth-mode="new">
+        <strong>New account</strong>
+        <p class="muted">Create a local profile and get your couple code immediately.</p>
+      </div>
+      <div class="auth-option" data-auth-mode="signin">
+        <strong>Sign in</strong>
+        <p class="muted">Restore your local profile on this device.</p>
+      </div>
+      <div class="auth-option" data-auth-mode="join">
+        <strong>Join partner</strong>
+        <p class="muted">Enter a shared couple code and connect.</p>
+      </div>
+    </div>
+    <div class="space"></div>
+    <div id="authForms">
+      <div class="tile auth-form" data-form="new">
+        <h4>Create account & get couple code</h4>
+        <div class="kv">
+          <input class="input" id="newName" placeholder="Your name" />
+          <button class="btn primary" id="createAccountBtn">Create local account</button>
+        </div>
+      </div>
+      <div class="tile auth-form hidden" data-form="signin">
+        <h4>Sign in</h4>
+        <div class="kv">
+          <input class="input" id="signInName" placeholder="Type the same name you used on this device" />
+          <button class="btn primary" id="signInBtn">Sign in</button>
+        </div>
+      </div>
+      <div class="tile auth-form hidden" data-form="join">
+        <h4>Connect with partner</h4>
+        <div class="kv">
+          <input class="input" id="modalJoinCode" placeholder="Enter partner code" />
+          <button class="btn primary" id="modalJoinBtn">Join with code</button>
+        </div>
+      </div>
+    </div>
+    <div class="space"></div>
+    <button class="btn ghost block" id="continueWithoutAccountBtn">Continue without account</button>
+    <p class="small muted center">All data stays on this device in this rebuild. No server. No ads. No external login dependency.</p>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="premiumModal">
+  <div class="modal">
+    <div class="close-row"><button class="btn ghost small" id="closePremiumModal">Close</button></div>
+    <div class="kicker">Sacred Path Premium</div>
+    <h3>Go deeper together</h3>
+    <div class="sub-list">
+      <div class="sub-item"><strong>Intimacy Weather</strong></div>
+      <div class="sub-item"><strong>The Unsaid</strong></div>
+      <div class="sub-item"><strong>The Thread</strong></div>
+      <div class="sub-item">Monthly Newsletter</div>
+      <div class="sub-item">30-Day Journey</div>
+      <div class="sub-item">Audio & Ritual Library</div>
+    </div>
+    <div class="space"></div>
+    <div class="price">$2.99<span class="small">/mo</span></div>
+    <div class="muted">7-day free trial · cancel anytime</div>
+    <div class="space"></div>
+    <button class="btn primary block" id="modalStartTrialBtn">Start 7-Day Free Trial</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const qs = (s, p=document) => p.querySelector(s);
+  const qsa = (s, p=document) => Array.from(p.querySelectorAll(s));
+  const state = {
+    practices: [
+      {title:'The Arrival', text:'Sit facing each other for 5 minutes. No fixing, no talking, no performance. Just arrive.'},
+      {title:'The Breath', text:'Lie back to back for 10 minutes and breathe at the same rhythm. Feel warmth before words.'},
+      {title:'The Gaze', text:'Three minutes of eye contact. No smiling away the discomfort. Stay present enough to be seen.'},
+      {title:'The Touch', text:'One partner receives slow touch for 10 minutes without doing anything at all. Then switch.'},
+      {title:'The Ask', text:'Each person completes this sentence: “What I most need from you tonight is…”'},
+      {title:'The Blessing', text:'Place one hand on your partner’s heart and speak one sentence of gratitude.'}
+    ],
+    practiceIndex: 0,
+    weatherLabels: ['Stormy','Cloudy','Warm','Electric','Radiant']
+  };
+
+  function storageGet(key, fallback){
+    try{
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    }catch(e){
+      return fallback;
+    }
+  }
+  function storageSet(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+  function getProfile(){
+    return storageGet('sp_profile', {name:'', signedIn:false, coupleCode:'', joinedCode:'', premium:false});
+  }
+  function setProfile(p){
+    storageSet('sp_profile', p);
+    renderProfile();
+  }
+  function ensureCoupleCode(){
+    const p = getProfile();
+    if(!p.coupleCode){
+      p.coupleCode = Math.random().toString(36).slice(2,8).toUpperCase();
+      setProfile(p);
+    }
+    return p.coupleCode;
+  }
+  function renderProfile(){
+    const p = getProfile();
+    const effectiveCode = p.joinedCode || p.coupleCode || '';
+    qs('#coupleCode').textContent = p.coupleCode || ensureCoupleCode();
+    qs('#inviteShareLink').value = buildInviteLink(p.coupleCode || ensureCoupleCode());
+    qs('#connectionStatus').textContent = p.joinedCode ? `You & Partner · Connected · ${p.joinedCode}` : (p.signedIn ? 'You & Partner · Invite partner' : 'You & Partner · Solo');
+    qs('#signOutBtn').classList.toggle('hidden', !p.signedIn);
+    if(p.joinedCode){
+      showConnectStatus(`Connected with partner code ${p.joinedCode}. Shared tools are ready.`);
+    }
+  }
+  function buildInviteLink(code){
+    const url = new URL(window.location.href);
+    url.searchParams.set('coupleCode', code);
+    return url.toString();
+  }
+  function copyText(text){
+    if(navigator.clipboard && window.isSecureContext){
+      return navigator.clipboard.writeText(text);
+    }
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    return Promise.resolve();
+  }
+  function showConnectStatus(msg){
+    const el = qs('#connectStatusBox');
+    el.textContent = msg;
+    el.classList.remove('hidden');
+  }
+
+  function showSection(id){
+    qsa('.section').forEach(el => el.classList.remove('active'));
+    qs('#section-' + id).classList.add('active');
+    qsa('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.section === id));
+    qsa('.footer-nav button').forEach(b => b.classList.toggle('active', b.dataset.section === id));
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  qsa('[data-section]').forEach(btn => btn.addEventListener('click', () => showSection(btn.dataset.section)));
+  qsa('[data-section-link]').forEach(btn => btn.addEventListener('click', () => showSection(btn.dataset.sectionLink)));
+
+  function switchTab(group, tab){
+    qsa(`.tab-btn[data-tab-group="${group}"]`).forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+    qsa(`#section-${group} .tab-panel, .card .tab-panel`).forEach(()=>{});
+    qsa(`.tab-panel[id^="tab-${group}-"]`).forEach(p => p.classList.add('hidden'));
+    qs(`#tab-${tab}`).classList.remove('hidden');
+  }
+  qsa('.tab-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tabGroup, btn.dataset.tab)));
+
+  function renderPractice(){
+    const item = state.practices[state.practiceIndex];
+    qs('#practiceTitle').textContent = item.title;
+    qs('#practiceText').textContent = item.text;
+    qs('#practiceCounter').textContent = `${state.practiceIndex + 1} / ${state.practices.length}`;
+  }
+  qs('#prevPracticeBtn').addEventListener('click', () => {
+    state.practiceIndex = (state.practiceIndex - 1 + state.practices.length) % state.practices.length;
+    renderPractice();
+  });
+  qs('#nextPracticeBtn').addEventListener('click', () => {
+    state.practiceIndex = (state.practiceIndex + 1) % state.practices.length;
+    renderPractice();
+  });
+  qs('#sharePracticeBtn').addEventListener('click', async () => {
+    const item = state.practices[state.practiceIndex];
+    const text = `${item.title}\n\n${item.text}`;
+    await copyText(text);
+    alert('Practice copied.');
+  });
+
+  // Banner timing
+  const bannerDismissed = localStorage.getItem('sp_banner_dismissed') === '1';
+  if(!bannerDismissed){
+    setTimeout(() => qs('#premiumBanner').classList.remove('hidden'), 30000);
+  }
+  qs('#dismissBanner').addEventListener('click', () => {
+    qs('#premiumBanner').classList.add('hidden');
+    localStorage.setItem('sp_banner_dismissed','1');
+  });
+
+  // Modals
+  function openModal(el){ el.classList.add('show'); }
+  function closeModal(el){ el.classList.remove('show'); }
+  qs('#authOpenBtn').addEventListener('click', () => openModal(qs('#authModal')));
+  qs('#closeAuthModal').addEventListener('click', () => closeModal(qs('#authModal')));
+  qs('#closePremiumModal').addEventListener('click', () => closeModal(qs('#premiumModal')));
+  qsa('[data-open-premium]').forEach(b => b.addEventListener('click', () => openModal(qs('#premiumModal'))));
+  qs('#startTrialBtn').addEventListener('click', () => openModal(qs('#premiumModal')));
+  qs('#modalStartTrialBtn').addEventListener('click', () => {
+    const p = getProfile();
+    p.premium = true;
+    setProfile(p);
+    closeModal(qs('#premiumModal'));
+    alert('Premium trial marked active on this device.');
+  });
+
+  // Auth
+  qsa('.auth-option').forEach(opt => opt.addEventListener('click', () => {
+    qsa('.auth-option').forEach(x => x.classList.remove('active'));
+    opt.classList.add('active');
+    qsa('.auth-form').forEach(f => f.classList.add('hidden'));
+    qs(`.auth-form[data-form="${opt.dataset.authMode}"]`).classList.remove('hidden');
+  }));
+
+  function createAccount(name){
+    const p = getProfile();
+    p.name = name || 'Beloved';
+    p.signedIn = true;
+    p.coupleCode = p.coupleCode || Math.random().toString(36).slice(2,8).toUpperCase();
+    setProfile(p);
+    renderProfile();
+    closeModal(qs('#authModal'));
+    showSection('connect');
+  }
+  qs('#createAccountBtn').addEventListener('click', () => createAccount(qs('#newName').value.trim()));
+  qs('#continueWithoutAccountBtn').addEventListener('click', () => closeModal(qs('#authModal')));
+  qs('#continueSoloBtn').addEventListener('click', () => showConnectStatus('You can use the app solo for now.'));
+
+  qs('#signInBtn').addEventListener('click', () => {
+    const entered = qs('#signInName').value.trim();
+    const p = getProfile();
+    if(p.name && entered && entered.toLowerCase() === p.name.toLowerCase()){
+      p.signedIn = true;
+      setProfile(p);
+      closeModal(qs('#authModal'));
+    } else {
+      alert('No matching local profile on this device. Use New account if needed.');
+    }
+  });
+
+  function joinWithCode(code){
+    const cleaned = (code || '').trim().toUpperCase();
+    if(!cleaned){ alert('Enter a partner code first.'); return; }
+    const p = getProfile();
+    p.signedIn = true;
+    p.joinedCode = cleaned;
+    setProfile(p);
+    renderProfile();
+    closeModal(qs('#authModal'));
+    showConnectStatus(`Connected with partner code ${cleaned}.`);
+    showSection('connect');
+  }
+  qs('#joinPartnerBtn').addEventListener('click', () => joinWithCode(qs('#joinCodeInput').value));
+  qs('#modalJoinBtn').addEventListener('click', () => joinWithCode(qs('#modalJoinCode').value));
+
+  qs('#signOutBtn').addEventListener('click', () => {
+    const p = getProfile();
+    p.signedIn = false;
+    p.joinedCode = '';
+    setProfile(p);
+    renderProfile();
+  });
+
+  // Share / invite
+  async function shareCodeAction(){
+    const p = getProfile();
+    const code = p.coupleCode || ensureCoupleCode();
+    const link = buildInviteLink(code);
+    const text = `Join me on Sacred Path for Couples. Couple Code: ${code}\n${link}`;
+    if(navigator.share){
+      try{
+        await navigator.share({title:'Sacred Path for Couples', text:`Join me with couple code ${code}`, url:link});
+        return;
+      }catch(e){}
+    }
+    await copyText(text);
+    alert('Invite copied to clipboard.');
+  }
+  qs('#shareCodeBtn').addEventListener('click', shareCodeAction);
+  qs('#copyInviteLinkBtn').addEventListener('click', async () => {
+    await copyText(qs('#inviteShareLink').value);
+    alert('Invite link copied.');
+  });
+  qs('#sendWhatsappBtn').addEventListener('click', () => {
+    const p = getProfile();
+    const code = p.coupleCode || ensureCoupleCode();
+    const link = buildInviteLink(code);
+    const text = `Join me on Sacred Path for Couples. Couple Code: ${code} ${link}`;
+    window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+  });
+
+  // Auto-join from invite link
+  const urlParams = new URLSearchParams(window.location.search);
+  const inviteCode = (urlParams.get('coupleCode') || '').trim().toUpperCase();
+  if(inviteCode){
+    qs('#joinCodeInput').value = inviteCode;
+    qs('#modalJoinCode').value = inviteCode;
+  }
+
+  // Weather
+  const weatherKeys = ['stormy','cloudy','warm','electric','radiant'];
+  const weatherLabels = {stormy:'Stormy',cloudy:'Cloudy',warm:'Warm',electric:'Electric',radiant:'Radiant'};
+  const weatherMessages = {};
+  weatherKeys.forEach(a => {
+    weatherKeys.forEach(b => {
+      weatherMessages[`${a}|${b}`] = `Tonight: ${weatherLabels[a]} + ${weatherLabels[b]} — begin with 2 minutes of synchronized breathing, then each say one sentence beginning “Right now I need…”.`;
+    });
+  });
+  weatherMessages['stormy|stormy'] = 'Two storms. No fixing. Sit apart at first. Three minutes of breath, then one truth each without interruption.';
+  weatherMessages['cloudy|warm'] = 'One cloudy, one warm. Let the warmer partner bring steadiness, not pressure. Try a quiet 6-minute embrace.';
+  weatherMessages['warm|electric'] = 'Warm meets electric. Good night for playful tension and slow escalation. Start with eye contact, then touch hands only.';
+  weatherMessages['radiant|radiant'] = 'Two radiant states. Do not waste it. Choose one shared ritual tonight and stay with it longer than usual.';
+
+  const weatherState = storageGet('sp_weather', {me:'', partner:''});
+  function renderWeatherPicker(containerId, key){
+    const wrap = qs('#' + containerId);
+    wrap.innerHTML = '';
+    weatherKeys.forEach(v => {
+      const btn = document.createElement('button');
+      btn.className = 'weather-btn' + (weatherState[key] === v ? ' active' : '');
+      btn.textContent = weatherLabels[v];
+      btn.addEventListener('click', () => {
+        weatherState[key] = v;
+        storageSet('sp_weather', weatherState);
+        renderWeatherPicker('weatherMe','me');
+        renderWeatherPicker('weatherPartner','partner');
+        renderWeatherResult();
+      });
+      wrap.appendChild(btn);
+    });
+  }
+  function renderWeatherResult(){
+    const box = qs('#weatherResult');
+    if(weatherState.me && weatherState.partner){
+      box.textContent = weatherMessages[`${weatherState.me}|${weatherState.partner}`] || 'Choose a gentle shared ritual tonight.';
+    } else {
+      box.textContent = 'Choose both states to receive tonight’s practice.';
+    }
+  }
+
+  // Unsaid
+  const unsaid = storageGet('sp_unsaid', []);
+  function setUnsaidFeedback(msg){ qs('#unsaidFeedback').textContent = msg; }
+  qs('#unsaidShareBtn').addEventListener('click', () => {
+    const text = qs('#unsaidText').value.trim();
+    if(!text) return alert('Write something first.');
+    unsaid.push({type:'share', text, date:new Date().toISOString()});
+    storageSet('sp_unsaid', unsaid);
+    qs('#unsaidText').value = '';
+    setUnsaidFeedback('Shared locally on this device. In a backend version, this would sync to your partner.');
+  });
+  qs('#unsaidSealBtn').addEventListener('click', () => {
+    const text = qs('#unsaidText').value.trim();
+    if(!text) return alert('Write something first.');
+    const openOn = new Date(Date.now() + 30*24*60*60*1000).toISOString().slice(0,10);
+    unsaid.push({type:'seal', text, openOn, date:new Date().toISOString()});
+    storageSet('sp_unsaid', unsaid);
+    qs('#unsaidText').value = '';
+    setUnsaidFeedback(`Sealed until ${openOn}.`);
+  });
+  qs('#unsaidReleaseBtn').addEventListener('click', () => {
+    const text = qs('#unsaidText').value.trim();
+    if(!text) return alert('Write something first.');
+    unsaid.push({type:'release', text, date:new Date().toISOString()});
+    storageSet('sp_unsaid', unsaid);
+    qs('#unsaidText').value = '';
+    setUnsaidFeedback('Released. Sometimes naming it is enough.');
+  });
+
+  // Thread
+  function getThread(){ return storageGet('sp_thread', []); }
+  function renderThread(){
+    const list = qs('#threadList');
+    const entries = getThread();
+    if(!entries.length){
+      list.innerHTML = '<div class="muted">Your thread begins with the first entry ♡</div>';
+      return;
+    }
+    list.innerHTML = entries.slice().reverse().map(e => `
+      <div class="thread-item">
+        <div class="thread-date">${e.date}</div>
+        <div>${escapeHtml(e.text)}</div>
+      </div>
+    `).join('');
+  }
+  function escapeHtml(str){
+    return str.replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+  }
+  qs('#addThreadBtn').addEventListener('click', () => {
+    const text = qs('#threadInput').value.trim();
+    if(!text) return alert('Write one gratitude first.');
+    const entries = getThread();
+    entries.push({text, date:new Date().toLocaleString()});
+    storageSet('sp_thread', entries);
+    qs('#threadInput').value = '';
+    renderThread();
+  });
+  qs('#exportThreadBtn').addEventListener('click', () => {
+    const entries = getThread();
+    if(!entries.length) return alert('No entries yet.');
+    const text = 'Our Thread — A Love Letter\n\n' + entries.map(e => `${e.date}\n${e.text}`).join('\n\n');
+    const blob = new Blob([text], {type:'text/plain'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'our-thread.txt';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  // Init
+  ensureCoupleCode();
+  renderProfile();
+  renderPractice();
+  renderWeatherPicker('weatherMe','me');
+  renderWeatherPicker('weatherPartner','partner');
+  renderWeatherResult();
+  renderThread();
+
+  // Make sure broken auth state never freezes UI
+  window.addEventListener('error', function(e){
+    console.error('Runtime error trapped:', e.message);
+  });
+})();
+</script>
+</body>
+</html>
