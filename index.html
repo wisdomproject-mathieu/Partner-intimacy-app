@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Sacred Path</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #1a1212; /* Deep charcoal/plum from your screenshots */
+            --card-dark: #261a1a;
+            --gold: #d4af37;
+            --rose-gold: #e2b1b1;
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: #ece0d1; 
+            margin: 0;
+        }
+        .serif { font-family: 'Playfair Display', serif; }
+        .gold-text { color: var(--gold); }
+        .premium-card { background-color: var(--card-dark); border-radius: 12px; }
+        .btn-gold { 
+            background: linear-gradient(to right, #d4af37, #f2d492); 
+            color: #1a1212; 
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #1a1212;
+            border-top: 1px solid #332222;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 100;
+        }
+        .nav-item { font-size: 10px; font-weight: 600; text-transform: uppercase; color: #7a6666; }
+        .nav-active { color: var(--gold); }
+    </style>
+</head>
+<body class="pb-24">
+
+    <header class="p-4 flex justify-between items-center border-b border-[#332222]">
+        <div class="flex items-center gap-2">
+            <span class="gold-text text-xl">✵</span>
+            <h1 class="serif text-lg tracking-wide">Our Sacred Path</h1>
+        </div>
+        <button class="text-[10px] border border-[#443333] px-3 py-1 rounded-full text-rose-gold uppercase tracking-widest">+ Sign In</button>
+    </header>
+
+    <section class="px-8 py-12 text-center">
+        <p class="text-[9px] uppercase tracking-[0.3em] text-[#7a6666] mb-4">A Sanctuary for Two</p>
+        <h2 class="serif text-4xl text-rose-gold leading-tight mb-6">Our Sacred Path</h2>
+        <p class="text-sm text-gray-400 leading-relaxed px-4">A free private space for couples deepening intimacy through Tantra, Tao, Deida & Richardson. No login. No ads. Just you two.</p>
+        
+        <button class="mt-8 btn-gold px-10 py-3 rounded-full font-bold flex items-center gap-2 mx-auto shadow-lg">
+            <span>▶</span> Right Now
+        </button>
+    </section>
+
+    <div class="px-6 mb-12">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-[10px] font-bold tracking-widest text-[#7a6666] uppercase">Today's Practice</h3>
+            <button class="text-[10px] text-rose-gold border-b border-rose-gold pb-1">Open Full Practice →</button>
+        </div>
+        <div class="premium-card p-6 border border-[#3d2b2b]">
+             <p class="serif text-lg italic text-center text-rose-gold opacity-90">
+                "Before you leave today, hold each other for 60 full seconds. A real breathing embrace. Feel their heartbeat."
+             </p>
+        </div>
+    </div>
+
+    <section class="px-6 py-10 bg-[#150e0e] border-y border-[#2d1f1f]">
+        <h3 class="serif text-2xl text-center mb-6">Go Deeper Together</h3>
+        <ul class="space-y-4 mb-8 text-sm text-gray-300">
+            <li class="flex gap-3">🌿 <span>30-Day Couples Journey — day by day guidance</span></li>
+            <li class="flex gap-3">🎧 <span>Guided audio — listen together during practice</span></li>
+            <li class="flex gap-3">🗓️ <span>New practice added every week</span></li>
+            <li class="flex gap-3">🌙 <span>Seasonal rituals & moon cycle practices</span></li>
+        </ul>
+        <div class="text-center">
+            <div class="text-3xl font-bold gold-text mb-1">$2.99</div>
+            <p class="text-[10px] text-gray-500 mb-6">per month • 7-day free trial • cancel anytime</p>
+            <button class="w-full btn-gold py-4 rounded-full font-extrabold uppercase tracking-widest text-xs mb-4">✦ Start Free Trial</button>
+            <button class="text-xs text-gray-500 underline uppercase tracking-widest">Learn more</button>
+        </div>
+    </section>
+
+    <nav class="bottom-nav">
+        <div class="nav-item nav-active flex flex-col items-center">
+            <span class="text-lg">✵</span>
+            <span>Home</span>
+        </div>
+        <div class="nav-item flex flex-col items-center">
+            <span class="text-lg">◯</span>
+            <span>Paths</span>
+        </div>
+        <div class="text-2xl text-gray-400 self-center px-2 bg-[#2d1f1f] rounded-lg">+</div>
+        <div class="nav-item flex flex-col items-center">
+            <span class="text-lg">✦</span>
+            <span>Teachers</span>
+        </div>
+        <div class="nav-item flex flex-col items-center">
+            <span class="text-lg">♡</span>
+            <span>Connect</span>
+        </div>
+    </nav>
+
+</body>
+</html>
