@@ -2721,6 +2721,169 @@ function pickRN(mood){
     <p class="sub-legal">Subscription automatically renews at $2.99/month unless cancelled at least 24 hours before the end of the current period. Manage or cancel in your App Store account settings.</p>
   </div>
 </div>
+<script>
+(function () {
+  function safeText(el) {
+    return (el?.textContent || '').trim();
+  }
 
+  function getCoupleCode() {
+    const explicit =
+      document.getElementById('coupleCode') ||
+      document.getElementById('couple-code') ||
+      document.querySelector('[data-couple-code]');
+
+    let code = explicit
+      ? (explicit.dataset.coupleCode || explicit.value || explicit.textContent || '')
+      : '';
+
+    code = code.trim();
+
+    if (!code || code === '——') {
+      code = localStorage.getItem('coupleCode') || '';
+    }
+
+    return code.trim();
+  }
+
+  function buildInviteLink(code) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('coupleCode', code);
+    return url.toString();
+  }
+
+  async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  async function shareCodeAction() {
+    const code = getCoupleCode();
+
+    if (!code) {
+      alert('No Couple Code found yet. Create or load your code first.');
+      return;
+    }
+
+    const inviteLink = buildInviteLink(code);
+    const message =
+      'Join me on Sacred Path for Couples. Use our Couple Code: ' +
+      code +
+      '\n' +
+      inviteLink;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Sacred Path for Couples',
+          text: 'Join me using our Couple Code: ' + code,
+          url: inviteLink
+        });
+      } else {
+        await copyText(message);
+        alert('Invite copied to clipboard.');
+      }
+    } catch (err) {
+      console.error('Share failed:', err);
+    }
+  }
+
+  async function copyLinkAction() {
+    const code = getCoupleCode();
+
+    if (!code) {
+      alert('No Couple Code found yet. Create or load your code first.');
+      return;
+    }
+
+    const inviteLink = buildInviteLink(code);
+
+    try {
+      await copyText(inviteLink);
+      alert('Invite link copied.');
+    } catch (err) {
+      console.error('Copy failed:', err);
+      alert('Could not copy the invite link.');
+    }
+  }
+
+  function whatsappAction() {
+    const code = getCoupleCode();
+
+    if (!code) {
+      alert('No Couple Code found yet. Create or load your code first.');
+      return;
+    }
+
+    const inviteLink = buildInviteLink(code);
+    const text =
+      'Join me on Sacred Path for Couples. Couple Code: ' +
+      code +
+      ' ' +
+      inviteLink;
+
+    window.open(
+      'https://wa.me/?text=' + encodeURIComponent(text),
+      '_blank'
+    );
+  }
+
+  // Try to bind by ID first
+  const shareBtn =
+    document.getElementById('shareCodeBtn') ||
+    document.getElementById('share-code-btn');
+
+  const copyBtn =
+    document.getElementById('copyInviteLinkBtn') ||
+    document.getElementById('copy-link-btn');
+
+  const whatsappBtn =
+    document.getElementById('sendWhatsappBtn') ||
+    document.getElementById('send-whatsapp-btn');
+
+  if (shareBtn) shareBtn.addEventListener('click', shareCodeAction);
+  if (copyBtn) copyBtn.addEventListener('click', copyLinkAction);
+  if (whatsappBtn) whatsappBtn.addEventListener('click', whatsappAction);
+
+  // Fallback: bind by visible button text if IDs are missing
+  document.querySelectorAll('button, a').forEach(function (el) {
+    const label = safeText(el);
+
+    if (!shareBtn && label === 'Share Code') {
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        shareCodeAction();
+      });
+    }
+
+    if (!copyBtn && label === 'Copy Link') {
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        copyLinkAction();
+      });
+    }
+
+    if (!whatsappBtn && label === 'Send via WhatsApp') {
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        whatsappAction();
+      });
+    }
+  });
+})();
+</script>
 </body>
 </html>
