@@ -2650,134 +2650,62 @@ function pickRN(mood){
 </div>
 
 <!-- SUBSCRIPTION MODAL -->
-<div id="subscription-overlay" class="sub-overlay" style="display: none; pointer-events: none;">
-  <div class="sub-content animate-fadeup" style="pointer-events: auto;">
-    <div class="sub-header">
-      <h2 class="serif">Go Deeper Together</h2>
-      <p>Premium sanctuary for deepening your shared path</p>
-    </div>
-    
-    <div class="sub-features">
-      <div class="sub-feat">
-        <span class="sub-feat-icon">⏳</span>
-        <div class="sub-feat-text">
-          <strong>30-Day Couples Journey</strong>
-          <span>A day-by-day guided path to profound intimacy</span>
-        </div>
-      </div>
-      <div class="sub-feat">
-        <span class="sub-feat-icon">🎧</span>
-        <div class="sub-feat-text">
-          <strong>Guided Audio Practices</strong>
-          <span>Listen together during your rituals and sequences</span>
-        </div>
-      </div>
-      <div class="sub-feat">
-        <span class="sub-feat-icon">✨</span>
-        <div class="sub-feat-text">
-          <strong>New Content Every Week</strong>
-          <span>Fresh practices, whispers, and wisdom cards added weekly</span>
-        </div>
-      </div>
-      <div class="sub-feat">
-        <span class="sub-feat-icon">🌙</span>
-        <div class="sub-feat-text">
-          <strong>Full Ritual Library</strong>
-          <span>Seasonal rituals, moon cycle practices, anniversary ceremonies</span>
-        </div>
-      </div>
-    </div>
-    <div class="sub-plan">
-      <div class="sub-plan-price">$2.99</div>
-      <div class="sub-plan-period">per month</div>
-      <div class="sub-plan-note">Cancel anytime · 7-day free trial</div>
-    </div>
-    <button class="sub-cta" onclick="startTrial()">Start 7-Day Free Trial</button>
-    <button class="sub-restore" onclick="restorePurchase()">Restore Purchase</button>
-    <button class="sub-close" onclick="closeSubscription()">Maybe later</button>
-    <p class="sub-legal">Subscription automatically renews at $2.99/month unless cancelled at least 24 hours before the end of the current period.</p>
+<div id="subscription-overlay" style="display: none; position: fixed; inset: 0; background: rgba(9,4,10,0.95); z-index: 10000; pointer-events: none; align-items: center; justify-content: center;">
+  <div style="background: #2d1820; padding: 30px; border-radius: 24px; border: 1px solid #c9924a; max-width: 85%; text-align: center; pointer-events: auto;">
+    <h2 style="font-family: serif; color: #c9924a; font-size: 22px;">Go Deeper Together</h2>
+    <p style="color: #e8d5c0; margin: 15px 0; font-size: 14px;">Unlock the 30-Day Journey and the full Ritual Library.</p>
+    <button onclick="startTrial()" style="background: linear-gradient(135deg, #c9924a, #e8b87a); color: #0e0609; padding: 14px; border-radius: 30px; width: 100%; font-weight: bold; border: none;">START 7-DAY FREE TRIAL</button>
+    <button onclick="closeSubscription()" style="background: none; border: none; color: #6b5048; margin-top: 15px; text-transform: uppercase; font-size: 10px;">Maybe later</button>
   </div>
 </div>
 
 <script>
-// Initialize App
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("Sacred Path Logic Initialized");
-    closeSubscription(); // Ensure the "invisible wall" is removed on load
-    showPage('home');    // Start at home
-});
-
-// MASTER NAVIGATION: Restores functionality to all buttons
-window.showPage = function(pageId) {
-    console.log("Navigating to: " + pageId);
+  // This function makes your navigation work
+  window.showPage = function(pageId) {
+    console.log("Navigating to:", pageId);
     
-    // 1. Find all sections (Home, Paths, Teachers, Connect, etc.)
-    const sections = ['home', 'paths', 'teachers', 'connect', 'positions', 'sequences', 'practices', 'whispers'];
-    
-    sections.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.style.display = 'none';
-            el.classList.remove('active');
-        }
+    // Hide all sections
+    const sections = document.querySelectorAll('section, .page, .pg');
+    sections.forEach(s => {
+      s.style.display = 'none';
+      s.classList.remove('active');
     });
 
-    // 2. Show the target section
+    // Show the target section
     const target = document.getElementById(pageId);
     if (target) {
-        target.style.display = 'block';
-        target.classList.add('active');
-        window.scrollTo(0, 0);
+      target.style.display = 'block';
+      target.classList.add('active');
+      window.scrollTo(0, 0);
     }
 
-    // 3. Update Nav Buttons UI
-    document.querySelectorAll('.bn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    
-    // Find the specific button that was clicked to highlight it
-    const activeBtn = document.querySelector(`.bn[onclick*="${pageId}"]`);
-    if (activeBtn) activeBtn.classList.add('active');
-};
+    // Update Nav Buttons
+    document.querySelectorAll('.bn').forEach(btn => btn.style.color = '#6b5048');
+    const activeBtn = document.querySelector(`[onclick*="${pageId}"]`);
+    if (activeBtn) activeBtn.style.color = '#c9924a';
+  };
 
-// SUBSCRIPTION BOX LOGIC
-window.openSubscription = function() {
+  // Logic to open/close the modal
+  window.openSubscription = function() {
     const sub = document.getElementById('subscription-overlay');
-    if (sub) {
-        sub.style.display = 'flex';
-        sub.style.pointerEvents = 'auto'; // Re-enable clicks for the modal
-        document.body.style.overflow = 'hidden'; // Stop background scrolling
-    }
-};
+    sub.style.display = 'flex';
+    sub.style.pointerEvents = 'auto'; // Turn on clicking for the modal
+  };
 
-window.closeSubscription = function() {
+  window.closeSubscription = function() {
     const sub = document.getElementById('subscription-overlay');
-    if (sub) {
-        sub.style.display = 'none';
-        sub.style.pointerEvents = 'none'; // CRITICAL: Allows clicks to pass through to buttons
-        document.body.style.overflow = '';
-    }
-};
+    sub.style.display = 'none';
+    sub.style.pointerEvents = 'none'; // Turn OFF clicking so we can hit the buttons behind it
+  };
 
-// SIGN IN LOGIC
-window.openSignIn = function() {
-    const modal = document.getElementById('signin-modal');
-    if (modal) modal.style.display = 'flex';
-};
+  function startTrial() {
+    alert("Redirecting to secure checkout...");
+  }
 
-// PARTNER SHARE LOGIC
-window.handleShare = async function(text) {
-    if (navigator.share) {
-        try {
-            await navigator.share({ title: 'Sacred Path', text: text });
-        } catch (e) {}
-    } else {
-        navigator.clipboard.writeText(text);
-        alert("Copied to clipboard!");
-    }
-};
+  // Set default page on load
+  document.addEventListener('DOMContentLoaded', () => {
+    showPage('home');
+  });
 </script>
-
 </body>
 </html>
-
