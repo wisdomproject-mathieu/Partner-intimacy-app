@@ -2016,12 +2016,11 @@ function addThread(){
 }
 function exportThread(){
   if(threadEntries.length===0) return;
-  var text = 'Our Thread — A Love Letter
-
-' + threadEntries.map(function(e){ return e.date+'
-'+e.text; }).join('
-
-');
+  var text =
+  'Our Thread — A Love Letter\n\n' +
+  threadEntries.map(function(e){
+    return e.date + '\n' + e.text;
+  }).join('\n\n');
   var blob = new Blob([text], {type:'text/plain'});
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
