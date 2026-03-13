@@ -2885,5 +2885,22 @@ function pickRN(mood){
   });
 })();
 </script>
+function generateCoupleCode(){
+  let code = localStorage.getItem("coupleCode");
+
+  if(!code){
+    code = Math.random().toString(36).substring(2,8).toUpperCase();
+    localStorage.setItem("coupleCode", code);
+  }
+
+  const codeEl = document.getElementById("coupleCode");
+  if(codeEl){
+    codeEl.textContent = code;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", generateCoupleCode);
+</script>
+
 </body>
 </html>
