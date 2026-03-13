@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <title>Sacred Path for Couples</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0e0609; --deep: #1a0a0f; --surface: #231218; --card: #2d1820;
+            --gold: #c9924a; --rose: #c4536a; --cream: #f0e6d6; --text: #e8d5c0;
+        }
+        body { 
+            background-color: var(--ink); color: var(--text); 
+            font-family: 'Jost', sans-serif; margin: 0; padding-bottom: 90px;
+        }
+        .serif { font-family: 'Cormorant Garamond', serif; }
+        .page { display: none; animation: fadeIn 0.5s ease both; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Bottom Nav Styling */
+        .bottom-nav {
+            position: fixed; bottom: 0; width: 100%; background: var(--deep);
+            border-top: 1px solid rgba(212, 160, 110, 0.1);
+            display: flex; justify-content: space-around; padding: 15px 0; z-index: 1000;
+        }
+        .nav-btn { background: none; border: none; color: #6b5048; font-size: 10px; text-transform: uppercase; cursor: pointer; }
+        .nav-btn.active { color: var(--gold); }
+        .nav-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+        
+        /* Elements */
+        .card { background: var(--card); border-radius: 16px; padding: 24px; margin: 16px; border: 1px solid rgba(212, 160, 110, 0.1); }
+        .btn-gold { background: linear-gradient(135deg, #c9924a, #e8b87a); color: var(--ink); padding: 16px; border-radius: 30px; font-weight: bold; width: 100%; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="home" class="page active">
+        <header class="p-8 text-center">
+            <h1 class="serif text-3xl tracking-widest uppercase text-[#c9924a]">Sacred Path</h1>
+            <p class="text-[10px] tracking-[0.2em] text-[#6b5048] mt-2 uppercase">A Sanctuary for Two</p>
+        </header>
+
+        <div class="card text-center">
+            <span class="text-[9px] uppercase tracking-widest text-[#a08070]">Today's Practice</span>
+            <p class="serif text-2xl italic mt-6 mb-8 text-[#f0e6d6]">"Before you leave today, hold each other for 60 full seconds. A real breathing embrace. Feel their heartbeat."</p>
+            <button class="text-[10px] border-b border-[#c9924a] pb-1 text-[#c9924a] uppercase">Open Full Practice →</button>
+        </div>
+    </div>
+
+    <div id="positions" class="page px-6 pt-12">
+        <h2 class="serif text-3xl text-center mb-8">Ancient Traditions</h2>
+        <div class="card">
+            <h3 class="serif text-xl gold-text">Tantra</h3>
+            <p class="text-sm text-gray-400 mt-2">Sacred union and the awakening of Kundalini energy.</p>
+            <button class="mt-4 text-[10px] font-bold uppercase gold-text">Explore Positions →</button>
+        </div>
+    </div>
+
+    <div id="connect" class="page px-6 pt-12">
+        <h2 class="serif text-3xl text-center mb-8">4 Ways to Connect</h2>
+        <div class="grid grid-cols-2 gap-4">
+            <button onclick="handleShare('quote')" class="card m-0 p-4 text-center">
+                <div class="text-2xl mb-2">💬</div>
+                <div class="text-[10px] font-bold uppercase">Share Quote</div>
+            </button>
+            <button onclick="handleShare('game')" class="card m-0 p-4 text-center">
+                <div class="text-2xl mb-2">♠</div>
+                <div class="text-[10px] font-bold uppercase">Games</div>
+            </button>
+        </div>
+        <div class="card mt-6">
+            <h3 class="text-[10px] uppercase tracking-widest text-[#a08070] mb-4">Partner Message</h3>
+            <textarea id="share-msg" class="w-full bg-[#1a0a0f] border border-[#3d2430] p-4 rounded-lg text-sm" placeholder="Send a whisper..."></textarea>
+            <button onclick="nativeShare()" class="btn-gold mt-4">Send to Partner ↗</button>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <button class="nav-btn active" id="btn-home" onclick="navTo('home')"><span class="nav-icon">✵</span>Home</button>
+        <button class="nav-btn" id="btn-positions" onclick="navTo('positions')"><span class="nav-icon">◯</span>Paths</button>
+        <button class="nav-btn" id="btn-connect" onclick="navTo('connect')"><span class="nav-icon">♡</span>Connect</button>
+    </nav>
+
+    <script>
+        // Core Navigation Logic
+        function navTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-' + pageId).classList.add('active');
+        }
+
+        // Functional Sharing Logic
+        async function nativeShare() {
+            const msg = document.getElementById('share-msg').value;
+            if (!msg) return alert("Write a message first.");
+            
+            if (navigator.share) {
+                try {
+                    await navigator.share({ title: 'Sacred Path Whisper', text: msg });
+                } catch (e) {}
+            } else {
+                navigator.clipboard.writeText(msg);
+                alert("Message copied to clipboard!");
+            }
+        }
+        
+        function handleShare(type) {
+            const messages = {
+                quote: "I feel your soul in every touch.",
+                game: "I challenge you to 10 minutes of uninterrupted eye contact tonight."
+            };
+            document.getElementById('share-msg').value = messages[type];
+        }
+    </script>
+</body>
+</html>
