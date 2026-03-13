@@ -2888,6 +2888,9 @@ function pickRN(mood){
 function generateCoupleCode(){
   let code = localStorage.getItem("coupleCode");
 
+function generateCoupleCode(){
+  let code = localStorage.getItem("coupleCode");
+
   if(!code){
     code = Math.random().toString(36).substring(2,8).toUpperCase();
     localStorage.setItem("coupleCode", code);
