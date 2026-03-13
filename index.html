@@ -2707,5 +2707,49 @@ function pickRN(mood){
     showPage('home');
   });
 </script>
-</body>
+</body><style>
+  /* This kills the invisible shield blocking your buttons */
+  #subscription-overlay {
+    display: none !important;
+    pointer-events: none !important;
+  }
+  #subscription-overlay.active {
+    display: flex !important;
+    pointer-events: auto !important;
+  }
+</style>
+
+<script>
+  // This forces the buttons to work even if there are errors above
+  window.showPage = function(pageId) {
+    console.log("Navigating to:", pageId);
+    document.querySelectorAll('section, .page, .pg').forEach(s => {
+      s.style.display = 'none';
+    });
+    const target = document.getElementById(pageId);
+    if (target) target.style.display = 'block';
+    window.scrollTo(0,0);
+    
+    // UI Update
+    document.querySelectorAll('.bn').forEach(b => b.classList.remove('active'));
+    const btn = document.querySelector(`[onclick*="${pageId}"]`);
+    if (btn) btn.classList.add('active');
+  };
+
+  window.openSubscription = function() {
+    const el = document.getElementById('subscription-overlay');
+    if (el) el.classList.add('active');
+  };
+
+  window.closeSubscription = function() {
+    const el = document.getElementById('subscription-overlay');
+    if (el) el.classList.remove('active');
+  };
+
+  // Run on start
+  document.addEventListener('DOMContentLoaded', () => {
+    showPage('home');
+  });
+</script>
+
 </html>
