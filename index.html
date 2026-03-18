@@ -847,13 +847,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
   <button id="mycode-btn" onclick="showMyCode()" style="display:none;background:rgba(200,146,74,.08);border:1px solid rgba(200,146,74,.22);color:#c8924a;padding:5px 11px;border-radius:20px;font-size:.66rem;cursor:pointer;letter-spacing:.04em;margin-left:6px">My Code</button>
 </div></nav>
 
-<!-- COUPLE BAR -->
-
-<div id="couple-bar" class="couple-bar">
-  ✦ <strong id="couple-bar-names">You &amp; Partner</strong> &nbsp;·&nbsp; Connected
-  <span class="couple-bar-btn" onclick="openAuth()">Sign In</span>
-  <span class="couple-bar-btn" onclick="window.firebaseSignOut&&window.firebaseSignOut()">Sign out</span>
-</div>
+<!-- COUPLE BAR removed -->
 
 <!-- HOME -->
 
@@ -2257,18 +2251,7 @@ function shareWhatsApp(){
   window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 function showCoupleBar(show){
-  var bar=document.getElementById('couple-bar');
-  var btn=document.getElementById('auth-nav-btn');
-  if(!bar) return;
-  if(show){
-    bar.classList.add('show');
-    if(window._myName && window._partnerName){
-      document.getElementById('couple-bar-names').textContent = window._myName+' & '+window._partnerName;
-    }
-    if(btn) btn.textContent='✦ '+( window._myName||'Account');
-  } else {
-    bar.classList.remove('show');
-  }
+  // couple-bar removed; kept for compatibility with Firebase module calls
 }
 function showPairingPrompt(){
   var pp=document.getElementById('pairing-prompt');
@@ -2277,49 +2260,59 @@ function showPairingPrompt(){
 
 function showMyCode(){
   if(!window._coupleCode) { openAuth(); return; }
-  openAuth();
-  // Pre-fill the invite step with the existing code
-  document.querySelectorAll('.auth-step').forEach(s=>s.classList.remove('on'));
-  var step = document.getElementById('step-invite');
-  if(step) step.classList.add('on');
-  var codeEl = document.getElementById('invite-code');
-  var linkEl = document.getElementById('invite-share-link');
-  if(codeEl) codeEl.textContent = window._coupleCode;
-  if(linkEl) linkEl.value = 'https://sacredpathforcouples.com?join=' + window._coupleCode;
+  var m=document.getElementById('code-modal');
+  var codeEl=document.getElementById('modal-code');
+  var linkEl=document.getElementById('modal-share-link');
+  if(codeEl) codeEl.textContent=window._coupleCode;
+  if(linkEl) linkEl.value='https://sacredpathforcouples.com?join='+window._coupleCode;
+  if(m){ m.style.display='block'; document.body.style.overflow='hidden'; }
+}
+function closeCodeModal(){
+  var m=document.getElementById('code-modal');
+  if(m) m.style.display='none';
+  document.body.style.overflow='';
+}
+function copyModalLink(){
+  var inp=document.getElementById('modal-share-link');
+  if(!inp) return;
+  navigator.clipboard.writeText(inp.value).then(function(){
+    var btn=document.querySelector('#code-modal .invite-copy-btn');
+    if(btn){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy Link';},2000);}
+  }).catch(function(){ inp.select(); document.execCommand('copy'); });
+}
+function shareWhatsAppModal(){
+  var code=document.getElementById('modal-code').textContent;
+  var link=document.getElementById('modal-share-link').value;
+  var msg='I just discovered Sacred Path for Couples \u2014 a beautiful private app for deepening intimacy together. Come join me: '+link+' (Couple Code: '+code+')';
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 
 function syncTopBar(){
   var authBtn=document.getElementById('auth-nav-btn');
   var myCodeBtn=document.getElementById('mycode-btn');
-  var coupleBar=document.getElementById('couple-bar');
-  var namesEl=document.getElementById('couple-bar-names');
   var pairingPrompt=document.getElementById('pairing-prompt');
   if(!authBtn) return;
 
   var signedIn=!!window._currentUser;
-  var myName=window._myName||'';
   var partnerName=window._partnerName||'';
   var connected=!!partnerName;
 
   if(!signedIn){
     authBtn.textContent='✦ Sign In';
     authBtn.onclick=function(){ openAuth(); };
-    if(coupleBar) coupleBar.classList.remove('show');
     if(pairingPrompt) pairingPrompt.style.display='none';
     if(myCodeBtn) myCodeBtn.style.display='none';
     return;
   }
 
-  // Signed in — always show sign-out
+  // Signed in — show sign-out
   authBtn.textContent='Sign out';
   authBtn.onclick=function(){ if(window.firebaseSignOut) window.firebaseSignOut(); };
 
   if(connected){
-    if(coupleBar){ coupleBar.classList.add('show'); if(namesEl) namesEl.textContent=(myName||'You')+' \u2665 '+partnerName; }
     if(pairingPrompt) pairingPrompt.style.display='none';
     if(myCodeBtn) myCodeBtn.style.display='none';
   } else {
-    if(coupleBar){ coupleBar.classList.add('show'); if(namesEl) namesEl.textContent='Waiting for partner...'; }
     if(pairingPrompt) pairingPrompt.style.display='block';
     if(myCodeBtn) myCodeBtn.style.display='inline-flex';
   }
@@ -2766,6 +2759,27 @@ function pickRN(mood){
 </div>
 
 <!-- AUTH OVERLAY -->
+
+<!-- CODE MODAL -->
+<div id="code-modal" style="display:none;position:fixed;inset:0;background:rgba(9,4,10,.95);z-index:10000;overflow-y:auto;padding:24px 16px">
+  <div class="auth-modal">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:4px">
+      <div class="auth-logo" style="padding:20px 0 16px">✦ <span>Your Couple Code</span></div>
+      <button onclick="closeCodeModal()" style="background:none;border:none;color:#a07068;font-size:1.4rem;cursor:pointer;padding:8px;line-height:1;margin-top:-8px" aria-label="Close">✕</button>
+    </div>
+    <div class="invite-code-box">
+      <div class="invite-code-lbl">Your Couple Code</div>
+      <div class="invite-code-val" id="modal-code">——</div>
+      <div class="invite-hint">Share this code with your partner. They enter it under "Join Partner" when they create their account.</div>
+    </div>
+    <div class="invite-share-row">
+      <input class="invite-share-input" id="modal-share-link" readonly value="">
+      <button class="invite-copy-btn" onclick="copyModalLink()">Copy Link</button>
+    </div>
+    <button class="invite-whatsapp" onclick="shareWhatsAppModal()">💬 Send via WhatsApp</button>
+    <button class="auth-btn-main" onclick="closeCodeModal()" style="margin-top:8px">Done ✦</button>
+  </div>
+</div>
 
 <div id="auth-overlay" class="auth-overlay">
   <div class="auth-modal">
