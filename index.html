@@ -635,6 +635,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
   window.firebaseGoogleSignIn = async function() {
     try {
+      window._pendingInviteStep = true;
       const provider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(auth, provider);
       // Check if user already exists in Firestore
@@ -650,15 +651,22 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
           user1: user.uid, user2: null, user1Name: name, user2Name: null, createdAt: serverTimestamp()
         });
         window._coupleCode = code;
+        window._pendingInviteStep = false;
+        // Ensure overlay is visible, then show invite step
+        document.getElementById('auth-overlay').style.removeProperty('display');
+        document.getElementById('auth-overlay').classList.add('show');
+        document.body.style.overflow = 'hidden';
+        showAuthStep('step-invite');
         document.getElementById('invite-code').textContent = code;
         document.getElementById('invite-share-link').value = 'https://sacredpathforcouples.com?join=' + code;
-        // Show invite step
-        document.querySelectorAll('.auth-step').forEach(s=>s.classList.remove('on'));
-        document.getElementById('step-invite').classList.add('on');
-        document.getElementById('auth-overlay').classList.add('show');
+      } else {
+        // Existing user — close overlay now (onAuthStateChanged already fired and was blocked)
+        window._pendingInviteStep = false;
+        document.getElementById('auth-overlay').style.display = 'none';
+        document.body.style.overflow = '';
       }
-      // Existing user — onAuthStateChanged handles the rest
     } catch(e) {
+      window._pendingInviteStep = false;
       if (e.code !== 'auth/popup-closed-by-user') {
         document.getElementById('err-google').textContent = 'Sign in failed. Please try again.';
       }
@@ -669,8 +677,10 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       window._currentUser = user;
-      document.getElementById('auth-overlay').style.display = 'none';
-      document.body.style.overflow = '';
+      if (!window._pendingInviteStep) {
+        document.getElementById('auth-overlay').style.display = 'none';
+        document.body.style.overflow = '';
+      }
       await loadUserProfile(user);
       syncTopBar();
     } else {
@@ -684,6 +694,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
   window.firebaseSignUp = async function(name, email, password) {
     try {
+      window._pendingInviteStep = true;
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(user, { displayName: name });
       // Generate unique couple code
@@ -695,10 +706,16 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
         user1: user.uid, user2: null, user1Name: name, user2Name: null, createdAt: serverTimestamp()
       });
       window._coupleCode = code;
+      window._pendingInviteStep = false;
+      // Ensure overlay is visible, then show invite step
+      document.getElementById('auth-overlay').style.removeProperty('display');
+      document.getElementById('auth-overlay').classList.add('show');
+      document.body.style.overflow = 'hidden';
       showAuthStep('step-invite');
       document.getElementById('invite-code').textContent = code;
       document.getElementById('invite-share-link').value = 'https://sacredpathforcouples.com?join=' + code;
     } catch(e) {
+      window._pendingInviteStep = false;
       showAuthError('signup', e.message);
     }
   };
@@ -728,8 +745,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
       await updateDoc(doc(db, 'users', user.uid), { coupleCode: code.toUpperCase(), partnerId: data.user1 });
       await updateDoc(doc(db, 'users', data.user1), { partnerId: user.uid });
       window._coupleCode = code.toUpperCase();
-      document.getElementById('auth-overlay').style.display = 'none';
-      document.body.style.overflow = '';
+      closeAuth();
       loadUserProfile(user);
     } catch(e) {
       showAuthError('join', e.message);
@@ -2208,13 +2224,16 @@ function doJoin(){
   setAuthLoading('btn-join',true,'Connecting…');
   if(window.firebaseSignUp){
     var _fb=window._fb;
+    window._pendingInviteStep=true;
     _fb.createUserWithEmailAndPassword(_fb.auth,email,pass).then(async cred=>{
       await _fb.updateProfile(cred.user,{displayName:name});
       await _fb.setDoc(_fb.doc(_fb.db,'users',cred.user.uid),{name,email,coupleCode:code,partnerId:null,createdAt:_fb.serverTimestamp()});
       window._currentUser=cred.user;
       window._myName=name;
-      window.firebaseJoinCouple(code,name);
-    }).catch(e=>{showAuthError('join',e.message);setAuthLoading('btn-join',false,'✦ Connect with Partner');});
+      window._pendingInviteStep=false;
+      await window.firebaseJoinCouple(code,name);
+      setAuthLoading('btn-join',false,'✦ Connect with Partner');
+    }).catch(e=>{window._pendingInviteStep=false;showAuthError('join',e.message);setAuthLoading('btn-join',false,'✦ Connect with Partner');});
   } else { showAuthError('join','Firebase not configured yet.'); setAuthLoading('btn-join',false,'✦ Connect with Partner'); }
 }
 function copyInviteLink(){
