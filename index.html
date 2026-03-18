@@ -1629,8 +1629,13 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
 <div class="pairing-prompt" id="pairing-prompt" style="display:none">
   <h4>Invite your partner</h4>
-  <p>These practices awaken fully when your partner joins. Share your Couple Code to unlock The Thread, Intimacy Weather and Challenges together.</p>
-  <button class="pw-btn" onclick="openAuth()" style="display:inline-flex;padding:10px 20px;font-size:.82rem">Sign In</button>
+  <p>These practices awaken fully when your partner joins. Share your Couple Code below.</p>
+  <div class="invite-code-box" style="margin:12px 0 14px">
+    <div class="invite-code-lbl">Your Couple Code</div>
+    <div class="invite-code-val" id="pairing-code" style="font-size:2rem;letter-spacing:.18em">——</div>
+  </div>
+  <button class="invite-whatsapp" onclick="shareWhatsAppPrompt()" style="width:100%;margin-bottom:8px">💬 Send via WhatsApp</button>
+  <button class="pw-btn" onclick="showMyCode()" style="display:block;width:100%;padding:10px 20px;font-size:.82rem;text-align:center">Copy invite link ✦</button>
 </div>
 
   <div class="c-tabs" id="reconnect-tabs" style="flex-wrap:wrap">
@@ -2256,6 +2261,14 @@ function showCoupleBar(show){
 function showPairingPrompt(){
   var pp=document.getElementById('pairing-prompt');
   if(pp) pp.style.display='block';
+  var codeEl=document.getElementById('pairing-code');
+  if(codeEl && window._coupleCode) codeEl.textContent=window._coupleCode;
+}
+function shareWhatsAppPrompt(){
+  var code=window._coupleCode||'';
+  var link='https://sacredpathforcouples.com?join='+code;
+  var msg='I just discovered Sacred Path for Couples \u2014 a beautiful private app for deepening intimacy together. Come join me: '+link+' (Couple Code: '+code+')';
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 
 function showMyCode(){
