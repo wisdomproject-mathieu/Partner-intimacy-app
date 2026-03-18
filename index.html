@@ -2930,262 +2930,30 @@ function pickRN(mood){
 
 <script>
 (function(){
-  const USERS_KEY = 'sp_local_users_v1';
-  const SESSION_KEY = 'sp_local_session_v1';
-
-  function loadUsers(){
-    try { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); }
-    catch(e){ return {}; }
-  }
-  function saveUsers(users){
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
-  }
-  function loadSession(){
-    try { return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); }
-    catch(e){ return null; }
-  }
-  function saveSession(session){
-    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-  }
-  function clearSession(){
-    localStorage.removeItem(SESSION_KEY);
-  }
-  function randomCode(){
-    return Math.random().toString(36).slice(2,8).toUpperCase();
-  }
-  function uniqueCode(users){
-    let code = randomCode();
-    const taken = new Set(Object.values(users).map(u => u.coupleCode).filter(Boolean));
-    while(taken.has(code)){ code = randomCode(); }
-    return code;
-  }
-  function showAuthErrorSafe(type,msg){
-    if(typeof showAuthError === 'function') showAuthError(type,msg);
-    else alert(msg);
-  }
-  function currentLink(code){
-    const url = new URL(window.location.href);
-    url.searchParams.set('join', code);
-    return url.toString();
-  }
-  function setInviteUI(code){
-    const codeEl = document.getElementById('invite-code');
-    const linkEl = document.getElementById('invite-share-link');
-    if(codeEl) codeEl.textContent = code || '——';
-    if(linkEl) linkEl.value = code ? currentLink(code) : '';
-  }
-  function updateSignedInUI(){
-    const session = loadSession();
-    const authBtn = document.getElementById('auth-nav-btn');
-    const coupleBar = document.getElementById('couple-bar');
-    const namesEl = document.getElementById('couple-bar-names');
-    const pairingPrompt = document.getElementById('pairing-prompt');
-
-    if(!session){
-      window._myName = null;
-      window._partnerName = null;
-      if(authBtn) authBtn.textContent = '✦ Sign In';
-      if(coupleBar) coupleBar.classList.remove('show');
-      if(pairingPrompt) pairingPrompt.style.display = 'none';
-      setInviteUI('');
-      return;
-    }
-
-    window._myName = session.name || 'You';
-    window._partnerName = session.partnerName || null;
-
-    if(authBtn) authBtn.textContent = '✦ ' + (session.name || 'Account');
-    if(coupleBar){
-      coupleBar.classList.add('show');
-    }
-    if(namesEl){
-      namesEl.textContent = session.partnerName ? (session.name + ' & ' + session.partnerName) : (session.name + ' & Partner');
-    }
-    if(pairingPrompt){
-      pairingPrompt.style.display = session.partnerName ? 'none' : 'block';
-    }
-    setInviteUI(session.coupleCode || '');
-    syncTopBar();
-  }
+  // localStorage auth removed — Firebase is the only auth system.
+  // Keeping only utility helpers that don't conflict with Firebase.
 
   window.copyInviteLink = function(){
-    const inp = document.getElementById('invite-share-link');
-    if(!inp || !inp.value){
-      alert('No invite link available yet.');
-      return;
-    }
-    const done = function(){
-      const btn = document.querySelector('.invite-copy-btn');
-      if(btn){
-        const prev = btn.textContent;
-        btn.textContent = 'Copied!';
-        setTimeout(function(){ btn.textContent = prev || 'Copy Link'; }, 1600);
-      }
+    var inp = document.getElementById('invite-share-link');
+    if(!inp || !inp.value){ alert('No invite link available yet.'); return; }
+    var done = function(){
+      var btn = document.querySelector('.invite-copy-btn');
+      if(btn){ var prev = btn.textContent; btn.textContent = 'Copied!'; setTimeout(function(){ btn.textContent = prev || 'Copy Link'; }, 1600); }
     };
     if(navigator.clipboard && window.isSecureContext){
-      navigator.clipboard.writeText(inp.value).then(done).catch(function(){
-        inp.select();
-        document.execCommand('copy');
-        done();
-      });
-    } else {
-      inp.select();
-      document.execCommand('copy');
-      done();
-    }
+      navigator.clipboard.writeText(inp.value).then(done).catch(function(){ inp.select(); document.execCommand('copy'); done(); });
+    } else { inp.select(); document.execCommand('copy'); done(); }
   };
 
   window.shareWhatsApp = function(){
-    const code = (document.getElementById('invite-code') || {}).textContent || '';
-    const link = (document.getElementById('invite-share-link') || {}).value || '';
-    if(!code || code === '——'){
-      alert('Create or sign into your account first to get a Couple Code.');
-      return;
-    }
-    const msg = "I've been using Sacred Path for Couples — a beautiful app for our intimacy practice. Join me: " + link + " (Couple Code: " + code + ")";
+    var code = (document.getElementById('invite-code') || {}).textContent || '';
+    var link = (document.getElementById('invite-share-link') || {}).value || '';
+    if(!code || code === '——'){ alert('Create or sign into your account first to get a Couple Code.'); return; }
+    var msg = "I've been using Sacred Path for Couples — a beautiful app for our intimacy practice. Join me: " + link + " (Couple Code: " + code + ")";
     window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
   };
 
-  window.doSignUp = function(){
-    const name = (document.getElementById('su-name').value || '').trim();
-    const email = (document.getElementById('su-email').value || '').trim().toLowerCase();
-    const pass = (document.getElementById('su-pass').value || '');
-    if(!name || !email || !pass){
-      showAuthErrorSafe('signup','Please fill in all fields.');
-      return;
-    }
-    if(pass.length < 6){
-      showAuthErrorSafe('signup','Password must be at least 6 characters.');
-      return;
-    }
-    const users = loadUsers();
-    if(users[email]){
-      showAuthErrorSafe('signup','An account with this email already exists. Try Sign in.');
-      return;
-    }
-    const code = uniqueCode(users);
-    users[email] = { name, email, pass, coupleCode: code, partnerCode: null, partnerName: null, createdAt: Date.now() };
-    saveUsers(users);
-    saveSession({ email, name, coupleCode: code, partnerCode: null, partnerName: null });
-    if(typeof showAuthStep === 'function') showAuthStep('step-invite');
-    updateSignedInUI();
-  };
-
-  window.doSignIn = function(){
-    const email = (document.getElementById('si-email').value || '').trim().toLowerCase();
-    const pass = (document.getElementById('si-pass').value || '');
-    if(!email || !pass){
-      showAuthErrorSafe('signin','Please enter email and password.');
-      return;
-    }
-    const users = loadUsers();
-    const user = users[email];
-    if(!user || user.pass !== pass){
-      showAuthErrorSafe('signin','Wrong email or password.');
-      return;
-    }
-    saveSession({
-      email,
-      name: user.name,
-      coupleCode: user.coupleCode,
-      partnerCode: user.partnerCode || null,
-      partnerName: user.partnerName || null
-    });
-    updateSignedInUI();
-    if(typeof closeAuth === 'function') closeAuth();
-  };
-
-  window.doJoin = function(){
-    const name = (document.getElementById('j-name').value || '').trim();
-    const email = (document.getElementById('j-email').value || '').trim().toLowerCase();
-    const pass = (document.getElementById('j-pass').value || '');
-    const code = (document.getElementById('j-code').value || '').trim().toUpperCase();
-    if(!name || !email || !pass || !code){
-      showAuthErrorSafe('join','Please fill all fields.');
-      return;
-    }
-    if(pass.length < 6){
-      showAuthErrorSafe('join','Password must be at least 6 characters.');
-      return;
-    }
-    const users = loadUsers();
-    const ownerEmail = Object.keys(users).find(function(key){
-      return users[key] && users[key].coupleCode === code;
-    });
-    if(!ownerEmail){
-      showAuthErrorSafe('join','That Couple Code was not found.');
-      return;
-    }
-    if(users[email]){
-      showAuthErrorSafe('join','An account with this email already exists. Use Sign in.');
-      return;
-    }
-    const partner = users[ownerEmail];
-    users[email] = { name, email, pass, coupleCode: uniqueCode(users), partnerCode: code, partnerName: partner.name, createdAt: Date.now() };
-    users[ownerEmail].partnerCode = users[email].coupleCode;
-    users[ownerEmail].partnerName = name;
-    saveUsers(users);
-    saveSession({
-      email,
-      name,
-      coupleCode: users[email].coupleCode,
-      partnerCode: code,
-      partnerName: partner.name
-    });
-    updateSignedInUI();
-    if(typeof closeAuth === 'function') closeAuth();
-  };
-
-  window.firebaseSignOut = function(){
-    clearSession();
-    updateSignedInUI();
-  };
-
-  window.addEventListener('load', function(){
-    updateSignedInUI();
-    const params = new URLSearchParams(window.location.search);
-    const joinCode = (params.get('join') || '').trim().toUpperCase();
-    if(joinCode){
-      const jCode = document.getElementById('j-code');
-      if(jCode) jCode.value = joinCode;
-    }
-  });
 })();
-</script>
-<!-- Firebase SDK -->
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
-<script>
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCJHYvd5Ku_Wd-hbfKdluMeBlzwOCJm2TQ",
-  authDomain: "sacred-path-couples.firebaseapp.com",
-  projectId: "sacred-path-couples",
-  storageBucket: "sacred-path-couples.firebasestorage.app",
-  messagingSenderId: "618306449162",
-  appId: "1:618306449162:web:a3e425987449411d3254f3"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-auth.onAuthStateChanged(user => {
-
-  if(user){
-    console.log("User signed in:", user.uid);
-  }
-
-  else{
-    console.log("User not signed in");
-  }
-
-});
-
 </script>
 
 <script>
