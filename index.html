@@ -662,7 +662,8 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
       } else {
         // Existing user — close overlay now (onAuthStateChanged already fired and was blocked)
         window._pendingInviteStep = false;
-        document.getElementById('auth-overlay').style.display = 'none';
+        var _ov=document.getElementById('auth-overlay');
+        if(_ov){ _ov.classList.remove('show'); _ov.style.removeProperty('display'); }
         document.body.style.overflow = '';
       }
     } catch(e) {
@@ -678,7 +679,8 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     if (user) {
       window._currentUser = user;
       if (!window._pendingInviteStep) {
-        document.getElementById('auth-overlay').style.display = 'none';
+        var _overlay=document.getElementById('auth-overlay');
+        if(_overlay){ _overlay.classList.remove('show'); _overlay.style.removeProperty('display'); }
         document.body.style.overflow = '';
       }
       await loadUserProfile(user);
@@ -2174,11 +2176,15 @@ function doGoogleSignIn(){
   else { document.getElementById('err-google').textContent = 'Firebase not ready. Please try again.'; }
 }
 function openAuth(){
-  document.getElementById('auth-overlay').classList.add('show');
+  var overlay=document.getElementById('auth-overlay');
+  overlay.style.removeProperty('display');
+  overlay.classList.add('show');
   document.body.style.overflow='hidden';
 }
 function closeAuth(){
-  document.getElementById('auth-overlay').classList.remove('show');
+  var overlay=document.getElementById('auth-overlay');
+  overlay.classList.remove('show');
+  overlay.style.removeProperty('display');
   document.body.style.overflow='';
 }
 function switchAuthTab(tab){
