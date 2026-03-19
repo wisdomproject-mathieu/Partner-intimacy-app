@@ -534,7 +534,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 /* Reconnect page focus mode */
 #reconnect-hub { display:block; }
 #reconnect-back-row { display:none; }
-#reconnect-tabs { display:none; }
+#reconnect-tabs { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:18px; }
 #pg-connect .c-panel { display:none; }
 #pg-connect .c-panel.on { display:block; }
 
@@ -811,7 +811,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
       const user = window._currentUser;
       await updateDoc(ref, { user2: user.uid, user2Name: userName });
       await updateDoc(doc(db, 'users', user.uid), { coupleCode: code.toUpperCase(), partnerId: data.user1 });
-      await updateDoc(doc(db, 'users', data.user1), { partnerId: user.uid });
+      // Note: user1's partnerId is resolved lazily via couples doc on their next login
       window._coupleCode = code.toUpperCase();
       closeAuth();
       loadUserProfile(user);
@@ -826,9 +826,20 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     const data = snap.data();
     window._coupleCode = data.coupleCode;
     window._myName = data.name || user.displayName;
-    // Get partner name
-    if (data.partnerId) {
-      const pSnap = await getDoc(doc(db, 'users', data.partnerId));
+    // Resolve partnerId — stored directly, or discovered via couples doc
+    let partnerId = data.partnerId;
+    if (!partnerId && data.coupleCode) {
+      const cSnap = await getDoc(doc(db, 'couples', data.coupleCode));
+      if (cSnap.exists()) {
+        const cData = cSnap.data();
+        if (cData.user1 === user.uid && cData.user2) partnerId = cData.user2;
+        else if (cData.user2 === user.uid && cData.user1) partnerId = cData.user1;
+        // Cache it so next load is instant
+        if (partnerId) await updateDoc(doc(db, 'users', user.uid), { partnerId });
+      }
+    }
+    if (partnerId) {
+      const pSnap = await getDoc(doc(db, 'users', partnerId));
       if (pSnap.exists()) {
         window._partnerName = pSnap.data().name;
         showCoupleBar(true);
@@ -842,7 +853,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     } else {
       showCoupleBar(false);
       showPairingPrompt();
-        syncTopBar();
+      syncTopBar();
     }
   };
 
@@ -1799,6 +1810,18 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
       <p style="font-size:.8rem;color:#c4a882">Leave one small gratitude for tonight and let tenderness accumulate over time.</p>
     </div>
   </div>
+  <div class="g2" style="margin-top:12px">
+    <div class="reconnect-card" onclick="openReconnectTool('dates')">
+      <div style="font-size:1.4rem;margin-bottom:6px">🌙</div>
+      <h4 style="margin-bottom:6px">Date Night Ideas</h4>
+      <p style="font-size:.8rem;color:#c4a882">One idea, chosen for you. Shuffle until something calls to you both.</p>
+    </div>
+    <div class="reconnect-card" onclick="openReconnectTool('notes')">
+      <div style="font-size:1.4rem;margin-bottom:6px">📝</div>
+      <h4 style="margin-bottom:6px">Shared Notes</h4>
+      <p style="font-size:.8rem;color:#c4a882">A private space to leave words, wishes or little love notes for each other.</p>
+    </div>
+  </div>
   <div class="rule-box">
     <strong style="color:#e4b87a;font-weight:400">Sacred Path rule:</strong> the phone is only the threshold. The real practice begins when you turn toward each other.
   </div>
@@ -1820,7 +1843,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
   <button class="pw-btn" onclick="showMyCode()" style="display:block;width:100%;padding:10px 20px;font-size:.82rem;text-align:center">Copy invite link ✦</button>
 </div>
 
-  <div class="c-tabs" id="reconnect-tabs" style="flex-wrap:wrap">
+  <div class="c-tabs" id="reconnect-tabs">
     <button class="c-tab on" data-ctab="whispers">Whispers</button>
     <button class="c-tab" data-ctab="share">Share</button>
     <button class="c-tab" data-ctab="games">Games</button>
@@ -3264,6 +3287,11 @@ function pickRN(mood){
     document.querySelectorAll('#pg-connect .c-tab').forEach(function(t){
       t.classList.remove('on');
     });
+    // Default: show Whispers panel
+    var defPanel = document.getElementById('cp-whispers');
+    var defTab = document.querySelector('[data-ctab="whispers"]');
+    if(defPanel){ defPanel.classList.add('on'); defPanel.style.display = 'block'; }
+    if(defTab) defTab.classList.add('on');
   }
 
   /* Open a specific reconnect tool (called from Home shortcuts) */
