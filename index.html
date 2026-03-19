@@ -635,6 +635,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
   window.firebaseGoogleSignIn = async function() {
     try {
+      window._pendingInviteStep = true;
       const provider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(auth, provider);
       // Check if user already exists in Firestore
@@ -650,15 +651,23 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
           user1: user.uid, user2: null, user1Name: name, user2Name: null, createdAt: serverTimestamp()
         });
         window._coupleCode = code;
+        window._pendingInviteStep = false;
+        // Ensure overlay is visible, then show invite step
+        document.getElementById('auth-overlay').style.removeProperty('display');
+        document.getElementById('auth-overlay').classList.add('show');
+        document.body.style.overflow = 'hidden';
+        showAuthStep('step-invite');
         document.getElementById('invite-code').textContent = code;
         document.getElementById('invite-share-link').value = 'https://sacredpathforcouples.com?join=' + code;
-        // Show invite step
-        document.querySelectorAll('.auth-step').forEach(s=>s.classList.remove('on'));
-        document.getElementById('step-invite').classList.add('on');
-        document.getElementById('auth-overlay').classList.add('show');
+      } else {
+        // Existing user — close overlay now (onAuthStateChanged already fired and was blocked)
+        window._pendingInviteStep = false;
+        var _ov=document.getElementById('auth-overlay');
+        if(_ov){ _ov.classList.remove('show'); _ov.style.removeProperty('display'); }
+        document.body.style.overflow = '';
       }
-      // Existing user — onAuthStateChanged handles the rest
     } catch(e) {
+      window._pendingInviteStep = false;
       if (e.code !== 'auth/popup-closed-by-user') {
         document.getElementById('err-google').textContent = 'Sign in failed. Please try again.';
       }
@@ -669,8 +678,11 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       window._currentUser = user;
-      document.getElementById('auth-overlay').style.display = 'none';
-      document.body.style.overflow = '';
+      if (!window._pendingInviteStep) {
+        var _overlay=document.getElementById('auth-overlay');
+        if(_overlay){ _overlay.classList.remove('show'); _overlay.style.removeProperty('display'); }
+        document.body.style.overflow = '';
+      }
       await loadUserProfile(user);
       syncTopBar();
     } else {
@@ -684,6 +696,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
   window.firebaseSignUp = async function(name, email, password) {
     try {
+      window._pendingInviteStep = true;
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(user, { displayName: name });
       // Generate unique couple code
@@ -695,10 +708,16 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
         user1: user.uid, user2: null, user1Name: name, user2Name: null, createdAt: serverTimestamp()
       });
       window._coupleCode = code;
+      window._pendingInviteStep = false;
+      // Ensure overlay is visible, then show invite step
+      document.getElementById('auth-overlay').style.removeProperty('display');
+      document.getElementById('auth-overlay').classList.add('show');
+      document.body.style.overflow = 'hidden';
       showAuthStep('step-invite');
       document.getElementById('invite-code').textContent = code;
       document.getElementById('invite-share-link').value = 'https://sacredpathforcouples.com?join=' + code;
     } catch(e) {
+      window._pendingInviteStep = false;
       showAuthError('signup', e.message);
     }
   };
@@ -728,8 +747,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
       await updateDoc(doc(db, 'users', user.uid), { coupleCode: code.toUpperCase(), partnerId: data.user1 });
       await updateDoc(doc(db, 'users', data.user1), { partnerId: user.uid });
       window._coupleCode = code.toUpperCase();
-      document.getElementById('auth-overlay').style.display = 'none';
-      document.body.style.overflow = '';
+      closeAuth();
       loadUserProfile(user);
     } catch(e) {
       showAuthError('join', e.message);
@@ -829,13 +847,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
   <button id="mycode-btn" onclick="showMyCode()" style="display:none;background:rgba(200,146,74,.08);border:1px solid rgba(200,146,74,.22);color:#c8924a;padding:5px 11px;border-radius:20px;font-size:.66rem;cursor:pointer;letter-spacing:.04em;margin-left:6px">My Code</button>
 </div></nav>
 
-<!-- COUPLE BAR -->
-
-<div id="couple-bar" class="couple-bar">
-  ✦ <strong id="couple-bar-names">You &amp; Partner</strong> &nbsp;·&nbsp; Connected
-  <span class="couple-bar-btn" onclick="openAuth()">Sign In</span>
-  <span class="couple-bar-btn" onclick="window.firebaseSignOut&&window.firebaseSignOut()">Sign out</span>
-</div>
+<!-- COUPLE BAR removed -->
 
 <!-- HOME -->
 
@@ -1617,8 +1629,13 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
 <div class="pairing-prompt" id="pairing-prompt" style="display:none">
   <h4>Invite your partner</h4>
-  <p>These practices awaken fully when your partner joins. Share your Couple Code to unlock The Thread, Intimacy Weather and Challenges together.</p>
-  <button class="pw-btn" onclick="openAuth()" style="display:inline-flex;padding:10px 20px;font-size:.82rem">Sign In</button>
+  <p>These practices awaken fully when your partner joins. Share your Couple Code below.</p>
+  <div class="invite-code-box" style="margin:12px 0 14px">
+    <div class="invite-code-lbl">Your Couple Code</div>
+    <div class="invite-code-val" id="pairing-code" style="font-size:2rem;letter-spacing:.18em">——</div>
+  </div>
+  <button class="invite-whatsapp" onclick="shareWhatsAppPrompt()" style="width:100%;margin-bottom:8px">💬 Send via WhatsApp</button>
+  <button class="pw-btn" onclick="showMyCode()" style="display:block;width:100%;padding:10px 20px;font-size:.82rem;text-align:center">Copy invite link ✦</button>
 </div>
 
   <div class="c-tabs" id="reconnect-tabs" style="flex-wrap:wrap">
@@ -2158,11 +2175,15 @@ function doGoogleSignIn(){
   else { document.getElementById('err-google').textContent = 'Firebase not ready. Please try again.'; }
 }
 function openAuth(){
-  document.getElementById('auth-overlay').classList.add('show');
+  var overlay=document.getElementById('auth-overlay');
+  overlay.style.removeProperty('display');
+  overlay.classList.add('show');
   document.body.style.overflow='hidden';
 }
 function closeAuth(){
-  document.getElementById('auth-overlay').classList.remove('show');
+  var overlay=document.getElementById('auth-overlay');
+  overlay.classList.remove('show');
+  overlay.style.removeProperty('display');
   document.body.style.overflow='';
 }
 function switchAuthTab(tab){
@@ -2208,13 +2229,16 @@ function doJoin(){
   setAuthLoading('btn-join',true,'Connecting…');
   if(window.firebaseSignUp){
     var _fb=window._fb;
+    window._pendingInviteStep=true;
     _fb.createUserWithEmailAndPassword(_fb.auth,email,pass).then(async cred=>{
       await _fb.updateProfile(cred.user,{displayName:name});
       await _fb.setDoc(_fb.doc(_fb.db,'users',cred.user.uid),{name,email,coupleCode:code,partnerId:null,createdAt:_fb.serverTimestamp()});
       window._currentUser=cred.user;
       window._myName=name;
-      window.firebaseJoinCouple(code,name);
-    }).catch(e=>{showAuthError('join',e.message);setAuthLoading('btn-join',false,'✦ Connect with Partner');});
+      window._pendingInviteStep=false;
+      await window.firebaseJoinCouple(code,name);
+      setAuthLoading('btn-join',false,'✦ Connect with Partner');
+    }).catch(e=>{window._pendingInviteStep=false;showAuthError('join',e.message);setAuthLoading('btn-join',false,'✦ Connect with Partner');});
   } else { showAuthError('join','Firebase not configured yet.'); setAuthLoading('btn-join',false,'✦ Connect with Partner'); }
 }
 function copyInviteLink(){
@@ -2232,69 +2256,76 @@ function shareWhatsApp(){
   window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 function showCoupleBar(show){
-  var bar=document.getElementById('couple-bar');
-  var btn=document.getElementById('auth-nav-btn');
-  if(!bar) return;
-  if(show){
-    bar.classList.add('show');
-    if(window._myName && window._partnerName){
-      document.getElementById('couple-bar-names').textContent = window._myName+' & '+window._partnerName;
-    }
-    if(btn) btn.textContent='✦ '+( window._myName||'Account');
-  } else {
-    bar.classList.remove('show');
-  }
+  // couple-bar removed; kept for compatibility with Firebase module calls
 }
 function showPairingPrompt(){
   var pp=document.getElementById('pairing-prompt');
   if(pp) pp.style.display='block';
+  var codeEl=document.getElementById('pairing-code');
+  if(codeEl && window._coupleCode) codeEl.textContent=window._coupleCode;
+}
+function shareWhatsAppPrompt(){
+  var code=window._coupleCode||'';
+  var link='https://sacredpathforcouples.com?join='+code;
+  var msg='I just discovered Sacred Path for Couples \u2014 a beautiful private app for deepening intimacy together. Come join me: '+link+' (Couple Code: '+code+')';
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 
 function showMyCode(){
   if(!window._coupleCode) { openAuth(); return; }
-  openAuth();
-  // Pre-fill the invite step with the existing code
-  document.querySelectorAll('.auth-step').forEach(s=>s.classList.remove('on'));
-  var step = document.getElementById('step-invite');
-  if(step) step.classList.add('on');
-  var codeEl = document.getElementById('invite-code');
-  var linkEl = document.getElementById('invite-share-link');
-  if(codeEl) codeEl.textContent = window._coupleCode;
-  if(linkEl) linkEl.value = 'https://sacredpathforcouples.com?join=' + window._coupleCode;
+  var m=document.getElementById('code-modal');
+  var codeEl=document.getElementById('modal-code');
+  var linkEl=document.getElementById('modal-share-link');
+  if(codeEl) codeEl.textContent=window._coupleCode;
+  if(linkEl) linkEl.value='https://sacredpathforcouples.com?join='+window._coupleCode;
+  if(m){ m.style.display='block'; document.body.style.overflow='hidden'; }
+}
+function closeCodeModal(){
+  var m=document.getElementById('code-modal');
+  if(m) m.style.display='none';
+  document.body.style.overflow='';
+}
+function copyModalLink(){
+  var inp=document.getElementById('modal-share-link');
+  if(!inp) return;
+  navigator.clipboard.writeText(inp.value).then(function(){
+    var btn=document.querySelector('#code-modal .invite-copy-btn');
+    if(btn){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy Link';},2000);}
+  }).catch(function(){ inp.select(); document.execCommand('copy'); });
+}
+function shareWhatsAppModal(){
+  var code=document.getElementById('modal-code').textContent;
+  var link=document.getElementById('modal-share-link').value;
+  var msg='I just discovered Sacred Path for Couples \u2014 a beautiful private app for deepening intimacy together. Come join me: '+link+' (Couple Code: '+code+')';
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 
 function syncTopBar(){
   var authBtn=document.getElementById('auth-nav-btn');
   var myCodeBtn=document.getElementById('mycode-btn');
-  var coupleBar=document.getElementById('couple-bar');
-  var namesEl=document.getElementById('couple-bar-names');
   var pairingPrompt=document.getElementById('pairing-prompt');
   if(!authBtn) return;
 
   var signedIn=!!window._currentUser;
-  var myName=window._myName||'';
   var partnerName=window._partnerName||'';
   var connected=!!partnerName;
 
   if(!signedIn){
     authBtn.textContent='✦ Sign In';
     authBtn.onclick=function(){ openAuth(); };
-    if(coupleBar) coupleBar.classList.remove('show');
     if(pairingPrompt) pairingPrompt.style.display='none';
     if(myCodeBtn) myCodeBtn.style.display='none';
     return;
   }
 
-  // Signed in — always show sign-out
+  // Signed in — show sign-out
   authBtn.textContent='Sign out';
   authBtn.onclick=function(){ if(window.firebaseSignOut) window.firebaseSignOut(); };
 
   if(connected){
-    if(coupleBar){ coupleBar.classList.add('show'); if(namesEl) namesEl.textContent=(myName||'You')+' \u2665 '+partnerName; }
     if(pairingPrompt) pairingPrompt.style.display='none';
     if(myCodeBtn) myCodeBtn.style.display='none';
   } else {
-    if(coupleBar){ coupleBar.classList.add('show'); if(namesEl) namesEl.textContent='Waiting for partner...'; }
     if(pairingPrompt) pairingPrompt.style.display='block';
     if(myCodeBtn) myCodeBtn.style.display='inline-flex';
   }
@@ -2742,6 +2773,27 @@ function pickRN(mood){
 
 <!-- AUTH OVERLAY -->
 
+<!-- CODE MODAL -->
+<div id="code-modal" style="display:none;position:fixed;inset:0;background:rgba(9,4,10,.95);z-index:10000;overflow-y:auto;padding:24px 16px">
+  <div class="auth-modal">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:4px">
+      <div class="auth-logo" style="padding:20px 0 16px">✦ <span>Your Couple Code</span></div>
+      <button onclick="closeCodeModal()" style="background:none;border:none;color:#a07068;font-size:1.4rem;cursor:pointer;padding:8px;line-height:1;margin-top:-8px" aria-label="Close">✕</button>
+    </div>
+    <div class="invite-code-box">
+      <div class="invite-code-lbl">Your Couple Code</div>
+      <div class="invite-code-val" id="modal-code">——</div>
+      <div class="invite-hint">Share this code with your partner. They enter it under "Join Partner" when they create their account.</div>
+    </div>
+    <div class="invite-share-row">
+      <input class="invite-share-input" id="modal-share-link" readonly value="">
+      <button class="invite-copy-btn" onclick="copyModalLink()">Copy Link</button>
+    </div>
+    <button class="invite-whatsapp" onclick="shareWhatsAppModal()">💬 Send via WhatsApp</button>
+    <button class="auth-btn-main" onclick="closeCodeModal()" style="margin-top:8px">Done ✦</button>
+  </div>
+</div>
+
 <div id="auth-overlay" class="auth-overlay">
   <div class="auth-modal">
     <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:4px">
@@ -2905,262 +2957,30 @@ function pickRN(mood){
 
 <script>
 (function(){
-  const USERS_KEY = 'sp_local_users_v1';
-  const SESSION_KEY = 'sp_local_session_v1';
-
-  function loadUsers(){
-    try { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); }
-    catch(e){ return {}; }
-  }
-  function saveUsers(users){
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
-  }
-  function loadSession(){
-    try { return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); }
-    catch(e){ return null; }
-  }
-  function saveSession(session){
-    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-  }
-  function clearSession(){
-    localStorage.removeItem(SESSION_KEY);
-  }
-  function randomCode(){
-    return Math.random().toString(36).slice(2,8).toUpperCase();
-  }
-  function uniqueCode(users){
-    let code = randomCode();
-    const taken = new Set(Object.values(users).map(u => u.coupleCode).filter(Boolean));
-    while(taken.has(code)){ code = randomCode(); }
-    return code;
-  }
-  function showAuthErrorSafe(type,msg){
-    if(typeof showAuthError === 'function') showAuthError(type,msg);
-    else alert(msg);
-  }
-  function currentLink(code){
-    const url = new URL(window.location.href);
-    url.searchParams.set('join', code);
-    return url.toString();
-  }
-  function setInviteUI(code){
-    const codeEl = document.getElementById('invite-code');
-    const linkEl = document.getElementById('invite-share-link');
-    if(codeEl) codeEl.textContent = code || '——';
-    if(linkEl) linkEl.value = code ? currentLink(code) : '';
-  }
-  function updateSignedInUI(){
-    const session = loadSession();
-    const authBtn = document.getElementById('auth-nav-btn');
-    const coupleBar = document.getElementById('couple-bar');
-    const namesEl = document.getElementById('couple-bar-names');
-    const pairingPrompt = document.getElementById('pairing-prompt');
-
-    if(!session){
-      window._myName = null;
-      window._partnerName = null;
-      if(authBtn) authBtn.textContent = '✦ Sign In';
-      if(coupleBar) coupleBar.classList.remove('show');
-      if(pairingPrompt) pairingPrompt.style.display = 'none';
-      setInviteUI('');
-      return;
-    }
-
-    window._myName = session.name || 'You';
-    window._partnerName = session.partnerName || null;
-
-    if(authBtn) authBtn.textContent = '✦ ' + (session.name || 'Account');
-    if(coupleBar){
-      coupleBar.classList.add('show');
-    }
-    if(namesEl){
-      namesEl.textContent = session.partnerName ? (session.name + ' & ' + session.partnerName) : (session.name + ' & Partner');
-    }
-    if(pairingPrompt){
-      pairingPrompt.style.display = session.partnerName ? 'none' : 'block';
-    }
-    setInviteUI(session.coupleCode || '');
-    syncTopBar();
-  }
+  // localStorage auth removed — Firebase is the only auth system.
+  // Keeping only utility helpers that don't conflict with Firebase.
 
   window.copyInviteLink = function(){
-    const inp = document.getElementById('invite-share-link');
-    if(!inp || !inp.value){
-      alert('No invite link available yet.');
-      return;
-    }
-    const done = function(){
-      const btn = document.querySelector('.invite-copy-btn');
-      if(btn){
-        const prev = btn.textContent;
-        btn.textContent = 'Copied!';
-        setTimeout(function(){ btn.textContent = prev || 'Copy Link'; }, 1600);
-      }
+    var inp = document.getElementById('invite-share-link');
+    if(!inp || !inp.value){ alert('No invite link available yet.'); return; }
+    var done = function(){
+      var btn = document.querySelector('.invite-copy-btn');
+      if(btn){ var prev = btn.textContent; btn.textContent = 'Copied!'; setTimeout(function(){ btn.textContent = prev || 'Copy Link'; }, 1600); }
     };
     if(navigator.clipboard && window.isSecureContext){
-      navigator.clipboard.writeText(inp.value).then(done).catch(function(){
-        inp.select();
-        document.execCommand('copy');
-        done();
-      });
-    } else {
-      inp.select();
-      document.execCommand('copy');
-      done();
-    }
+      navigator.clipboard.writeText(inp.value).then(done).catch(function(){ inp.select(); document.execCommand('copy'); done(); });
+    } else { inp.select(); document.execCommand('copy'); done(); }
   };
 
   window.shareWhatsApp = function(){
-    const code = (document.getElementById('invite-code') || {}).textContent || '';
-    const link = (document.getElementById('invite-share-link') || {}).value || '';
-    if(!code || code === '——'){
-      alert('Create or sign into your account first to get a Couple Code.');
-      return;
-    }
-    const msg = "I've been using Sacred Path for Couples — a beautiful app for our intimacy practice. Join me: " + link + " (Couple Code: " + code + ")";
+    var code = (document.getElementById('invite-code') || {}).textContent || '';
+    var link = (document.getElementById('invite-share-link') || {}).value || '';
+    if(!code || code === '——'){ alert('Create or sign into your account first to get a Couple Code.'); return; }
+    var msg = "I've been using Sacred Path for Couples — a beautiful app for our intimacy practice. Join me: " + link + " (Couple Code: " + code + ")";
     window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
   };
 
-  window.doSignUp = function(){
-    const name = (document.getElementById('su-name').value || '').trim();
-    const email = (document.getElementById('su-email').value || '').trim().toLowerCase();
-    const pass = (document.getElementById('su-pass').value || '');
-    if(!name || !email || !pass){
-      showAuthErrorSafe('signup','Please fill in all fields.');
-      return;
-    }
-    if(pass.length < 6){
-      showAuthErrorSafe('signup','Password must be at least 6 characters.');
-      return;
-    }
-    const users = loadUsers();
-    if(users[email]){
-      showAuthErrorSafe('signup','An account with this email already exists. Try Sign in.');
-      return;
-    }
-    const code = uniqueCode(users);
-    users[email] = { name, email, pass, coupleCode: code, partnerCode: null, partnerName: null, createdAt: Date.now() };
-    saveUsers(users);
-    saveSession({ email, name, coupleCode: code, partnerCode: null, partnerName: null });
-    if(typeof showAuthStep === 'function') showAuthStep('step-invite');
-    updateSignedInUI();
-  };
-
-  window.doSignIn = function(){
-    const email = (document.getElementById('si-email').value || '').trim().toLowerCase();
-    const pass = (document.getElementById('si-pass').value || '');
-    if(!email || !pass){
-      showAuthErrorSafe('signin','Please enter email and password.');
-      return;
-    }
-    const users = loadUsers();
-    const user = users[email];
-    if(!user || user.pass !== pass){
-      showAuthErrorSafe('signin','Wrong email or password.');
-      return;
-    }
-    saveSession({
-      email,
-      name: user.name,
-      coupleCode: user.coupleCode,
-      partnerCode: user.partnerCode || null,
-      partnerName: user.partnerName || null
-    });
-    updateSignedInUI();
-    if(typeof closeAuth === 'function') closeAuth();
-  };
-
-  window.doJoin = function(){
-    const name = (document.getElementById('j-name').value || '').trim();
-    const email = (document.getElementById('j-email').value || '').trim().toLowerCase();
-    const pass = (document.getElementById('j-pass').value || '');
-    const code = (document.getElementById('j-code').value || '').trim().toUpperCase();
-    if(!name || !email || !pass || !code){
-      showAuthErrorSafe('join','Please fill all fields.');
-      return;
-    }
-    if(pass.length < 6){
-      showAuthErrorSafe('join','Password must be at least 6 characters.');
-      return;
-    }
-    const users = loadUsers();
-    const ownerEmail = Object.keys(users).find(function(key){
-      return users[key] && users[key].coupleCode === code;
-    });
-    if(!ownerEmail){
-      showAuthErrorSafe('join','That Couple Code was not found.');
-      return;
-    }
-    if(users[email]){
-      showAuthErrorSafe('join','An account with this email already exists. Use Sign in.');
-      return;
-    }
-    const partner = users[ownerEmail];
-    users[email] = { name, email, pass, coupleCode: uniqueCode(users), partnerCode: code, partnerName: partner.name, createdAt: Date.now() };
-    users[ownerEmail].partnerCode = users[email].coupleCode;
-    users[ownerEmail].partnerName = name;
-    saveUsers(users);
-    saveSession({
-      email,
-      name,
-      coupleCode: users[email].coupleCode,
-      partnerCode: code,
-      partnerName: partner.name
-    });
-    updateSignedInUI();
-    if(typeof closeAuth === 'function') closeAuth();
-  };
-
-  window.firebaseSignOut = function(){
-    clearSession();
-    updateSignedInUI();
-  };
-
-  window.addEventListener('load', function(){
-    updateSignedInUI();
-    const params = new URLSearchParams(window.location.search);
-    const joinCode = (params.get('join') || '').trim().toUpperCase();
-    if(joinCode){
-      const jCode = document.getElementById('j-code');
-      if(jCode) jCode.value = joinCode;
-    }
-  });
 })();
-</script>
-<!-- Firebase SDK -->
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
-<script>
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCJHYvd5Ku_Wd-hbfKdluMeBlzwOCJm2TQ",
-  authDomain: "sacred-path-couples.firebaseapp.com",
-  projectId: "sacred-path-couples",
-  storageBucket: "sacred-path-couples.firebasestorage.app",
-  messagingSenderId: "618306449162",
-  appId: "1:618306449162:web:a3e425987449411d3254f3"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-auth.onAuthStateChanged(user => {
-
-  if(user){
-    console.log("User signed in:", user.uid);
-  }
-
-  else{
-    console.log("User not signed in");
-  }
-
-});
-
 </script>
 
 <script>
