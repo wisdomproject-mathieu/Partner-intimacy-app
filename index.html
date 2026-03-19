@@ -613,6 +613,27 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 .notes-status{font-size:.64rem;color:#a07068;margin-top:6px;text-align:right;min-height:15px;transition:color .3s}
 .notes-saved{color:#4ccc80}
 
+/* ── SACRED QUESTION ── */
+.sq-card{background:linear-gradient(145deg,rgba(192,65,95,.07),rgba(144,100,200,.06));border:1px solid rgba(192,65,95,.2);border-radius:16px;padding:22px 20px;margin-bottom:16px}
+.sq-label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#c0415f;margin-bottom:10px;display:block}
+.sq-question{font-family:Georgia,serif;font-size:1rem;color:#f0e2d0;line-height:1.75;font-style:italic;margin-bottom:16px;min-height:48px}
+.sq-tradition{font-size:.68rem;color:#a07068;margin-bottom:14px}
+.sq-btn-row{display:flex;gap:8px;flex-wrap:wrap}
+.sq-btn{padding:8px 16px;border-radius:10px;font-size:.75rem;letter-spacing:.06em;border:1px solid rgba(192,65,95,.25);background:rgba(192,65,95,.08);color:#e06e88;cursor:pointer;transition:all .2s}
+.sq-btn:hover{background:rgba(192,65,95,.16)}
+.sq-btn-next{border-color:rgba(200,146,74,.25);background:rgba(200,146,74,.08);color:#c8924a}
+.sq-btn-next:hover{background:rgba(200,146,74,.16)}
+
+/* ── LOVE SEED ── */
+.ls-card{background:linear-gradient(145deg,rgba(200,146,74,.07),rgba(76,180,100,.05));border:1px solid rgba(200,146,74,.2);border-radius:16px;padding:22px 20px;margin-bottom:16px}
+.ls-label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#c8924a;margin-bottom:10px;display:block}
+.ls-seed{font-family:Georgia,serif;font-size:.97rem;color:#f0e2d0;line-height:1.78;font-style:italic;margin-bottom:8px;min-height:44px}
+.ls-source{font-size:.68rem;color:#a07068;margin-bottom:14px}
+.ls-btn-row{display:flex;gap:8px;flex-wrap:wrap}
+.ls-btn{padding:8px 16px;border-radius:10px;font-size:.75rem;letter-spacing:.06em;border:1px solid rgba(200,146,74,.25);background:rgba(200,146,74,.08);color:#c8924a;cursor:pointer;transition:all .2s}
+.ls-btn:hover{background:rgba(200,146,74,.16)}
+.ls-planted{display:none;align-items:center;gap:8px;margin-top:10px;font-size:.8rem;color:#4ccc80;font-family:Georgia,serif;font-style:italic}
+
 /* ── DATE NIGHT IDEAS ── */
 .date-idea-card{background:linear-gradient(145deg,rgba(192,65,95,.08),rgba(200,146,74,.06));border:1px solid rgba(200,146,74,.2);border-radius:16px;padding:24px 20px;text-align:center;margin-bottom:16px;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .3s}
 .date-idea-icon{font-size:2.2rem;margin-bottom:10px;line-height:1}
@@ -2002,6 +2023,31 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
       </div>
       <button class="thread-export-btn" onclick="exportThread()" id="thread-export" style="display:none">&#8675; Export as love letter</button>
     </div>
+
+    <!-- ── SACRED QUESTION ── -->
+    <div class="sq-card" style="margin-top:24px">
+      <span class="sq-label">✦ Sacred Question</span>
+      <p class="sq-question" id="sq-text"></p>
+      <p class="sq-tradition" id="sq-source"></p>
+      <div class="sq-btn-row">
+        <button class="sq-btn" onclick="sqAddToThread()">Add to Thread &#9825;</button>
+        <button class="sq-btn sq-btn-next" onclick="sqNext()">Another question &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ── LOVE SEED ── -->
+    <div class="ls-card">
+      <span class="ls-label">&#127807; Love Seed</span>
+      <p class="ls-seed" id="ls-text"></p>
+      <p class="ls-source" id="ls-source"></p>
+      <div class="ls-btn-row">
+        <button class="ls-btn" onclick="lsPlant()">Plant this seed &#10024;</button>
+        <button class="ls-btn" style="border-color:rgba(200,146,74,.15);background:transparent;color:#a07068" onclick="lsNext()">New seed &rarr;</button>
+      </div>
+      <div class="ls-planted" id="ls-planted">&#127807; Planted. Carry this into tomorrow together.</div>
+    </div>
+
+  </div>
   </div>
 
 </div>
@@ -3665,6 +3711,103 @@ function pickRN(mood){
   };
 
   document.addEventListener('DOMContentLoaded', function(){ renderIdea(cur); });
+})();
+
+/* ══════════════════════════════════════════
+   SACRED QUESTION
+══════════════════════════════════════════ */
+(function(){
+  var questions = [
+    { q: 'What did your partner do today that you silently appreciated but never said out loud?', src: 'Tantric awareness practice' },
+    { q: 'In what small moment this week did you feel most fully seen by them?', src: 'Diana Richardson — Slow Sex' },
+    { q: 'What part of yourself do you only feel safe showing with this person?', src: 'David Deida — The Way of the Superior Man' },
+    { q: 'What does the quality of your presence in this relationship say about the love you believe you deserve?', src: 'David Deida — Blue Truth' },
+    { q: 'If you could dissolve one old wound between you — without explanation, without an apology — what would it be?', src: 'Osho — Love, Freedom, Aloneness' },
+    { q: 'Where in your body do you feel your love for them right now?', src: 'Tantric body awareness' },
+    { q: 'What would your relationship look like if you stopped waiting for the other to go first?', src: 'Taoist principle of initiation' },
+    { q: 'What do you want to remember about this season of your relationship, ten years from now?', src: 'Sacred witnessing practice' },
+    { q: 'What is one thing you have been protecting yourself from feeling — that you could let your partner hold with you?', src: 'Diana Richardson — Tantric Sex for Women' },
+    { q: 'When you imagine your most nourished, alive, radiant self — how does your partner appear in that vision?', src: 'Mantak Chia — The Multi-Orgasmic Couple' },
+    { q: 'What do you want your partner to know about how they look when they are fully present with you?', src: 'Eye-gazing tradition, Tantra' },
+    { q: 'Which of your edges — anger, sadness, desire, fear — have you never allowed them to witness?', src: 'David Deida — Dear Lover' },
+    { q: 'What would change between you if you loved each other as if this were the last year you had together?', src: 'Tibetan Buddhist couples practice' },
+    { q: 'What is something your body wants to tell your partner that your mind keeps editing out?', src: 'Somatic intimacy tradition' },
+    { q: 'In what moments do you feel the masculine and feminine between you come most alive?', src: 'David Deida — Finding God Through Sex' },
+  ];
+
+  var idx = Math.floor(Math.random() * questions.length);
+
+  function render(){
+    var el = document.getElementById('sq-text');
+    var src = document.getElementById('sq-source');
+    if(el) el.textContent = '\u201c' + questions[idx].q + '\u201d';
+    if(src) src.textContent = '\u2014 ' + questions[idx].src;
+  }
+
+  window.sqNext = function(){
+    idx = (idx + 1 + Math.floor(Math.random()*(questions.length-1))) % questions.length;
+    render();
+  };
+
+  window.sqAddToThread = function(){
+    var ta = document.getElementById('thread-input');
+    if(!ta) return;
+    ta.value = questions[idx].q + ' — ';
+    ta.focus();
+    ta.setSelectionRange(ta.value.length, ta.value.length);
+    // Scroll up to the thread input
+    ta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
+  document.addEventListener('DOMContentLoaded', render);
+})();
+
+/* ══════════════════════════════════════════
+   LOVE SEED
+══════════════════════════════════════════ */
+(function(){
+  var seeds = [
+    { s: 'Tomorrow, touch your partner as if your hands have never met their skin before. Slowly. With no destination.', src: 'Diana Richardson — Tantric Orgasm for Women' },
+    { s: 'For one full minute tomorrow, look at your partner without speaking. Let your eyes say what words have been too hurried to carry.', src: 'Eye-gazing tradition, Tantra' },
+    { s: 'Tomorrow, before you speak, pause. Feel your body. Then let your words come from that place.', src: 'Somatic presence practice' },
+    { s: 'Leave one small, unexpected tenderness for your partner tomorrow — a note, a gesture, a single moment of pure attention.', src: 'Sacred partnership tradition' },
+    { s: 'Tomorrow, receive your partner\'s love without deflecting it. Let it land. Let it in.', src: 'David Deida — Blue Truth' },
+    { s: 'Choose one moment tomorrow to be entirely still with each other. No agenda. Just breath and presence.', src: 'Taoist stillness practice' },
+    { s: 'Tomorrow, tell your partner something you love about them that you have thought but never said aloud.', src: 'Tantric expression practice' },
+    { s: 'Before you sleep tonight, breathe together for two minutes — your inhale meeting their exhale. Let your nervous systems remember each other.', src: 'Pranayama couples practice' },
+    { s: 'Tomorrow, let your partner\'s happiness matter more than being right — just once. Notice what opens between you.', src: 'Osho — The Book of Secrets' },
+    { s: 'Find one moment tomorrow to place a hand on their heart and say nothing. Just feel it beat.', src: 'Heart connection ritual, Tantra' },
+    { s: 'Tomorrow, let desire be something you give freely — not something you wait to have reciprocated first.', src: 'David Deida — The Way of the Superior Man' },
+    { s: 'When you wake tomorrow, before phones, before words — simply turn toward each other. That is the whole practice.', src: 'Morning ritual, Diana Richardson' },
+  ];
+
+  var idx = Math.floor(Math.random() * seeds.length);
+
+  function render(){
+    var el = document.getElementById('ls-text');
+    var src = document.getElementById('ls-source');
+    var planted = document.getElementById('ls-planted');
+    if(el) el.textContent = seeds[idx].s;
+    if(src) src.textContent = '\u2014 ' + seeds[idx].src;
+    if(planted) planted.style.display = 'none';
+  }
+
+  window.lsNext = function(){
+    idx = (idx + 1 + Math.floor(Math.random()*(seeds.length-1))) % seeds.length;
+    render();
+  };
+
+  window.lsPlant = function(){
+    var planted = document.getElementById('ls-planted');
+    if(planted){ planted.style.display = 'flex'; }
+    // Share to thread as an intention
+    var ta = document.getElementById('thread-input');
+    if(ta && !ta.value){
+      ta.value = 'Intention for tomorrow: ' + seeds[idx].s;
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', render);
 })();
 
 /* ══════════════════════════════════════════
