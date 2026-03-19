@@ -594,6 +594,72 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 #pg-connect .thread-input{min-height:84px;}
 #pg-connect .thread-add-btn{width:100%;min-width:0;padding:12px 16px;border-radius:12px;font-size:.9rem;}
 #pg-connect .rule-box{margin-top:14px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.03);border-left:2px solid rgba(200,146,74,.2);color:#c4a882;font-size:.82rem;line-height:1.7;}
+
+/* ── ONLINE INDICATOR ── */
+.online-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#4ccc80;box-shadow:0 0 7px rgba(76,204,128,.6);margin-left:6px;vertical-align:middle;animation:onlinePulse 2.5s ease-in-out infinite}
+@keyframes onlinePulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+/* ── MOOD HISTORY ── */
+.mood-history{margin-top:20px;padding-top:16px;border-top:1px solid rgba(200,140,90,.1)}
+.mood-history-lbl{font-size:.64rem;color:#a07068;letter-spacing:.09em;text-transform:uppercase;margin-bottom:10px}
+.mood-history-days{display:flex;gap:5px;flex-wrap:wrap}
+.mood-day{display:flex;flex-direction:column;align-items:center;gap:2px;opacity:.85}
+.mood-day-icon{font-size:.95rem;line-height:1}
+.mood-day-date{font-size:.52rem;color:#806060}
+
+/* ── SHARED NOTES ── */
+.notes-ta{width:100%;min-height:150px;background:rgba(255,255,255,.03);border:1px solid rgba(200,146,74,.15);border-radius:12px;padding:13px;color:#e8d8c0;font-size:.88rem;line-height:1.8;resize:vertical;font-family:Georgia,serif;outline:none;box-sizing:border-box}
+.notes-ta:focus{border-color:rgba(200,146,74,.35)}
+.notes-status{font-size:.64rem;color:#a07068;margin-top:6px;text-align:right;min-height:15px;transition:color .3s}
+.notes-saved{color:#4ccc80}
+
+/* ── DATE NIGHT IDEAS ── */
+.date-idea-card{background:linear-gradient(145deg,rgba(192,65,95,.08),rgba(200,146,74,.06));border:1px solid rgba(200,146,74,.2);border-radius:16px;padding:24px 20px;text-align:center;margin-bottom:16px;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .3s}
+.date-idea-icon{font-size:2.2rem;margin-bottom:10px;line-height:1}
+.date-idea-text{font-family:Georgia,serif;color:#f0e2d0;font-size:1rem;line-height:1.75;margin-bottom:8px}
+.date-idea-cat{font-size:.62rem;color:#a07068;letter-spacing:.12em;text-transform:uppercase}
+.date-shuffle-btn{width:100%;padding:12px;background:rgba(200,146,74,.1);border:1px solid rgba(200,146,74,.25);border-radius:10px;color:#e4b87a;font-size:.86rem;cursor:pointer;letter-spacing:.05em;margin-bottom:9px;transition:background .2s}
+.date-shuffle-btn:hover{background:rgba(200,146,74,.18)}
+
+/* ── PRACTICE TIMER ── */
+.ptimer-widget{position:fixed;bottom:76px;right:14px;z-index:500;display:flex;flex-direction:column;align-items:flex-end}
+.ptimer-toggle{width:46px;height:46px;border-radius:50%;background:rgba(200,146,74,.1);border:1px solid rgba(200,146,74,.28);color:#e4b87a;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.3);transition:all .2s}
+.ptimer-toggle.running{background:rgba(200,146,74,.22);animation:timerPulse 2s ease-in-out infinite}
+@keyframes timerPulse{0%,100%{box-shadow:0 2px 12px rgba(0,0,0,.3)}50%{box-shadow:0 2px 18px rgba(200,146,74,.35)}}
+.ptimer-panel{background:#0f080d;border:1px solid rgba(200,146,74,.22);border-radius:16px;padding:16px;margin-bottom:8px;width:210px;display:none}
+.ptimer-panel.open{display:block}
+.ptimer-ring-wrap{position:relative;width:90px;height:90px;margin:0 auto 12px}
+.ptimer-svg{transform:rotate(-90deg)}
+.ptimer-track{fill:none;stroke:rgba(200,146,74,.12);stroke-width:5}
+.ptimer-arc{fill:none;stroke:#c8924a;stroke-width:5;stroke-linecap:round;stroke-dasharray:251.2;stroke-dashoffset:0;transition:stroke-dashoffset .95s linear}
+.ptimer-display{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:1.35rem;color:#e4b87a;letter-spacing:.04em}
+.ptimer-presets{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:12px}
+.ptimer-preset{padding:5px 9px;border-radius:20px;border:1px solid rgba(200,146,74,.22);background:rgba(200,146,74,.05);color:#c8924a;font-size:.7rem;cursor:pointer;transition:all .15s}
+.ptimer-preset.active,.ptimer-preset:hover{background:rgba(200,146,74,.18);border-color:#c8924a;color:#e4b87a}
+.ptimer-btns{display:flex;gap:7px}
+.ptimer-btn{flex:1;padding:8px 5px;border-radius:9px;border:1px solid rgba(200,146,74,.22);background:rgba(200,146,74,.07);color:#e4b87a;font-size:.75rem;cursor:pointer;transition:background .15s}
+.ptimer-btn:hover{background:rgba(200,146,74,.16)}
+.ptimer-label{font-size:.64rem;color:#a07068;text-align:center;margin-bottom:10px;letter-spacing:.06em}
+
+/* ── MUSIC WIDGET ── */
+.music-widget{position:fixed;bottom:76px;left:14px;z-index:500;display:flex;flex-direction:column;align-items:flex-start}
+.music-toggle{width:46px;height:46px;border-radius:50%;background:rgba(130,70,150,.12);border:1px solid rgba(160,80,180,.28);color:#c070e0;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.3);transition:all .3s}
+.music-toggle.playing{background:rgba(160,80,180,.22);animation:musicGlow 3s ease-in-out infinite}
+@keyframes musicGlow{0%,100%{box-shadow:0 2px 12px rgba(0,0,0,.3)}50%{box-shadow:0 2px 20px rgba(160,80,180,.4)}}
+.music-panel{background:#0f080d;border:1px solid rgba(160,80,180,.2);border-radius:16px;padding:14px;margin-bottom:8px;width:180px;display:none}
+.music-panel.open{display:block}
+.music-title{font-size:.68rem;color:#c4a882;margin-bottom:3px;text-align:center;letter-spacing:.07em}
+.music-subtitle{font-size:.6rem;color:#a07068;text-align:center;margin-bottom:10px}
+.music-presets{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+.music-preset{padding:7px 10px;border-radius:8px;border:1px solid rgba(160,80,180,.18);background:rgba(160,80,180,.05);color:#c4a882;font-size:.72rem;cursor:pointer;text-align:left;transition:all .15s}
+.music-preset:hover,.music-preset.active{background:rgba(160,80,180,.15);border-color:rgba(160,80,180,.4);color:#e0c0f0}
+.music-vol-lbl{font-size:.6rem;color:#a07068;margin-bottom:4px}
+.music-vol{width:100%;accent-color:#c070e0;cursor:pointer}
+
+/* ── SPARKLE PARTICLES ── */
+.sparkle-layer{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.sp{position:absolute;border-radius:50%;opacity:0;animation:spFloat linear infinite}
+@keyframes spFloat{0%{opacity:0;transform:translateY(4px) scale(0)}15%{opacity:.8}70%{opacity:.3}100%{opacity:0;transform:translateY(-90px) scale(1.2)}}
 </style>
 
 <!-- Google Analytics -->
@@ -825,6 +891,122 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     const challenge = data[type] || { startDate: new Date().toDateString(), entries: [] };
     challenge.entries.push({ text, authorName: window._myName, date: new Date().toDateString() });
     await setDoc(ref, { [type]: challenge }, {merge: true});
+  };
+
+  // ── LAST SEEN / ONLINE INDICATOR ──
+  function touchLastSeen() {
+    if (!window._currentUser) return;
+    const ref = doc(db, 'users', window._currentUser.uid);
+    updateDoc(ref, { lastSeen: Date.now() }).catch(()=>{});
+  }
+  window._lastSeenInterval = null;
+  function startLastSeenPing() {
+    touchLastSeen();
+    if (window._lastSeenInterval) clearInterval(window._lastSeenInterval);
+    window._lastSeenInterval = setInterval(touchLastSeen, 30000);
+  }
+  function stopLastSeenPing() {
+    if (window._lastSeenInterval) { clearInterval(window._lastSeenInterval); window._lastSeenInterval = null; }
+  }
+
+  window._partnerLastSeenUnsub = null;
+  function subscribePartnerOnline(partnerId) {
+    if (window._partnerLastSeenUnsub) { window._partnerLastSeenUnsub(); window._partnerLastSeenUnsub = null; }
+    if (!partnerId) return;
+    window._partnerLastSeenUnsub = onSnapshot(doc(db, 'users', partnerId), (snap) => {
+      if (!snap.exists()) return;
+      const ts = snap.data().lastSeen || 0;
+      window._partnerOnline = (Date.now() - ts) < 3 * 60 * 1000;
+      renderOnlineDot();
+    });
+  }
+  window.renderOnlineDot = function() {
+    var dot = document.getElementById('partner-online-dot');
+    if (!dot) return;
+    var online = !!window._partnerOnline;
+    dot.style.display = online ? 'inline-block' : 'none';
+  };
+
+  // ── WEATHER HISTORY ──
+  window.saveWeatherHistory = async function(uid, mood, icon) {
+    if (!window._coupleCode) return;
+    const today = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'2-digit'});
+    const ref = doc(db, 'couples', window._coupleCode, 'realtime', 'weather-history');
+    const snap = await getDoc(ref);
+    var entries = snap.exists() ? (snap.data().entries || []) : [];
+    // Remove old entry for same uid+date
+    entries = entries.filter(e => !(e.uid === uid && e.date === today));
+    entries.push({ uid, mood, icon, date: today, ts: Date.now() });
+    // Keep last 28 entries max
+    if (entries.length > 28) entries = entries.slice(entries.length - 28);
+    await setDoc(ref, { entries }, { merge: false });
+  };
+
+  window.subscribeWeatherHistory = function() {
+    if (!window._coupleCode) return;
+    onSnapshot(doc(db, 'couples', window._coupleCode, 'realtime', 'weather-history'), (snap) => {
+      var entries = snap.exists() ? (snap.data().entries || []) : [];
+      renderWeatherHistory(entries);
+    });
+  };
+
+  // ── SHARED NOTES ──
+  window._sharedNotesSaveTimer = null;
+  window.subscribeSharedNotes = function() {
+    if (!window._coupleCode) return;
+    onSnapshot(doc(db, 'couples', window._coupleCode, 'realtime', 'shared-notes'), (snap) => {
+      if (!snap.exists()) return;
+      var data = snap.data();
+      var ta = document.getElementById('shared-notes-ta');
+      // Only update if not currently focused (avoid cursor jump)
+      if (ta && document.activeElement !== ta) {
+        ta.value = data.text || '';
+      }
+      var status = document.getElementById('shared-notes-status');
+      if (status && data.updatedBy) {
+        status.textContent = 'Last edited by ' + data.updatedBy;
+        status.classList.remove('notes-saved');
+      }
+    });
+  };
+  window.saveSharedNotes = async function(text) {
+    if (!window._coupleCode) return;
+    await setDoc(doc(db, 'couples', window._coupleCode, 'realtime', 'shared-notes'), {
+      text, updatedBy: window._myName || 'You', updatedAt: serverTimestamp()
+    });
+    var status = document.getElementById('shared-notes-status');
+    if (status) { status.textContent = 'Saved ✓'; status.classList.add('notes-saved'); }
+  };
+
+  // ── HOOK INTO AUTH STATE FOR ONLINE + SUBSCRIPTIONS ──
+  const _origOnAuth = window._onAuthHook;
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      startLastSeenPing();
+    } else {
+      stopLastSeenPing();
+      if (window._partnerLastSeenUnsub) { window._partnerLastSeenUnsub(); window._partnerLastSeenUnsub = null; }
+    }
+  });
+
+  // Extend loadUserProfile to start extra subscriptions
+  const _origLoadProfile = window.loadUserProfile;
+  window.loadUserProfile = async function(user) {
+    await _origLoadProfile(user);
+    // Partner online subscription
+    const snap = await getDoc(doc(db, 'users', user.uid));
+    if (snap.exists() && snap.data().partnerId) {
+      subscribePartnerOnline(snap.data().partnerId);
+      window.subscribeWeatherHistory();
+      window.subscribeSharedNotes();
+    }
+  };
+
+  // Extend saveWeatherFirebase to also save history
+  const _origSaveWeather = window.saveWeatherFirebase;
+  window.saveWeatherFirebase = async function(uid, mood, icon) {
+    await _origSaveWeather(uid, mood, icon);
+    await window.saveWeatherHistory(uid, mood, icon);
   };
 </script>
 
@@ -1628,7 +1810,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
 
 <div class="pairing-prompt" id="pairing-prompt" style="display:none">
-  <h4>Invite your partner</h4>
+  <h4>Invite your partner<span class="online-dot" id="partner-online-dot" style="display:none" title="Partner is online"></span></h4>
   <p>These practices awaken fully when your partner joins. Share your Couple Code below.</p>
   <div class="invite-code-box" style="margin:12px 0 14px">
     <div class="invite-code-lbl">Your Couple Code</div>
@@ -1646,6 +1828,8 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     <button class="c-tab" data-ctab="unsaid">🤫 Unsaid</button>
     <button class="c-tab" data-ctab="thread">🧵 Thread</button>
     <button class="c-tab" data-ctab="challenges">🌸 Gratitude</button>
+    <button class="c-tab" data-ctab="notes">📝 Notes</button>
+    <button class="c-tab" data-ctab="dates">🌙 Date Night</button>
   </div>
   <div class="c-panel on" id="cp-whispers">
     <span class="lbl">Today's Picks</span>
@@ -1736,6 +1920,10 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
         <p class="iw-result-hint" id="iw-result-hint"></p>
         <button class="iw-reset" onclick="resetWeather()">Reset for tomorrow</button>
       </div>
+    </div>
+    <div class="mood-history" id="mood-history-section" style="display:none">
+      <div class="mood-history-lbl">Last 7 days</div>
+      <div class="mood-history-days" id="mood-history-days"></div>
     </div>
   </div>
 
@@ -1846,6 +2034,29 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
   <p style="font-size:.78rem;color:#a07068;line-height:1.65">Challenges sync between both partners in real time. <br>Your partner sees your entries the moment you add them.</p>
 </div>
 
+  </div>
+
+  <!-- ── SHARED NOTES PANEL ── -->
+  <div class="c-panel" id="cp-notes">
+    <span class="feat-pill">✦ Shared Space</span>
+    <h3 style="font-family:Georgia,serif;font-size:1.1rem;color:#f0e2d0;margin-bottom:5px;font-weight:400">Our Notes</h3>
+    <p style="color:#a07068;font-size:.82rem;line-height:1.7;margin-bottom:14px">A private shared space for both of you. Intentions, desires, plans, anything. Syncs in real time.</p>
+    <textarea class="notes-ta" id="shared-notes-ta" placeholder="Write something together..." oninput="onSharedNotesInput()"></textarea>
+    <div class="notes-status" id="shared-notes-status"></div>
+  </div>
+
+  <!-- ── DATE NIGHT IDEAS PANEL ── -->
+  <div class="c-panel" id="cp-dates">
+    <span class="feat-pill">✦ Inspiration</span>
+    <h3 style="font-family:Georgia,serif;font-size:1.1rem;color:#f0e2d0;margin-bottom:5px;font-weight:400">Date Night Ideas</h3>
+    <p style="color:#a07068;font-size:.82rem;line-height:1.7;margin-bottom:14px">One idea, chosen for you. Shuffle until something calls to you both.</p>
+    <div class="date-idea-card" id="date-idea-card">
+      <div class="date-idea-icon" id="date-idea-icon">🕯️</div>
+      <div class="date-idea-text" id="date-idea-text">Loading your date idea...</div>
+      <div class="date-idea-cat" id="date-idea-cat"></div>
+    </div>
+    <button class="date-shuffle-btn" onclick="shuffleDateIdea()">✦ Shuffle Idea</button>
+    <button class="btn btn-o btn-s share-w" style="width:100%" id="date-share-btn">Share with Partner ↗</button>
   </div>
 
 </div>
@@ -2688,6 +2899,51 @@ function pickRN(mood){
 })();
 </script>
 
+<!-- ── SPARKLE LAYER ── -->
+<div class="sparkle-layer" id="sparkle-layer"></div>
+
+<!-- ── PRACTICE TIMER WIDGET ── -->
+<div class="ptimer-widget" id="ptimer-widget">
+  <div class="ptimer-panel" id="ptimer-panel">
+    <div class="ptimer-label" id="ptimer-label">Choose duration</div>
+    <div class="ptimer-ring-wrap">
+      <svg class="ptimer-svg" width="90" height="90" viewBox="0 0 90 90">
+        <circle class="ptimer-track" cx="45" cy="45" r="40"/>
+        <circle class="ptimer-arc" id="ptimer-arc" cx="45" cy="45" r="40"/>
+      </svg>
+      <div class="ptimer-display" id="ptimer-display">—</div>
+    </div>
+    <div class="ptimer-presets">
+      <button class="ptimer-preset" onclick="ptimerSet(5)">5 min</button>
+      <button class="ptimer-preset" onclick="ptimerSet(10)">10 min</button>
+      <button class="ptimer-preset" onclick="ptimerSet(15)">15 min</button>
+      <button class="ptimer-preset" onclick="ptimerSet(20)">20 min</button>
+      <button class="ptimer-preset" onclick="ptimerSet(30)">30 min</button>
+    </div>
+    <div class="ptimer-btns">
+      <button class="ptimer-btn" id="ptimer-start-btn" onclick="ptimerStartStop()">Start</button>
+      <button class="ptimer-btn" onclick="ptimerReset()">Reset</button>
+    </div>
+  </div>
+  <button class="ptimer-toggle" id="ptimer-toggle" onclick="ptimerTogglePanel()" title="Practice Timer">⏱</button>
+</div>
+
+<!-- ── MUSIC WIDGET ── -->
+<div class="music-widget" id="music-widget">
+  <div class="music-panel" id="music-panel">
+    <div class="music-title">Sacred Sound</div>
+    <div class="music-subtitle">136.1 Hz · OM frequency</div>
+    <div class="music-presets">
+      <button class="music-preset active" id="mp-om" onclick="musicSelect('om',this)">🕉 OM Drone</button>
+      <button class="music-preset" id="mp-binaural" onclick="musicSelect('binaural',this)">🧘 Alpha Waves</button>
+      <button class="music-preset" id="mp-deep" onclick="musicSelect('deep',this)">🌊 Deep Calm</button>
+    </div>
+    <div class="music-vol-lbl">Volume</div>
+    <input class="music-vol" id="music-vol" type="range" min="0" max="100" value="40" oninput="musicSetVol(this.value)">
+  </div>
+  <button class="music-toggle" id="music-toggle" onclick="musicToggle()" title="Sacred Sound">♪</button>
+</div>
+
 <!-- DESIRE CARD MODAL — at body level so fixed overlay always works -->
 
 <div id="desire-overlay" style="display:none;position:fixed;inset:0;background:rgba(9,4,10,.92);z-index:9999;overflow-y:auto;padding:24px 16px">
@@ -3071,6 +3327,372 @@ function pickRN(mood){
     if(addBtn && addBtn.textContent.trim() === '+') addBtn.textContent = 'Save';
   });
 
+})();
+</script>
+
+<script>
+/* ══════════════════════════════════════════
+   SPARKLE PARTICLES
+══════════════════════════════════════════ */
+(function(){
+  var layer = document.getElementById('sparkle-layer');
+  if(!layer) return;
+  var colours = ['rgba(200,146,74,.5)','rgba(228,184,122,.4)','rgba(192,65,95,.35)','rgba(220,180,255,.3)','rgba(255,220,160,.4)'];
+  for(var i=0;i<28;i++){
+    var s = document.createElement('div');
+    s.className = 'sp';
+    var size = 2 + Math.random()*3;
+    s.style.cssText = [
+      'width:'+size+'px','height:'+size+'px',
+      'left:'+(Math.random()*100)+'%',
+      'bottom:'+(Math.random()*30)+'%',
+      'background:'+colours[Math.floor(Math.random()*colours.length)],
+      'animation-duration:'+(6+Math.random()*14)+'s',
+      'animation-delay:'+(Math.random()*12)+'s'
+    ].join(';');
+    layer.appendChild(s);
+  }
+})();
+
+/* ══════════════════════════════════════════
+   PRACTICE TIMER
+══════════════════════════════════════════ */
+(function(){
+  var _mins = 0, _total = 0, _remaining = 0, _running = false, _iv = null;
+  var ARC_LEN = 251.2; // 2*pi*40
+
+  function fmt(sec){
+    var m=Math.floor(sec/60), s=sec%60;
+    return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  }
+  function updateRing(rem, tot){
+    var arc = document.getElementById('ptimer-arc');
+    if(!arc) return;
+    var pct = tot > 0 ? (1 - rem/tot) : 0;
+    arc.style.strokeDashoffset = ARC_LEN * (1 - pct);
+  }
+  function updateDisplay(){
+    var d = document.getElementById('ptimer-display');
+    if(d) d.textContent = _total > 0 ? fmt(_remaining) : '—';
+    updateRing(_remaining, _total);
+    var lbl = document.getElementById('ptimer-label');
+    if(lbl){
+      if(_running) lbl.textContent = 'Practice in progress ✦';
+      else if(_remaining > 0 && _remaining < _total) lbl.textContent = 'Paused';
+      else if(_total > 0) lbl.textContent = 'Ready · '+_mins+' min';
+      else lbl.textContent = 'Choose duration';
+    }
+    var btn = document.getElementById('ptimer-start-btn');
+    if(btn) btn.textContent = _running ? 'Pause' : (_remaining > 0 && _remaining < _total ? 'Resume' : 'Start');
+    var tog = document.getElementById('ptimer-toggle');
+    if(tog) tog.classList.toggle('running', _running);
+  }
+  window.ptimerSet = function(m){
+    ptimerStop();
+    _mins = m; _total = m*60; _remaining = _total;
+    document.querySelectorAll('.ptimer-preset').forEach(function(b){
+      b.classList.toggle('active', parseInt(b.textContent)===m);
+    });
+    updateDisplay();
+  };
+  function ptimerStop(){
+    _running = false;
+    if(_iv){ clearInterval(_iv); _iv = null; }
+  }
+  window.ptimerStartStop = function(){
+    if(!_total) return;
+    if(_remaining === 0) { _remaining = _total; }
+    if(_running){ ptimerStop(); updateDisplay(); return; }
+    _running = true;
+    _iv = setInterval(function(){
+      _remaining--;
+      updateDisplay();
+      if(_remaining <= 0){
+        ptimerStop();
+        ptimerChime();
+        var lbl = document.getElementById('ptimer-label');
+        if(lbl) lbl.textContent = '✦ Practice complete ✦';
+        updateDisplay();
+      }
+    }, 1000);
+    updateDisplay();
+  };
+  window.ptimerReset = function(){
+    ptimerStop();
+    _remaining = _total;
+    updateDisplay();
+  };
+  window.ptimerTogglePanel = function(){
+    var p = document.getElementById('ptimer-panel');
+    if(p) p.classList.toggle('open');
+  };
+  function ptimerChime(){
+    try {
+      var ctx = new (window.AudioContext||window.webkitAudioContext)();
+      [0, 0.4, 0.9].forEach(function(delay, i){
+        var osc = ctx.createOscillator();
+        var g = ctx.createGain();
+        osc.connect(g); g.connect(ctx.destination);
+        osc.frequency.value = [528, 396, 639][i];
+        osc.type = 'sine';
+        g.gain.setValueAtTime(0, ctx.currentTime+delay);
+        g.gain.linearRampToValueAtTime(0.18, ctx.currentTime+delay+0.05);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+delay+1.8);
+        osc.start(ctx.currentTime+delay);
+        osc.stop(ctx.currentTime+delay+2);
+      });
+    } catch(e){}
+  }
+  updateDisplay();
+})();
+
+/* ══════════════════════════════════════════
+   SACRED SOUND (WEB AUDIO)
+══════════════════════════════════════════ */
+(function(){
+  var _ctx = null, _masterGain = null, _nodes = [], _playing = false;
+  var _mode = 'om', _vol = 0.4;
+
+  function stopAll(){
+    _nodes.forEach(function(n){ try{ n.stop(); }catch(e){} });
+    _nodes = [];
+    if(_masterGain){ _masterGain.disconnect(); _masterGain = null; }
+    if(_ctx){ _ctx.close().catch(()=>{}); _ctx = null; }
+    _playing = false;
+    updateMusicUI();
+  }
+
+  function buildOM(ctx, master){
+    // OM frequency 136.1 Hz with harmonics and slow breath LFO
+    var freqs = [136.1, 272.2, 204.15]; // fundamental + octave + fifth
+    var amps  = [0.4,   0.15,  0.12];
+    freqs.forEach(function(f, i){
+      var osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.value = f;
+      var g = ctx.createGain();
+      g.gain.value = amps[i];
+      // Slow LFO for breath effect
+      var lfo = ctx.createOscillator();
+      lfo.frequency.value = 0.07 + i*0.03;
+      var lfoG = ctx.createGain();
+      lfoG.gain.value = amps[i] * 0.15;
+      lfo.connect(lfoG); lfoG.connect(g.gain);
+      lfo.start(); _nodes.push(lfo);
+      osc.connect(g); g.connect(master);
+      osc.start(); _nodes.push(osc);
+    });
+  }
+
+  function buildBinaural(ctx, master){
+    // Alpha binaural: 100Hz left, 110Hz right (10Hz difference)
+    var merger = ctx.createChannelMerger(2);
+    merger.connect(master);
+    [[100, 0],[110, 1]].forEach(function(pair){
+      var osc = ctx.createOscillator();
+      osc.type = 'sine'; osc.frequency.value = pair[0];
+      var g = ctx.createGain(); g.gain.value = 0.3;
+      var splitter = ctx.createChannelSplitter(1);
+      osc.connect(g); g.connect(merger, 0, pair[1]);
+      osc.start(); _nodes.push(osc);
+    });
+    // Also add a soft 136.1Hz base
+    var base = ctx.createOscillator();
+    base.type = 'sine'; base.frequency.value = 136.1;
+    var bg = ctx.createGain(); bg.gain.value = 0.12;
+    base.connect(bg); bg.connect(master);
+    base.start(); _nodes.push(base);
+  }
+
+  function buildDeep(ctx, master){
+    // Deep calm: 40Hz gamma + harmonics + gentle noise-like pad
+    var freqs = [40, 80, 60, 174];
+    var amps  = [0.2, 0.1, 0.12, 0.08];
+    freqs.forEach(function(f, i){
+      var osc = ctx.createOscillator();
+      osc.type = i < 2 ? 'sine' : 'triangle';
+      osc.frequency.value = f;
+      var g = ctx.createGain(); g.gain.value = amps[i];
+      var lfo = ctx.createOscillator();
+      lfo.frequency.value = 0.05 + i*0.02;
+      var lfoG = ctx.createGain(); lfoG.gain.value = amps[i]*0.1;
+      lfo.connect(lfoG); lfoG.connect(g.gain);
+      lfo.start(); _nodes.push(lfo);
+      osc.connect(g); g.connect(master);
+      osc.start(); _nodes.push(osc);
+    });
+  }
+
+  function startAudio(){
+    try {
+      _ctx = new (window.AudioContext||window.webkitAudioContext)();
+      _masterGain = _ctx.createGain();
+      _masterGain.gain.value = 0;
+      var filter = _ctx.createBiquadFilter();
+      filter.type = 'lowpass'; filter.frequency.value = 900;
+      _masterGain.connect(filter); filter.connect(_ctx.destination);
+
+      if(_mode === 'om')       buildOM(_ctx, _masterGain);
+      else if(_mode === 'binaural') buildBinaural(_ctx, _masterGain);
+      else                     buildDeep(_ctx, _masterGain);
+
+      // Fade in
+      _masterGain.gain.linearRampToValueAtTime(_vol, _ctx.currentTime + 2);
+      _playing = true;
+      updateMusicUI();
+    } catch(e){ console.warn('Web Audio not available', e); }
+  }
+
+  function updateMusicUI(){
+    var tog = document.getElementById('music-toggle');
+    if(tog){ tog.classList.toggle('playing', _playing); tog.textContent = _playing ? '♫' : '♪'; }
+  }
+
+  window.musicToggle = function(){
+    if(_playing){ stopAll(); }
+    else { startAudio(); }
+    // Open/close panel
+    var p = document.getElementById('music-panel');
+    if(p && !_playing) p.classList.remove('open');
+  };
+  window.musicSelect = function(mode, btn){
+    _mode = mode;
+    document.querySelectorAll('.music-preset').forEach(function(b){ b.classList.remove('active'); });
+    if(btn) btn.classList.add('active');
+    if(_playing){ stopAll(); startAudio(); }
+  };
+  window.musicSetVol = function(v){
+    _vol = v / 100;
+    if(_masterGain) _masterGain.gain.linearRampToValueAtTime(_vol, _ctx.currentTime + 0.3);
+  };
+
+  // Long press toggle to show panel
+  var tog = document.getElementById('music-toggle');
+  if(tog){
+    tog.addEventListener('contextmenu', function(e){
+      e.preventDefault();
+      var p = document.getElementById('music-panel');
+      if(p) p.classList.toggle('open');
+    });
+  }
+  // Click the toggle: if panel closed just start/stop. If panel open, start/stop.
+})();
+
+/* ══════════════════════════════════════════
+   DATE NIGHT IDEAS
+══════════════════════════════════════════ */
+(function(){
+  var ideas = [
+    {icon:'🕯️', text:'Light candles, turn off all screens, and spend one hour speaking only about what you love about each other.', cat:'Presence'},
+    {icon:'🛁', text:'Draw a bath together. Add oils, candles, music. Take turns washing each other\'s hair in silence.', cat:'Sensual ritual'},
+    {icon:'🌙', text:'Lie outside under the sky tonight. Share one dream you\'ve never told anyone.', cat:'Intimacy'},
+    {icon:'🍷', text:'Cook a meal together barefoot, with music. No phones. Feed each other the first bite.', cat:'Nourishment'},
+    {icon:'💌', text:'Each write your partner a letter. Not a text — a real letter. Read them aloud to each other.', cat:'Deep connection'},
+    {icon:'💃', text:'Clear the floor. Dance together for 20 minutes to songs that meant something to you when you fell in love.', cat:'Playful'},
+    {icon:'🎭', text:'Take turns being blindfolded while the other offers three different sensory experiences — touch, taste, scent.', cat:'Sensory'},
+    {icon:'🧘', text:'Sit facing each other in yab-yum or simply cross-legged. Breathe together for 15 minutes without speaking.', cat:'Sacred practice'},
+    {icon:'🌅', text:'Set your alarm early and watch the sunrise together. Bring a blanket, hot drinks, nothing else.', cat:'Simplicity'},
+    {icon:'📖', text:'Take turns reading each other poetry or passages that move you. No explaining — just let the words land.', cat:'Soul'},
+    {icon:'🎨', text:'Buy a single canvas. Paint something together with your hands, no brushes. Frame it afterward.', cat:'Creative'},
+    {icon:'🌊', text:'Go somewhere with water. Sit at the edge. Say nothing. Let the sound hold you both.', cat:'Nature'},
+    {icon:'✨', text:'Revisit the place where you first fell for each other. Walk slowly. Notice what you feel in your body.', cat:'Memory'},
+    {icon:'🫀', text:'Lie down and take turns placing your hand on each other\'s heart. Breathe together for five minutes like that.', cat:'Heart opening'},
+    {icon:'🍓', text:'Prepare a slow, intentional meal — just finger foods. Feed each other. Make it last an hour.', cat:'Sensual'},
+    {icon:'🌿', text:'Spend an afternoon in nature. No destination. Let your bodies slow to the pace of the land.', cat:'Grounding'},
+    {icon:'🎵', text:'Make a playlist of 10 songs that are yours as a couple. Play it from beginning to end, listening deeply.', cat:'Soundtrack'},
+    {icon:'🌸', text:'Give each other a 30-minute massage. No agenda, no reciprocation expected. Just give, then receive.', cat:'Touch'},
+    {icon:'🔥', text:'Sit by candlelight and take turns completing the sentence: "I feel closest to you when..."', cat:'Vulnerability'},
+    {icon:'🌌', text:'Turn off every light. Lie together in the dark and just breathe. Let whatever wants to be said, be said.', cat:'Stillness'}
+  ];
+  var cur = Math.floor(Math.random() * ideas.length);
+
+  function renderIdea(idx){
+    var idea = ideas[idx];
+    var card = document.getElementById('date-idea-card');
+    var icon = document.getElementById('date-idea-icon');
+    var text = document.getElementById('date-idea-text');
+    var cat  = document.getElementById('date-idea-cat');
+    var shareBtn = document.getElementById('date-share-btn');
+    if(!card) return;
+    card.style.opacity = '0';
+    setTimeout(function(){
+      if(icon) icon.textContent = idea.icon;
+      if(text) text.textContent = idea.text;
+      if(cat)  cat.textContent  = idea.cat;
+      if(shareBtn){
+        shareBtn.onclick = function(){
+          var msg = idea.icon + ' Date idea for us: ' + idea.text;
+          if(navigator.share){ navigator.share({title:'Sacred Path Date Idea', text:msg}); }
+          else{ navigator.clipboard && navigator.clipboard.writeText(msg); alert('Copied to clipboard!'); }
+        };
+      }
+      card.style.opacity = '1';
+    }, 200);
+  }
+
+  window.shuffleDateIdea = function(){
+    var next = (cur + 1 + Math.floor(Math.random()*(ideas.length-1))) % ideas.length;
+    cur = next;
+    renderIdea(cur);
+  };
+
+  document.addEventListener('DOMContentLoaded', function(){ renderIdea(cur); });
+})();
+
+/* ══════════════════════════════════════════
+   SHARED NOTES INPUT HANDLER
+══════════════════════════════════════════ */
+window.onSharedNotesInput = function(){
+  var ta = document.getElementById('shared-notes-ta');
+  var status = document.getElementById('shared-notes-status');
+  if(!ta) return;
+  if(status){ status.textContent = 'Typing...'; status.classList.remove('notes-saved'); }
+  clearTimeout(window._sharedNotesSaveTimer);
+  window._sharedNotesSaveTimer = setTimeout(function(){
+    if(window.saveSharedNotes) window.saveSharedNotes(ta.value);
+  }, 1000);
+};
+
+/* ══════════════════════════════════════════
+   WEATHER HISTORY RENDERER
+══════════════════════════════════════════ */
+window.renderWeatherHistory = function(entries){
+  var section = document.getElementById('mood-history-section');
+  var container = document.getElementById('mood-history-days');
+  if(!section || !container) return;
+  if(!entries || entries.length === 0){ section.style.display='none'; return; }
+
+  // Build a map: date → {you: icon, partner: icon}
+  var map = {};
+  entries.forEach(function(e){
+    if(!map[e.date]) map[e.date] = {};
+    var isMe = window._currentUser && e.uid === window._currentUser.uid;
+    if(isMe) map[e.date].you = e.icon;
+    else map[e.date].partner = e.icon;
+  });
+
+  // Get last 7 unique dates
+  var dates = Object.keys(map).sort().slice(-7);
+  if(dates.length === 0){ section.style.display='none'; return; }
+
+  section.style.display = 'block';
+  container.innerHTML = dates.map(function(d){
+    var day = map[d];
+    var icons = (day.you||'·') + (day.partner ? (day.partner) : '');
+    return '<div class="mood-day"><div class="mood-day-icon">'+icons+'</div><div class="mood-day-date">'+d+'</div></div>';
+  }).join('');
+};
+
+/* ══════════════════════════════════════════
+   MUSIC PANEL LONG-PRESS / TAP TO OPEN
+══════════════════════════════════════════ */
+(function(){
+  var tog = document.getElementById('music-toggle');
+  var panel = document.getElementById('music-panel');
+  if(!tog || !panel) return;
+  var pressTimer;
+  tog.addEventListener('touchstart', function(){ pressTimer = setTimeout(function(){ panel.classList.toggle('open'); }, 500); }, {passive:true});
+  tog.addEventListener('touchend', function(){ clearTimeout(pressTimer); }, {passive:true});
 })();
 </script>
 
