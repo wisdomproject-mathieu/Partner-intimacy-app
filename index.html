@@ -479,7 +479,6 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 /* Reconnect page focus mode */
 #reconnect-hub { display:block; }
 #reconnect-back-row { display:none; }
-#reconnect-tabs { display:none !important; }
 #pg-connect .c-panel { display:none; }
 #pg-connect .c-panel.on { display:block; }
 
@@ -527,6 +526,8 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 .reconnect-card:hover{box-shadow:0 4px 18px rgba(200,140,90,.12);}
 #reconnect-hub .lbl{color:#c8924a;}
 #reconnect-hub h3{font-family:Georgia,serif;font-weight:400;}
+#shared-messages-panel{max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s ease;opacity:0;margin-top:0}
+#shared-messages-panel.open{max-height:2400px;opacity:1;margin-top:14px}
 /* Thread entry layout on mobile */
 #pg-connect .thread-entry-input{display:flex;flex-direction:column;gap:10px;align-items:stretch;}
 #pg-connect .thread-input{min-height:84px;}
@@ -1313,13 +1314,10 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
 <div id="reconnect-hub" class="card" style="margin-bottom:18px;background:linear-gradient(145deg,#1c1008,#140c04);border:1px solid rgba(200,146,74,.22)">
   <span class="lbl">Reconnect Tonight</span>
-  <h3 style="margin-bottom:8px;color:#f0e2d0">Choose one doorway back into each other</h3>
-  <p style="color:#c4a882;font-size:.86rem;line-height:1.75;margin-bottom:14px">
-    Choose one doorway back into each other. Then let the rest disappear.
-  </p>
+  <h3 style="margin-bottom:18px;color:#f0e2d0;font-family:Georgia,serif;font-weight:400;font-size:1.15rem;line-height:1.55;letter-spacing:.01em">Choose one doorway back<br>into each other — then let<br>the rest disappear.</h3>
   <div class="g2">
     <div class="reconnect-card" onclick="openReconnectTool('games')">
-      <div style="font-size:1.4rem;margin-bottom:6px">🎲</div>
+      <div style="font-size:1.4rem;margin-bottom:6px">✨</div>
       <h4 style="margin-bottom:6px">Intimacy Games</h4>
       <p style="font-size:.8rem;color:#c4a882">A playful prompt to share through the day or start the evening with.</p>
     </div>
@@ -1355,7 +1353,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     </div>
   </div>
   <!-- Inline expandable share panel -->
-  <div id="shared-messages-panel" style="display:none;margin-top:14px">
+  <div id="shared-messages-panel">
     <div class="card" style="margin-bottom:14px;background:rgba(255,255,255,.03)">
       <p style="font-size:.78rem;color:#c4a882;margin-bottom:10px">Write something sensual, sweet, or playful for your partner.</p>
       <textarea class="msg-ta" rows="4" id="msg-ta" placeholder="Write something sensual, sweet, or playful..."></textarea>
@@ -1391,16 +1389,6 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 </div>
 
 
-  <div class="c-tabs" id="reconnect-tabs">
-    <button class="c-tab" data-ctab="games">Games</button>
-    <button class="c-tab" data-ctab="weather">🌡️ Weather</button>
-    <button class="c-tab" data-ctab="unsaid">🤫 Unsaid</button>
-    <button class="c-tab" data-ctab="thread">🧵 Thread</button>
-    <button class="c-tab" data-ctab="challenges">🌸 Gratitude</button>
-    <button class="c-tab" data-ctab="notes">📝 Notes</button>
-    <button class="c-tab" data-ctab="dates">🌙 Date Night</button>
-  </div>
-  <div class="c-panel" id="cp-share" style="display:none"></div>
   <div class="c-panel" id="cp-games">
     <p style="color:#c4a882;font-size:.88rem;margin-bottom:18px;max-width:440px;line-height:1.78">Intimacy games to start together or thread through the day. Share one and see what unfolds.</p>
     <div class="gcol">
@@ -1563,14 +1551,6 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
   </div>
 
-  <!-- ── SHARED NOTES PANEL ── -->
-  <div class="c-panel" id="cp-notes">
-    <span class="feat-pill">✦ Shared Space</span>
-    <h3 style="font-family:Georgia,serif;font-size:1.1rem;color:#f0e2d0;margin-bottom:5px;font-weight:400">Our Notes</h3>
-    <p style="color:#a07068;font-size:.82rem;line-height:1.7;margin-bottom:14px">A private shared space for both of you. Intentions, desires, plans, anything. Syncs in real time.</p>
-    <textarea class="notes-ta" id="shared-notes-ta" placeholder="Write something together..." oninput="onSharedNotesInput()"></textarea>
-    <div class="notes-status" id="shared-notes-status"></div>
-  </div>
 
   <!-- ── DATE NIGHT IDEAS PANEL ── -->
   <div class="c-panel" id="cp-dates">
@@ -2467,17 +2447,14 @@ function pickRN(mood){
       p.classList.remove('on');
       p.style.display = 'none';
     });
-    document.querySelectorAll('#pg-connect .c-tab').forEach(function(t){
-      t.classList.remove('on');
-    });
   }
 
   /* Toggle inline shared messages panel */
   window.toggleSharedMessages = function(){
     var panel  = document.getElementById('shared-messages-panel');
     var arrow  = document.getElementById('shared-messages-arrow');
-    var isOpen = panel && panel.style.display !== 'none';
-    if(panel) panel.style.display = isOpen ? 'none' : 'block';
+    var isOpen = panel && panel.classList.contains('open');
+    if(panel) panel.classList.toggle('open', !isOpen);
     if(arrow) arrow.style.transform = isOpen ? '' : 'rotate(180deg)';
   };
 
@@ -2492,9 +2469,6 @@ function pickRN(mood){
       var isTarget = (p.id === 'cp-' + id);
       p.classList.toggle('on', isTarget);
       p.style.display = isTarget ? 'block' : 'none';
-    });
-    document.querySelectorAll('#pg-connect .c-tab').forEach(function(t){
-      t.classList.toggle('on', t.getAttribute('data-ctab') === id);
     });
   }
 
