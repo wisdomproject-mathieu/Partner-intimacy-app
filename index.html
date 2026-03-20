@@ -1770,13 +1770,29 @@ var iwState = {p1:null, p2:null};
 var iwMessages = {
   'radiant+radiant':{msg:"Both of you are radiant today. This is a rare gift — meet each other fully in it.",hint:"Tonight: Yab-Yum, candles, no agenda."},
   'stormy+stormy':{msg:"Two storms. Give each other space first — then come together slowly.",hint:"Tonight: Hold each other without speaking for 10 minutes."},
-  'stormy+radiant':{msg:"One storm, one sun. The sun doesn't fix the storm — it simply holds warmth nearby.",hint:"Suggestion: Let the stormy one be held tonight. No advice. Just presence."},
-  'radiant+stormy':{msg:"One storm, one sun. The sun doesn't fix the storm — it simply holds warmth nearby.",hint:"Suggestion: Let the stormy one be held tonight. No advice. Just presence."},
-  'electric+electric':{msg:"Pure electricity between you. Channel it consciously — don't let it scatter.",hint:"Tonight: Valley Orgasm practice. This energy is fuel."},
   'warm+warm':{msg:"Warm and steady. The best conditions for deep, unhurried practice.",hint:"Tonight: Scissors of Stillness — long, slow, nourishing."},
+  'cloudy+cloudy':{msg:"Two quiet ones today. No need to perform presence — parallel stillness is its own intimacy.",hint:"Same room, no pressure. Let closeness happen without agenda."},
+  'electric+electric':{msg:"Pure electricity between you. Channel it consciously — don't let it scatter.",hint:"Tonight: Valley Orgasm practice. This energy is fuel."},
+  'stormy+radiant':{msg:"One storm, one sun. The sun doesn't fix the storm — it simply holds warmth nearby.",hint:"Let the stormy one be held tonight. No advice. Just presence."},
+  'radiant+stormy':{msg:"One storm, one sun. The sun doesn't fix the storm — it simply holds warmth nearby.",hint:"Let the stormy one be held tonight. No advice. Just presence."},
+  'stormy+cloudy':{msg:"Both carrying weight today. Neither needs to lighten the other — just be close.",hint:"Lie side by side. No talking required. Let the breathing slow together."},
+  'cloudy+stormy':{msg:"Both carrying weight today. Neither needs to lighten the other — just be close.",hint:"Lie side by side. No talking required. Let the breathing slow together."},
+  'stormy+warm':{msg:"One in turbulence, one holding steadiness. The warm one offers shelter — not solutions.",hint:"Let the stormy one speak first without interruption. Then hold."},
+  'warm+stormy':{msg:"One in turbulence, one holding steadiness. The warm one offers shelter — not solutions.",hint:"Let the stormy one speak first without interruption. Then hold."},
+  'stormy+electric':{msg:"Turbulence meets charge — this can ignite or overwhelm. Ground the electric one first.",hint:"10 minutes of still holding before anything else. Let the storm settle."},
+  'electric+stormy':{msg:"Turbulence meets charge — this can ignite or overwhelm. Ground the electric one first.",hint:"10 minutes of still holding before anything else. Let the storm settle."},
   'cloudy+warm':{msg:"One is inward today. Meet them there gently before moving together.",hint:"Start with 5 minutes of back-to-back breathing before anything else."},
   'warm+cloudy':{msg:"One is inward today. Meet them there gently before moving together.",hint:"Start with 5 minutes of back-to-back breathing before anything else."},
-  'default':{msg:"Two different weathers — which means something interesting is possible between them.",hint:"Follow the energy of the one who has more to give tonight."}
+  'cloudy+electric':{msg:"One has energy the other doesn't. Share it gently — don't flood the quiet one.",hint:"Let the electric one lead slowly. The cloudy one follows only what feels natural."},
+  'electric+cloudy':{msg:"One has energy the other doesn't. Share it gently — don't flood the quiet one.",hint:"Let the electric one lead slowly. The cloudy one follows only what feels natural."},
+  'cloudy+radiant':{msg:"Radiance offered to a quiet one. Let it be a gift, not a pressure to match.",hint:"The radiant one simply holds space. No expectation. Pure offering."},
+  'radiant+cloudy':{msg:"Radiance offered to a quiet one. Let it be a gift, not a pressure to match.",hint:"The radiant one simply holds space. No expectation. Pure offering."},
+  'warm+electric':{msg:"Warmth and charge — a beautifully creative pairing. Something intentional wants to emerge.",hint:"Choose one practice together before you begin. Let the direction be mutual."},
+  'electric+warm':{msg:"Warmth and charge — a beautifully creative pairing. Something intentional wants to emerge.",hint:"Choose one practice together before you begin. Let the direction be mutual."},
+  'warm+radiant':{msg:"Open, soft, and present — both of you. Let this evening take its own time.",hint:"No structure needed tonight. Follow the flow wherever it leads."},
+  'radiant+warm':{msg:"Open, soft, and present — both of you. Let this evening take its own time.",hint:"No structure needed tonight. Follow the flow wherever it leads."},
+  'electric+radiant':{msg:"High charge meets full openness. This is a night for something expansive.",hint:"Tonight: Firebird or Kundalini Breath practice. Let the energy move."},
+  'radiant+electric':{msg:"High charge meets full openness. This is a night for something expansive.",hint:"Tonight: Firebird or Kundalini Breath practice. Let the energy move."}
 };
 function pickWeather(partner, mood, icon, ev){
   iwState['p'+partner] = {mood:mood, icon:icon};
@@ -2856,7 +2872,7 @@ function pickRN(mood){
     renderIdea(cur);
   };
 
-  document.addEventListener('DOMContentLoaded', function(){ renderIdea(cur); });
+  renderIdea(cur);
 })();
 
 
