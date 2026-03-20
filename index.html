@@ -541,23 +541,16 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 .reconnect-card:hover{box-shadow:0 4px 18px rgba(200,140,90,.12);}
 #reconnect-hub .lbl{color:#c8924a;}
 #reconnect-hub h3{font-family:Georgia,serif;font-weight:400;}
-#reconnect-hub .rule-box{margin-top:14px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.03);border-left:2px solid rgba(200,146,74,.2);color:#c4a882;font-size:.82rem;line-height:1.7;}
-#reconnect-hub .rule-box strong{color:#e4b87a;font-weight:400;}
-
-/* ── SACRED COUPLES RULES ── */
-.sacred-rules-wrap{margin-top:0;padding:28px 22px;background:linear-gradient(160deg,#1a0c10,#120810,#0e0a18);border:1px solid rgba(200,146,74,.18);border-radius:20px}
-.sacred-rules-header{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:22px}
-.sacred-rules-title{font-family:Georgia,serif;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#e4b87a}
-.sacred-rules-star{color:#c8924a;font-size:.65rem;opacity:.7}
-.sacred-rules-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:16px;counter-reset:rules}
-.sacred-rules-list li{counter-increment:rules;display:flex;gap:14px;align-items:flex-start;font-family:Georgia,serif;font-size:.91rem;color:#d4c0a8;line-height:1.78;font-style:italic}
-.sacred-rules-list li::before{content:counter(rules);flex-shrink:0;width:22px;height:22px;border-radius:50%;background:rgba(200,146,74,.1);border:1px solid rgba(200,146,74,.25);display:flex;align-items:center;justify-content:center;font-family:inherit;font-size:.62rem;font-style:normal;letter-spacing:.05em;color:#c8924a;margin-top:3px}
-
 /* Thread entry layout on mobile */
 #pg-connect .thread-entry-input{display:flex;flex-direction:column;gap:10px;align-items:stretch;}
 #pg-connect .thread-input{min-height:84px;}
 #pg-connect .thread-add-btn{width:100%;min-width:0;padding:12px 16px;border-radius:12px;font-size:.9rem;}
-#pg-connect .rule-box{margin-top:14px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.03);border-left:2px solid rgba(200,146,74,.2);color:#c4a882;font-size:.82rem;line-height:1.7;}
+/* ── TANTRIC QUOTE BANNER ── */
+.tantra-quote-banner{margin-top:20px;padding:28px 22px 24px;border-radius:18px;background:linear-gradient(145deg,#1e0814,#130820,#1a0c14);border:1px solid rgba(224,110,136,.18);text-align:center;position:relative;overflow:hidden}
+.tantra-quote-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(224,110,136,.07) 0%,transparent 70%);pointer-events:none}
+.tantra-quote-glyph{font-size:1.6rem;opacity:.5;margin-bottom:14px;display:block;line-height:1}
+.tantra-quote-text{font-family:Georgia,serif;font-size:1.02rem;font-style:italic;color:#e8d4c4;line-height:1.85;margin:0 0 16px;letter-spacing:.01em}
+.tantra-quote-author{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:#c8924a;opacity:.8}
 
 /* ── ONLINE INDICATOR ── */
 .online-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#4ccc80;box-shadow:0 0 7px rgba(76,204,128,.6);margin-left:6px;vertical-align:middle;animation:onlinePulse 2.5s ease-in-out infinite}
@@ -721,29 +714,6 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
   </div>
 
 </div></div>
-
-  <!-- SACRED PATH — RULES FOR TWO -->
-
-  <div class="divg"></div>
-  <div class="sacred-rules-wrap" id="premium-home-wall">
-    <div class="sacred-rules-header">
-      <span class="sacred-rules-star">✦</span>
-      <span class="sacred-rules-title">Sacred Path — Rules for Two</span>
-      <span class="sacred-rules-star">✦</span>
-    </div>
-    <ol class="sacred-rules-list">
-      <li>The phone is only the threshold. The real practice begins when you turn toward each other.</li>
-      <li>Come to bed without armor. Just your body, your breath, and your willingness to be seen.</li>
-      <li>Touch your partner as if your hands have never met their skin before — slowly, with no destination.</li>
-      <li>What you withhold from each other, you withhold from yourself. Speak the tender thing.</li>
-      <li>Disagreement is not the enemy of intimacy. Distance is. Come back, however small the step.</li>
-      <li>The most sacred gift you can offer your partner is your undivided presence. Not advice. Not fixing. Presence.</li>
-      <li>Let slowness be your teacher. The body opens only at its own sacred pace. Never rush the opening.</li>
-      <li>Your partner is not your mirror — they are your mystery. Stay curious. Stay humble.</li>
-      <li>Before any difficult conversation, breathe together first. Let the nervous system soften before the mouth opens.</li>
-      <li>What cannot be said can often be held. Let silence be sacred between you. Not every feeling needs a word.</li>
-    </ol>
-  </div>
 
 </div></div>
 
@@ -1452,6 +1422,13 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
       <button class="ls-btn" style="border-color:rgba(200,146,74,.15);background:transparent;color:#a07068" onclick="lsNext()">New seed &rarr;</button>
     </div>
     <div class="ls-planted" id="ls-planted">&#127807; Planted. Carry this into tomorrow together.</div>
+  </div>
+
+  <!-- ── TANTRIC QUOTE ── -->
+  <div class="tantra-quote-banner">
+    <span class="tantra-quote-glyph">&#9673;</span>
+    <p class="tantra-quote-text">"Be together and yet free. Be together and yet utterly alone. Be together and yet utterly individual. Be together in such a way that you don't possess each other — that you give each other absolute freedom."</p>
+    <span class="tantra-quote-author">Osho</span>
   </div>
 
 </div>
