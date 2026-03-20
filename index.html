@@ -1368,7 +1368,6 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
 
   <div class="c-tabs" id="reconnect-tabs">
-    <button class="c-tab on" data-ctab="whispers">Whispers</button>
     <button class="c-tab" data-ctab="share">Share</button>
     <button class="c-tab" data-ctab="games">Games</button>
     <button class="c-tab" data-ctab="weather">🌡️ Weather</button>
@@ -1377,13 +1376,6 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     <button class="c-tab" data-ctab="challenges">🌸 Gratitude</button>
     <button class="c-tab" data-ctab="notes">📝 Notes</button>
     <button class="c-tab" data-ctab="dates">🌙 Date Night</button>
-  </div>
-  <div class="c-panel on" id="cp-whispers">
-    <span class="feat-pill">&#9651; Tonight's Ritual</span>
-    <h3 style="font-family:Georgia,serif;font-size:1.1rem;color:#f0e2d0;margin-bottom:6px;font-weight:400">A ritual for this evening</h3>
-    <p style="color:#a07068;font-size:.82rem;line-height:1.7;margin-bottom:18px">One doorway. Choose what calls to you — or let yourself be surprised.</p>
-    <div class="gcol" id="whispers-list"></div>
-    <button class="date-shuffle-btn" onclick="shuffleWhisper()" style="margin-top:12px">&#9651; Another ritual</button>
   </div>
   <div class="c-panel" id="cp-share">
     <div class="card" style="max-width:580px;margin-bottom:20px">
@@ -2477,8 +2469,8 @@ function pickRN(mood){
       t.classList.remove('on');
     });
     // Default: show Whispers panel
-    var defPanel = document.getElementById('cp-whispers');
-    var defTab = document.querySelector('[data-ctab="whispers"]');
+    var defPanel = document.getElementById('cp-share');
+    var defTab = document.querySelector('[data-ctab="share"]');
     if(defPanel){ defPanel.classList.add('on'); defPanel.style.display = 'block'; }
     if(defTab) defTab.classList.add('on');
   }
