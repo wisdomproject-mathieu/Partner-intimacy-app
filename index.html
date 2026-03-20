@@ -1843,6 +1843,29 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
       <p style="font-size:.8rem;color:#c4a882">A private space to leave words, wishes or little love notes for each other.</p>
     </div>
   </div>
+  <!-- ── SACRED QUESTION ── -->
+  <div class="sq-card" style="margin-top:18px">
+    <span class="sq-label">✦ Sacred Question</span>
+    <p class="sq-question" id="sq-text"></p>
+    <p class="sq-tradition" id="sq-source"></p>
+    <div class="sq-btn-row">
+      <button class="sq-btn" onclick="sqAddToThread()">Add to Thread &#9825;</button>
+      <button class="sq-btn sq-btn-next" onclick="sqNext()">Another question &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ── LOVE SEED ── -->
+  <div class="ls-card">
+    <span class="ls-label">&#127807; Love Seed</span>
+    <p class="ls-seed" id="ls-text"></p>
+    <p class="ls-source" id="ls-source"></p>
+    <div class="ls-btn-row">
+      <button class="ls-btn" onclick="lsPlant()">Plant this seed &#10024;</button>
+      <button class="ls-btn" style="border-color:rgba(200,146,74,.15);background:transparent;color:#a07068" onclick="lsNext()">New seed &rarr;</button>
+    </div>
+    <div class="ls-planted" id="ls-planted">&#127807; Planted. Carry this into tomorrow together.</div>
+  </div>
+
   <div class="rule-box">
     <strong style="color:#e4b87a;font-weight:400">Sacred Path rule:</strong> the phone is only the threshold. The real practice begins when you turn toward each other.
   </div>
@@ -2024,28 +2047,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
       <button class="thread-export-btn" onclick="exportThread()" id="thread-export" style="display:none">&#8675; Export as love letter</button>
     </div>
 
-    <!-- ── SACRED QUESTION ── -->
-    <div class="sq-card" style="margin-top:24px">
-      <span class="sq-label">✦ Sacred Question</span>
-      <p class="sq-question" id="sq-text"></p>
-      <p class="sq-tradition" id="sq-source"></p>
-      <div class="sq-btn-row">
-        <button class="sq-btn" onclick="sqAddToThread()">Add to Thread &#9825;</button>
-        <button class="sq-btn sq-btn-next" onclick="sqNext()">Another question &rarr;</button>
-      </div>
-    </div>
 
-    <!-- ── LOVE SEED ── -->
-    <div class="ls-card">
-      <span class="ls-label">&#127807; Love Seed</span>
-      <p class="ls-seed" id="ls-text"></p>
-      <p class="ls-source" id="ls-source"></p>
-      <div class="ls-btn-row">
-        <button class="ls-btn" onclick="lsPlant()">Plant this seed &#10024;</button>
-        <button class="ls-btn" style="border-color:rgba(200,146,74,.15);background:transparent;color:#a07068" onclick="lsNext()">New seed &rarr;</button>
-      </div>
-      <div class="ls-planted" id="ls-planted">&#127807; Planted. Carry this into tomorrow together.</div>
-    </div>
 
   </div>
   </div>
