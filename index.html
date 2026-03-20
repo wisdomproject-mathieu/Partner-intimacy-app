@@ -512,11 +512,11 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 }
 
 /* Coming-soon mobile teaser */
-.app-coming-banner{margin-top:24px;background:linear-gradient(145deg,#12060e,#0e0818,#130a08);border:1px solid rgba(200,146,74,.2);border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:14px}
-.app-coming-icon{font-size:1.5rem;flex-shrink:0;opacity:.85}
-.app-coming-text{flex:1}
-.app-coming-text strong{display:block;color:#f0e2d0;font-family:Georgia,serif;font-weight:400;font-size:.92rem;margin-bottom:4px}
-.app-coming-text span{color:#a08878;font-size:.76rem;line-height:1.6}
+.app-coming-banner{margin-top:24px;padding:28px 22px 24px;border-radius:18px;background:linear-gradient(145deg,#120a04,#0e0c18,#140810);border:1px solid rgba(200,146,74,.2);text-align:center;position:relative;overflow:hidden}
+.app-coming-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(200,146,74,.06) 0%,transparent 70%);pointer-events:none}
+.app-coming-glyph{font-size:1.5rem;opacity:.45;margin-bottom:14px;display:block;line-height:1}
+.app-coming-title{font-family:Georgia,serif;font-size:1rem;font-style:italic;color:#e8d4c4;line-height:1.85;margin:0 0 14px;letter-spacing:.01em}
+.app-coming-label{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:#c8924a;opacity:.75}
 
 /* Hide full journey page in current web app */
 #pg-journey { display:none !important; }
@@ -752,11 +752,9 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     </div>
   </div>
   <div class="app-coming-banner">
-    <div class="app-coming-icon">&#127963;</div>
-    <div class="app-coming-text">
-      <strong>The mobile app is coming</strong>
-      <span>A sacred temple for couples — more paths, more authors, audio guides, instant messaging, and a space that belongs only to the two of you.</span>
-    </div>
+    <span class="app-coming-glyph">&#9651;</span>
+    <p class="app-coming-title">You have touched the threshold. A sacred temple is being built for the two of you — deeper paths, more ancient voices, audio journeys, a private space where only your love lives, and the ability to reach each other instantly, wherever you are.</p>
+    <span class="app-coming-label">Sacred Path — Mobile App · Coming Soon</span>
   </div>
 </div></div>
 
@@ -799,11 +797,9 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     </div>
   </div>
   <div class="app-coming-banner">
-    <div class="app-coming-icon">&#127963;</div>
-    <div class="app-coming-text">
-      <strong>The mobile app is coming</strong>
-      <span>More teachers, audio, instant messaging, and a private sanctuary built only for the two of you — soon.</span>
-    </div>
+    <span class="app-coming-glyph">&#10022;</span>
+    <p class="app-coming-title">More teachers are gathering their voices for you. Barry Long. More voices that have walked the fire of sacred love — coming in audio, in depth, in presence. A private sanctuary where just the two of you meet the teachings together.</p>
+    <span class="app-coming-label">Sacred Path — Mobile App · Coming Soon</span>
   </div>
 </div></div>
 
