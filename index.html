@@ -511,16 +511,12 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
   font-size:.9rem;
 }
 
-/* Bottom premium cards */
-.reconnect-premium-card,
-.paths-premium-card,
-.teachers-premium-card{
-  margin-top:24px;
-  background:linear-gradient(145deg,#1e0f1a,#140a10);
-  border:1px solid rgba(200,146,74,.22);
-  border-radius:16px;
-  padding:20px;
-}
+/* Coming-soon mobile teaser */
+.app-coming-banner{margin-top:24px;background:linear-gradient(145deg,#12060e,#0e0818,#130a08);border:1px solid rgba(200,146,74,.2);border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:14px}
+.app-coming-icon{font-size:1.5rem;flex-shrink:0;opacity:.85}
+.app-coming-text{flex:1}
+.app-coming-text strong{display:block;color:#f0e2d0;font-family:Georgia,serif;font-weight:400;font-size:.92rem;margin-bottom:4px}
+.app-coming-text span{color:#a08878;font-size:.76rem;line-height:1.6}
 
 /* Hide full journey page in current web app */
 #pg-journey { display:none !important; }
@@ -755,13 +751,12 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
       </div>
     </div>
   </div>
-  <div class="paths-premium-card">
-    <span class="premium-badge">Premium</span>
-    <h3 style="margin:10px 0 8px;color:#f0e2d0">Go deeper into the paths</h3>
-    <p style="color:#c4a882;font-size:.84rem;line-height:1.75;margin-bottom:14px">
-      Unlock deeper guided journeys, expanded practice pathways, and future sacred themes as the library grows.
-    </p>
-    <button class="pw-btn" onclick="openSubscription()" style="max-width:260px">✦ Start Free Trial</button>
+  <div class="app-coming-banner">
+    <div class="app-coming-icon">&#127963;</div>
+    <div class="app-coming-text">
+      <strong>The mobile app is coming</strong>
+      <span>A sacred temple for couples — more paths, more authors, audio guides, instant messaging, and a space that belongs only to the two of you.</span>
+    </div>
   </div>
 </div></div>
 
@@ -803,13 +798,12 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
       </div>
     </div>
   </div>
-  <div class="teachers-premium-card">
-    <span class="premium-badge">Premium</span>
-    <h3 style="margin:10px 0 8px;color:#f0e2d0">Advanced teachings</h3>
-    <p style="color:#c4a882;font-size:.84rem;line-height:1.75;margin-bottom:14px">
-      Go deeper with future premium guides such as Barry Long, Jay Day, C. Wells, and other advanced voices.
-    </p>
-    <button class="pw-btn" onclick="openSubscription()" style="max-width:260px">✦ Start Free Trial</button>
+  <div class="app-coming-banner">
+    <div class="app-coming-icon">&#127963;</div>
+    <div class="app-coming-text">
+      <strong>The mobile app is coming</strong>
+      <span>More teachers, audio, instant messaging, and a private sanctuary built only for the two of you — soon.</span>
+    </div>
   </div>
 </div></div>
 
