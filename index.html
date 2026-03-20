@@ -673,7 +673,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
   <div style="text-align:center;padding:10px 0 28px">
     <span class="lbl">A Sanctuary for Two</span>
     <h1 class="hero-title">Our Sacred Path</h1>
-    <p style="color:#c4a882;max-width:400px;margin:0 auto;font-size:.91rem;line-height:1.8">A private space for couples deepening intimacy through Tantra, Tao, Deida &amp; Richardson. No algorithms. No social media. Just you two.</p>
+    <p style="color:#c4a882;max-width:400px;margin:0 auto;font-size:.91rem;line-height:1.8">A private sanctuary for two — where ancient wisdom meets the life you are living now. Tantra, Tao, Deida, Richardson. No algorithms. No noise. Just you, your partner, and the path you walk together.</p>
     <button class="rn-btn" onclick="openRightNow()">&#9654; Right Now</button>
   </div>
 
@@ -1440,6 +1440,12 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     <button class="c-tab" data-ctab="dates">🌙 Date Night</button>
   </div>
   <div class="c-panel on" id="cp-whispers">
+    <span class="feat-pill">&#9651; Tonight's Ritual</span>
+    <h3 style="font-family:Georgia,serif;font-size:1.1rem;color:#f0e2d0;margin-bottom:6px;font-weight:400">A ritual for this evening</h3>
+    <p style="color:#a07068;font-size:.82rem;line-height:1.7;margin-bottom:18px">One doorway. Choose what calls to you — or let yourself be surprised.</p>
+    <div class="gcol" id="whispers-list"></div>
+    <button class="date-shuffle-btn" onclick="shuffleWhisper()" style="margin-top:12px">&#9651; Another ritual</button>
+  </div>
   <div class="c-panel" id="cp-share">
     <div class="card" style="max-width:580px;margin-bottom:20px">
       <p style="font-size:.78rem;color:#c4a882;margin-bottom:12px">Write something sensual, sweet, or playful for your partner.</p>
@@ -1568,13 +1574,8 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
       </div>
       <button class="thread-export-btn" onclick="exportThread()" id="thread-export" style="display:none">&#8675; Export as love letter</button>
     </div>
-
-
-
-  </div>
   </div>
 
-</div>
   <!-- GRATITUDE CHALLENGES PANEL -->
   <div class="c-panel" id="cp-challenges">
     <span class="feat-pill">✦ Couples Challenge</span>
@@ -1652,7 +1653,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     <button class="btn btn-o btn-s share-w" style="width:100%" id="date-share-btn">Share with Partner ↗</button>
   </div>
 
-</div>
+</div></div>
 
 <!-- BOTTOM NAV -->
 
@@ -2851,6 +2852,39 @@ function pickRN(mood){
     });
   }
   // Click the toggle: if panel closed just start/stop. If panel open, start/stop.
+})();
+
+/* ══════════════════════════════════════════
+   WHISPERS — RITUAL TONIGHT
+══════════════════════════════════════════ */
+(function(){
+  var rituals = [
+    {icon:'🕯️', title:'The Sacred Arrival', text:'Sit facing each other in candlelight for five minutes. No words. Simply let your eyes soften and your breathing slow until you feel each other's presence fully.', src:'Tantric threshold practice'},
+    {icon:'🫀', title:'Heart Breath', text:'Place your right hand on each other\'s heart. Breathe together slowly for ten rounds — your inhale meeting their exhale. Feel the warmth grow between your palms.', src:'Diana Richardson — Heart connection'},
+    {icon:'👁️', title:'Eye Gazing', text:'Sit close. Hold each other\'s gaze for five full minutes without speaking. Let whatever arises — laughter, tears, love — simply move through you.', src:'Tantric eye-gazing tradition'},
+    {icon:'🌙', title:'The Slow Touch', text:'One gives. One receives. Seven minutes of unhurried touch — no agenda, no destination. Then gently reverse. Let slowness be your teacher.', src:'Tantric touch practice'},
+    {icon:'🌊', title:'Synchronized Breath', text:'Lie together in stillness. Match your breathing completely. Let your bodies soften into each other until you cannot tell where one breath ends and the other begins.', src:'Taoist breath harmonization'},
+    {icon:'💬', title:'The Tender Thing', text:'Each of you speaks one sentence that begins: "The thing I most want you to know tonight is…" Then sit in silence together for two minutes and let it land.', src:'Sacred speech practice'},
+    {icon:'🌿', title:'Gratitude Holding', text:'Hold each other in silence — one behind the other. The one being held receives without deflecting. The one holding gives without agenda. Stay for ten full minutes.', src:'Osho — The Book of Secrets'},
+    {icon:'🔥', title:'The Conscious Kiss', text:'Begin with your foreheads touching. Breathe together for one full minute. Then let the kiss arise from that stillness — slowly, with full awareness, no rush toward anything.', src:'Margot Anand — The Art of Sexual Ecstasy'},
+  ];
+  var shown = [];
+  function pick(){
+    if(shown.length === rituals.length) shown = [];
+    var remaining = rituals.filter(function(r,i){ return shown.indexOf(i)<0; });
+    var idx = Math.floor(Math.random()*remaining.length);
+    var real = rituals.indexOf(remaining[idx]);
+    shown.push(real);
+    return remaining[idx];
+  }
+  function renderWhisper(){
+    var list = document.getElementById('whispers-list');
+    if(!list) return;
+    var r = pick();
+    list.innerHTML = '<div class="card" style="margin-bottom:0"><div style="font-size:1.4rem;margin-bottom:8px">'+r.icon+'</div><h4 style="color:#f0e2d0;font-family:Georgia,serif;font-weight:400;margin-bottom:8px">'+r.title+'</h4><p style="color:#c4a882;font-size:.85rem;line-height:1.75;margin-bottom:10px">'+r.text+'</p><span style="font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:#c8924a;opacity:.7">'+r.src+'</span></div>';
+  }
+  window.shuffleWhisper = renderWhisper;
+  document.addEventListener('DOMContentLoaded', renderWhisper);
 })();
 
 /* ══════════════════════════════════════════
