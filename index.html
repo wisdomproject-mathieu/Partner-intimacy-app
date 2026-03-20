@@ -707,7 +707,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   // ── DROP YOUR FIREBASE CONFIG HERE ──
@@ -727,17 +727,26 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
   // Expose to global scope for inline event handlers
   window._fb = { auth, db, doc, setDoc, getDoc, updateDoc, collection, addDoc,
     onSnapshot, query, orderBy, serverTimestamp, getDocs,
-    createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, updateProfile };
+    createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut, updateProfile };
 
-  window.firebaseGoogleSignIn = async function() {
+  // Restore pending state across the redirect (sessionStorage survives navigation)
+  if (sessionStorage.getItem('pendingGoogleSignIn')) {
+    window._pendingInviteStep = true;
+  }
+
+  // Handle the result when Google redirects back to the app
+  getRedirectResult(auth).then(async (result) => {
+    sessionStorage.removeItem('pendingGoogleSignIn');
+    if (!result || !result.user) {
+      // Normal page load — no redirect in progress
+      window._pendingInviteStep = false;
+      return;
+    }
+    const user = result.user;
     try {
-      window._pendingInviteStep = true;
-      const provider = new GoogleAuthProvider();
-      const { user } = await signInWithPopup(auth, provider);
-      // Check if user already exists in Firestore
       const snap = await getDoc(doc(db, 'users', user.uid));
       if (!snap.exists()) {
-        // New user — create profile + couple code
+        // New user — create profile + couple code then show invite step
         const name = user.displayName ? user.displayName.split(' ')[0] : 'Friend';
         const code = name.substring(0,2).toUpperCase() + Math.random().toString(36).substring(2,6).toUpperCase();
         await setDoc(doc(db, 'users', user.uid), {
@@ -747,27 +756,38 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
           user1: user.uid, user2: null, user1Name: name, user2Name: null, createdAt: serverTimestamp()
         });
         window._coupleCode = code;
-        window._pendingInviteStep = false;
-        // Ensure overlay is visible, then show invite step
         document.getElementById('auth-overlay').style.removeProperty('display');
         document.getElementById('auth-overlay').classList.add('show');
         document.body.style.overflow = 'hidden';
-        showAuthStep('step-invite');
+        if (typeof showAuthStep === 'function') showAuthStep('step-invite');
         document.getElementById('invite-code').textContent = code;
         document.getElementById('invite-share-link').value = 'https://sacredpathforcouples.com?join=' + code;
       } else {
-        // Existing user — close overlay now (onAuthStateChanged already fired and was blocked)
+        // Existing user — close overlay (onAuthStateChanged may have been blocked by _pendingInviteStep)
         window._pendingInviteStep = false;
-        var _ov=document.getElementById('auth-overlay');
-        if(_ov){ _ov.classList.remove('show'); _ov.style.removeProperty('display'); }
+        var _ov = document.getElementById('auth-overlay');
+        if (_ov) { _ov.classList.remove('show'); _ov.style.removeProperty('display'); }
         document.body.style.overflow = '';
       }
     } catch(e) {
       window._pendingInviteStep = false;
-      if (e.code !== 'auth/popup-closed-by-user') {
-        document.getElementById('err-google').textContent = 'Sign in failed. Please try again.';
-      }
+      var errEl = document.getElementById('err-google');
+      if (errEl) errEl.textContent = 'Sign in failed. Please try again.';
     }
+  }).catch((e) => {
+    sessionStorage.removeItem('pendingGoogleSignIn');
+    window._pendingInviteStep = false;
+    if (e.code !== 'auth/redirect-cancelled-by-user') {
+      var errEl = document.getElementById('err-google');
+      if (errEl) errEl.textContent = 'Sign in failed. Please try again.';
+    }
+  });
+
+  window.firebaseGoogleSignIn = function() {
+    sessionStorage.setItem('pendingGoogleSignIn', '1');
+    window._pendingInviteStep = true;
+    const provider = new GoogleAuthProvider();
+    signInWithRedirect(auth, provider);
   };
 
   // Auth state watcher
