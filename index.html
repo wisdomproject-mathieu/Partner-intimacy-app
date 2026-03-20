@@ -623,24 +623,24 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 .notes-saved{color:#4ccc80}
 
 /* ── SACRED QUESTION ── */
-.sq-card{background:linear-gradient(145deg,rgba(192,65,95,.07),rgba(144,100,200,.06));border:1px solid rgba(192,65,95,.2);border-radius:16px;padding:22px 20px;margin-bottom:16px}
-.sq-label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#c0415f;margin-bottom:10px;display:block}
-.sq-question{font-family:Georgia,serif;font-size:1rem;color:#f0e2d0;line-height:1.75;font-style:italic;margin-bottom:16px;min-height:48px}
-.sq-tradition{font-size:.68rem;color:#a07068;margin-bottom:14px}
+.sq-card{background:#1e0f1a;border:1px solid rgba(200,140,90,.16);border-radius:16px;padding:16px;margin-bottom:16px}
+.sq-label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#c8924a;margin-bottom:10px;display:block}
+.sq-question{font-family:Georgia,serif;font-size:.95rem;color:#f0e2d0;line-height:1.75;font-style:italic;margin-bottom:14px;min-height:48px}
+.sq-tradition{font-size:.68rem;color:#a07068;margin-bottom:12px}
 .sq-btn-row{display:flex;gap:8px;flex-wrap:wrap}
-.sq-btn{padding:8px 16px;border-radius:10px;font-size:.75rem;letter-spacing:.06em;border:1px solid rgba(192,65,95,.25);background:rgba(192,65,95,.08);color:#e06e88;cursor:pointer;transition:all .2s}
-.sq-btn:hover{background:rgba(192,65,95,.16)}
-.sq-btn-next{border-color:rgba(200,146,74,.25);background:rgba(200,146,74,.08);color:#c8924a}
-.sq-btn-next:hover{background:rgba(200,146,74,.16)}
+.sq-btn{padding:8px 16px;border-radius:10px;font-size:.75rem;letter-spacing:.06em;border:1px solid rgba(200,140,90,.2);background:rgba(200,140,90,.08);color:#c8924a;cursor:pointer;transition:all .2s}
+.sq-btn:hover{background:rgba(200,140,90,.15)}
+.sq-btn-next{border-color:rgba(200,146,74,.2);background:rgba(200,146,74,.06);color:#c8924a}
+.sq-btn-next:hover{background:rgba(200,146,74,.14)}
 
 /* ── LOVE SEED ── */
-.ls-card{background:linear-gradient(145deg,rgba(200,146,74,.07),rgba(76,180,100,.05));border:1px solid rgba(200,146,74,.2);border-radius:16px;padding:22px 20px;margin-bottom:16px}
+.ls-card{background:#1e0f1a;border:1px solid rgba(200,140,90,.16);border-radius:16px;padding:16px;margin-bottom:16px}
 .ls-label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#c8924a;margin-bottom:10px;display:block}
 .ls-seed{font-family:Georgia,serif;font-size:.97rem;color:#f0e2d0;line-height:1.78;font-style:italic;margin-bottom:8px;min-height:44px}
 .ls-source{font-size:.68rem;color:#a07068;margin-bottom:14px}
 .ls-btn-row{display:flex;gap:8px;flex-wrap:wrap}
-.ls-btn{padding:8px 16px;border-radius:10px;font-size:.75rem;letter-spacing:.06em;border:1px solid rgba(200,146,74,.25);background:rgba(200,146,74,.08);color:#c8924a;cursor:pointer;transition:all .2s}
-.ls-btn:hover{background:rgba(200,146,74,.16)}
+.ls-btn{padding:8px 16px;border-radius:10px;font-size:.75rem;letter-spacing:.06em;border:1px solid rgba(200,140,90,.2);background:rgba(200,140,90,.08);color:#c8924a;cursor:pointer;transition:all .2s}
+.ls-btn:hover{background:rgba(200,140,90,.15)}
 .ls-planted{display:none;align-items:center;gap:8px;margin-top:10px;font-size:.8rem;color:#4ccc80;font-family:Georgia,serif;font-style:italic}
 
 /* ── DATE NIGHT IDEAS ── */
@@ -1115,15 +1115,6 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
   </div>
 
 </div></div>
-
-  <!-- DIANA RICHARDSON CARD ON HOME -->
-  <div class="divg"></div>
-  <div class="card rich-card" style="margin-bottom:0;cursor:pointer" onclick="go('teachers');document.querySelector('[data-p=richardson]') && document.querySelector('[data-p=richardson]').click()">
-    <span class="lbl" style="color:#c09ae0">Featured Teacher</span>
-    <h3 style="font-family:Georgia,serif;font-size:1.15rem;color:#f0e2d0;font-weight:400;margin-bottom:8px">&#10047; Diana Richardson</h3>
-    <p style="font-family:Georgia,serif;font-style:italic;color:#d8c8f0;font-size:.93rem;line-height:1.75;margin-bottom:10px">&ldquo;When we stop trying to get somewhere sexually, we discover that we are already there. The body, held in loving stillness, becomes a universe of sensation all by itself.&rdquo;</p>
-    <span style="font-size:.72rem;color:#c09ae0">Explore slow love &amp; stillness practices &rarr;</span>
-  </div>
 
   <!-- PREMIUM SECTION ON HOME -->
 
@@ -1833,10 +1824,9 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     </div>
   </div>
   <!-- ── SACRED QUESTION ── -->
-  <div class="sq-card" style="margin-top:18px">
+  <div class="sq-card" style="margin-top:12px">
     <span class="sq-label">✦ Sacred Question</span>
     <p class="sq-question" id="sq-text"></p>
-    <p class="sq-tradition" id="sq-source"></p>
     <div class="sq-btn-row">
       <button class="sq-btn" onclick="sqAddToThread()">Add to Thread &#9825;</button>
       <button class="sq-btn sq-btn-next" onclick="sqNext()">Another question &rarr;</button>
@@ -1845,9 +1835,8 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
   <!-- ── LOVE SEED ── -->
   <div class="ls-card">
-    <span class="ls-label">&#127807; Love Seed</span>
+    <span class="ls-label">&#127807; Plant the Seed</span>
     <p class="ls-seed" id="ls-text"></p>
-    <p class="ls-source" id="ls-source"></p>
     <div class="ls-btn-row">
       <button class="ls-btn" onclick="lsPlant()">Plant this seed &#10024;</button>
       <button class="ls-btn" style="border-color:rgba(200,146,74,.15);background:transparent;color:#a07068" onclick="lsNext()">New seed &rarr;</button>
