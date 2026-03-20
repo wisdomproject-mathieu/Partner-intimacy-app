@@ -431,7 +431,7 @@ body.banner-shown{padding-top:calc(58px + 42px)}
 .unsaid-choice-lbl{font-size:.68rem;color:#c4a882;line-height:1.4}
 
 /* ── THE THREAD ── */
-.thread-wrap{}
+.thread-wrap{background:linear-gradient(145deg,rgba(200,140,90,.07),rgba(120,80,160,.05));border:1px solid rgba(200,140,90,.2);border-radius:16px;padding:22px 20px;margin-bottom:16px}
 .thread-intro{color:#c4a882;font-size:.86rem;line-height:1.78;margin-bottom:16px}
 .thread-entry-input{display:flex;gap:8px;margin-bottom:20px;align-items:flex-end}
 .thread-input{flex:1;background:#1c0e18;border:1px solid rgba(200,140,90,.16);border-radius:10px;color:#f0e2d0;font-family:Georgia,serif;font-size:.92rem;font-style:italic;padding:10px 12px;outline:none;resize:none;min-height:44px}
@@ -534,7 +534,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 /* Reconnect page focus mode */
 #reconnect-hub { display:block; }
 #reconnect-back-row { display:none; }
-#reconnect-tabs { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:18px; }
+#reconnect-tabs { display:none !important; }
 #pg-connect .c-panel { display:none; }
 #pg-connect .c-panel.on { display:block; }
 
@@ -1096,12 +1096,6 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     <button class="daily-go" id="daily-go">Open full practice &rarr;</button>
   </div>
 
-  <div class="divg"></div>
-  <span class="lbl">Today</span>
-  <div class="g2" style="margin-top:11px">
-    <div class="card"><div class="wtime">&#127749; Morning</div><p class="wtxt">Before you leave today, hold each other for 60 full seconds. A real breathing embrace. Feel their heartbeat.</p><button class="btn btn-o btn-s" data-p="connect">Share &rarr;</button></div>
-    <div class="card"><div class="wtime">&#127769; Evening</div><p class="wtxt">Before bed, undress slowly. Not seductively &mdash; mindfully. Let your body be seen without hurry.</p><button class="btn btn-o btn-s" data-p="connect">Share &rarr;</button></div>
-  </div>
   <div class="divl"></div>
   <span class="lbl">Explore</span>
   <h2 style="margin-bottom:6px">Ancient Traditions</h2>
@@ -1118,23 +1112,17 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     <div class="card path-card pc-blue" data-p="deida"><h4>&#10022; David Deida</h4><p>Polarity, masculine presence, and the electricity between feminine and masculine essences.</p><span class="go">Wisdom &amp; practices &rarr;</span></div>
     <div class="card path-card pc-vio" data-p="richardson"><h4>&#10047; Diana Richardson</h4><p>Slow love, soft presence, and the profound healing power of non-goal-oriented union.</p><span class="go">Wisdom &amp; practices &rarr;</span></div>
   </div>
-  <div class="divl"></div>
-  <span class="lbl">Together</span>
-  <h2 style="margin-bottom:6px">4 Ways to Reconnect</h2>
-  <p style="color:#c4a882;font-size:.83rem;margin-bottom:14px">The same four doorway tools you will find inside Reconnect.</p>
-  <div class="g2">
-    <div class="card connect-way" onclick="go('connect');openReconnectTool('whispers')"><div class="cw-icon">🌙</div><h4>A ritual tonight</h4><p>Open simple whispers and practical prompts for this evening.</p><span class="go">Open ritual whispers →</span></div>
-    <div class="card connect-way" onclick="go('connect');openReconnectTool('weather')"><div class="cw-icon">🌡️</div><h4>Intimacy Weather</h4><p>Name your emotional climate before touch and receive a gentler doorway back into each other.</p><span class="go">Open weather →</span></div>
-    <div class="card connect-way" onclick="go('connect');openReconnectTool('unsaid')"><div class="cw-icon">🤫</div><h4>The Unsaid</h4><p>Write what feels unspoken first, privately, before it hardens into distance.</p><span class="go">Open The Unsaid →</span></div>
-    <div class="card connect-way" onclick="go('connect');openReconnectTool('thread')"><div class="cw-icon">🧵</div><h4>The Thread</h4><p>Leave one small gratitude for tonight and let tenderness accumulate over time.</p><span class="go">Open The Thread →</span></div>
-  </div>
-  <div class="divl"></div>
-  <div class="qgrid" style="grid-template-columns:repeat(2,1fr)">
-    <div class="qi" data-p="paths"><span class="qi-i">&#9673;</span><span class="qi-l">Sacred Paths</span></div>
-    <div class="qi" data-p="teachers"><span class="qi-i">&#10022;</span><span class="qi-l">Teachers</span></div>
-  </div>
 
 </div></div>
+
+  <!-- DIANA RICHARDSON CARD ON HOME -->
+  <div class="divg"></div>
+  <div class="card rich-card" style="margin-bottom:0;cursor:pointer" onclick="go('teachers');document.querySelector('[data-p=richardson]') && document.querySelector('[data-p=richardson]').click()">
+    <span class="lbl" style="color:#c09ae0">Featured Teacher</span>
+    <h3 style="font-family:Georgia,serif;font-size:1.15rem;color:#f0e2d0;font-weight:400;margin-bottom:8px">&#10047; Diana Richardson</h3>
+    <p style="font-family:Georgia,serif;font-style:italic;color:#d8c8f0;font-size:.93rem;line-height:1.75;margin-bottom:10px">&ldquo;When we stop trying to get somewhere sexually, we discover that we are already there. The body, held in loving stillness, becomes a universe of sensation all by itself.&rdquo;</p>
+    <span style="font-size:.72rem;color:#c09ae0">Explore slow love &amp; stillness practices &rarr;</span>
+  </div>
 
   <!-- PREMIUM SECTION ON HOME -->
 
@@ -1905,18 +1893,6 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
       <div class="card tod-card tod-r"><span class="tod-lbl">&#127769; Evening</span><button class="rvbtn" id="rv-e">Reveal &#10022;</button><p class="tod-txt" id="tod-e" style="display:none">Before bed, undress slowly. Not seductively &mdash; mindfully. Let your body be seen without hurry.</p></div>
       <div class="card tod-card tod-b"><span class="tod-lbl">&#127922; Tonight</span><button class="rvbtn" id="rv-g">Reveal &#10022;</button><p class="tod-txt" id="tod-g" style="display:none">Tonight, express desire only through touch &mdash; no words at all. Discover how much you can say without language.</p></div>
     </div>
-    <div style="height:1px;background:rgba(200,140,90,.14);margin:28px 0"></div>
-    <span class="lbl" style="margin-bottom:13px">More Ritual Ideas</span>
-    <div class="wgrid">
-      <div class="card" style="display:flex;flex-direction:column"><div class="w-cat">Morning</div><p class="w-txt2">Hold each other for 60 full seconds before leaving. A real breathing embrace. Feel their heartbeat.</p><button class="btn btn-o btn-s share-w">Share &#8599;</button></div>
-      <div class="card" style="display:flex;flex-direction:column"><div class="w-cat">Morning</div><p class="w-txt2">Send your partner one message today that has nothing to do with logistics. Just: I was thinking about you.</p><button class="btn btn-o btn-s share-w">Share &#8599;</button></div>
-      <div class="card" style="display:flex;flex-direction:column"><div class="w-cat">Morning</div><p class="w-txt2">Look into each other's eyes for 30 slow seconds before breakfast. Let them really see you today.</p><button class="btn btn-o btn-s share-w">Share &#8599;</button></div>
-      <div class="card" style="display:flex;flex-direction:column"><div class="w-cat">Morning</div><p class="w-txt2">Tell your partner one thing you love about them that you have never actually said out loud before.</p><button class="btn btn-o btn-s share-w">Share &#8599;</button></div>
-      <div class="card" style="display:flex;flex-direction:column"><div class="w-cat">Evening</div><p class="w-txt2">Undress slowly before bed. Not seductively &mdash; mindfully. Let your body be seen without hurry.</p><button class="btn btn-o btn-s share-w">Share &#8599;</button></div>
-      <div class="card" style="display:flex;flex-direction:column"><div class="w-cat">Evening</div><p class="w-txt2">Synchronize your breathing for 5 minutes before sleep. Feel your nervous systems soften together.</p><button class="btn btn-o btn-s share-w">Share &#8599;</button></div>
-      <div class="card" style="display:flex;flex-direction:column"><div class="w-cat">Evening</div><p class="w-txt2">Offer your partner a 10-minute back massage &mdash; nothing more. Be utterly present to the gift of giving.</p><button class="btn btn-o btn-s share-w">Share &#8599;</button></div>
-      <div class="card" style="display:flex;flex-direction:column"><div class="w-cat">Evening</div><p class="w-txt2">Put all screens away 1 hour before bed. Let those last hours belong only to each other.</p><button class="btn btn-o btn-s share-w">Share &#8599;</button></div>
-    </div>
   </div>
   <div class="c-panel" id="cp-share">
     <div class="card" style="max-width:580px;margin-bottom:20px">
@@ -2032,9 +2008,9 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
   <!-- THE THREAD PANEL -->
 
   <div class="c-panel" id="cp-thread">
-    <span class="feat-pill">✦ New Feature</span>
     <div class="thread-wrap">
-      <h3 style="font-family:Georgia,serif;font-size:1.1rem;color:#f0e2d0;margin-bottom:6px;font-weight:400">The Thread</h3>
+      <span class="ls-label" style="color:#c8924a">&#9825; The Thread</span>
+      <h3 style="font-family:Georgia,serif;font-size:1.1rem;color:#f0e2d0;margin-bottom:6px;font-weight:400">Build your love letter together</h3>
       <p class="thread-intro">One small moment of gratitude each day. A look. A gesture. A word they said. Over months it becomes a love letter neither of you could have written alone.</p>
       <div class="thread-entry-input">
         <textarea class="thread-input" id="thread-input" rows="2" placeholder="What small moment touched you today..."></textarea>
