@@ -624,7 +624,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
 /* ── SACRED QUESTION ── */
 .sq-card{background:#1e0f1a;border:1px solid rgba(200,140,90,.16);border-radius:16px;padding:16px;margin-bottom:16px}
-.sq-label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#c8924a;margin-bottom:10px;display:block}
+.sq-title{color:#f0e2d0;font-family:Georgia,serif;font-weight:400}
 .sq-question{font-size:.8rem;color:#c4a882;line-height:1.65;margin-bottom:14px}
 .sq-tradition{font-size:.68rem;color:#a07068;margin-bottom:12px}
 .sq-btn-row{display:flex;gap:8px;flex-wrap:wrap}
@@ -635,7 +635,7 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
 /* ── LOVE SEED ── */
 .ls-card{background:#1e0f1a;border:1px solid rgba(200,140,90,.16);border-radius:16px;padding:16px;margin-bottom:16px}
-.ls-label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#c8924a;margin-bottom:10px;display:block}
+.ls-title{color:#f0e2d0;font-family:Georgia,serif;font-weight:400}
 .ls-seed{font-size:.8rem;color:#c4a882;line-height:1.65;margin-bottom:8px}
 .ls-source{font-size:.68rem;color:#a07068;margin-bottom:14px}
 .ls-btn-row{display:flex;gap:8px;flex-wrap:wrap}
@@ -1847,7 +1847,8 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
   </div>
   <!-- ── SACRED QUESTION ── -->
   <div class="sq-card" style="margin-top:12px">
-    <span class="sq-label">✦ Sacred Question</span>
+    <div style="font-size:1.4rem;margin-bottom:6px">🔮</div>
+    <h4 class="sq-title" style="margin-bottom:6px">Sacred Question</h4>
     <p class="sq-question" id="sq-text"></p>
     <div class="sq-btn-row">
       <button class="sq-btn" onclick="sqAddToThread()">Add to Thread &#9825;</button>
@@ -1857,7 +1858,8 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 
   <!-- ── LOVE SEED ── -->
   <div class="ls-card">
-    <span class="ls-label">&#127807; Plant the Seed</span>
+    <div style="font-size:1.4rem;margin-bottom:6px">🌱</div>
+    <h4 class="ls-title" style="margin-bottom:6px">Plant the Seed</h4>
     <p class="ls-seed" id="ls-text"></p>
     <div class="ls-btn-row">
       <button class="ls-btn" onclick="lsPlant()">Plant this seed &#10024;</button>
