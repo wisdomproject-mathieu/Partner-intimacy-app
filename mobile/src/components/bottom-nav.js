@@ -8,6 +8,15 @@ export function bottomNav(active) {
       </svg>`,
     },
     {
+      key: 'positions',
+      label: 'Practices',
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5"/>
+        <path d="M2 12l10 5 10-5"/>
+      </svg>`,
+    },
+    {
       key: 'compose',
       label: 'Write',
       icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">

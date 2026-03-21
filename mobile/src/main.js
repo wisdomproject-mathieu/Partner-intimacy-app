@@ -4,6 +4,7 @@ import { renderInvitePartner } from './screens/invite-partner.js'
 import { renderFeed } from './screens/feed.js'
 import { renderCompose } from './screens/compose.js'
 import { renderProfile } from './screens/profile.js'
+import { renderPositions } from './screens/positions.js'
 import { getSession, onSessionChange } from './firebase/auth.js'
 import { DEMO_MODE, demoUser } from './firebase/demo.js'
 
@@ -33,6 +34,7 @@ function render(screen, params = {}) {
     case 'invite-partner': renderInvitePartner(el, params); break
     case 'feed':           renderFeed(el, params);           break
     case 'compose':        renderCompose(el, params);        break
+    case 'positions':      renderPositions(el, params);      break
     case 'profile':        renderProfile(el, params);        break
     default:               renderFeed(el, params)
   }
