@@ -1,0 +1,17 @@
+{
+  "appId": "com.sacredpath.couples",
+  "appName": "Sacred Path",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_icon_config_sample",
+      "iconColor": "#c084fc"
+    }
+  }
+}
