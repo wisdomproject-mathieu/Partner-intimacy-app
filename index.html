@@ -615,6 +615,18 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
 .sp{position:absolute;border-radius:50%;opacity:0;animation:spFloat linear infinite}
 @keyframes spFloat{0%{opacity:0;transform:translateY(4px) scale(0)}15%{opacity:.8}70%{opacity:.3}100%{opacity:0;transform:translateY(-90px) scale(1.2)}}
 
+/* ── SACRED RULES BUTTON & OVERLAY ── */
+.sr-btn{padding:13px 28px;background:linear-gradient(135deg,#1a0c14,#221020);border:1px solid rgba(200,146,74,.35);border-radius:30px;color:#e4b87a;font-family:Georgia,serif;font-size:1rem;font-weight:500;cursor:pointer;letter-spacing:.04em;transition:transform .15s}
+.sr-btn:active{transform:scale(.97)}
+.sr-overlay{display:none;position:fixed;inset:0;background:rgba(9,4,10,.97);z-index:9999;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0}
+.sr-page{max-width:560px;margin:0 auto;padding:28px 20px 60px}
+.sr-back{display:flex;align-items:center;gap:8px;background:none;border:none;color:#c8924a;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;padding:0;margin-bottom:32px;-webkit-tap-highlight-color:transparent}
+.sr-back-arrow{font-size:1.1rem;line-height:1}
+.sr-page-header{text-align:center;margin-bottom:28px}
+.sr-page-star{color:#c8924a;font-size:.9rem;opacity:.7}
+.sr-page-title{font-family:Georgia,serif;font-size:clamp(1.1rem,3vw,1.5rem);font-weight:400;background:linear-gradient(135deg,#f0e2d0,#e4b87a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:8px 0 4px;line-height:1.4}
+.sr-page-sub{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#c8924a;opacity:.6}
+
 /* ── SACRED TEMPLE BANNER ── */
 .temple-banner{margin:36px 0 0;padding:30px 22px 26px;border-radius:18px;background:linear-gradient(145deg,#120820,#0e0c18,#1a0c10);border:1px solid rgba(200,146,74,.25);text-align:center;position:relative;overflow:hidden}
 .temple-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(200,146,74,.08) 0%,transparent 65%);pointer-events:none}
@@ -665,7 +677,10 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     <span class="lbl">A Sanctuary for Two</span>
     <h1 class="hero-title">Our Sacred Path</h1>
     <p style="color:#c4a882;max-width:400px;margin:0 auto;font-size:.91rem;line-height:1.8">A private sanctuary for two — where ancient wisdom meets the life you are living now. Tantra, Tao, Deida, Richardson. No algorithms. No noise. Just you, your partner, and the path you walk together.</p>
-    <button class="rn-btn" onclick="openRightNow()">&#9654; Right Now</button>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px">
+      <button class="rn-btn" style="margin-top:0" onclick="openRightNow()">&#9654; Right Now</button>
+      <button class="sr-btn" onclick="openSacredRules()">&#10022; Sacred Rules</button>
+    </div>
   </div>
 
   <!-- SWIPEABLE WISDOM CARD -->
@@ -691,37 +706,6 @@ button,.btn,.pc-arrow,.seq-arrow,.iw-mood,.challenge-card,.c-tab,.dn,.bn,.rvbtn{
     <button class="daily-go" id="daily-go">Open full practice &rarr;</button>
   </div>
 
-  <div class="divl"></div>
-  <span class="lbl">Explore</span>
-  <h2 style="margin-bottom:6px">Ancient Traditions</h2>
-  <p style="color:#c4a882;font-size:.83rem;margin-bottom:14px">Two living paths for sacred intimacy</p>
-  <div class="g2">
-    <div class="card path-card pc-rose" data-p="tantra"><h4>&#9673; Tantra</h4><p>Sacred union, energy work, and the awakening of Kundalini. The body as divine instrument of consciousness.</p><span class="go">Wisdom &amp; positions &rarr;</span></div>
-    <div class="card path-card pc-gold" data-p="tao"><h4>&#9711; Tao</h4><p>Yin-yang harmony, chi cultivation, and the art of loving longevity. The path of effortless nourishing flow.</p><span class="go">Wisdom &amp; positions &rarr;</span></div>
-  </div>
-
-
-  <!-- SACRED PATH — RULES FOR TWO -->
-  <div class="divg"></div>
-  <div class="sacred-rules-wrap" id="premium-home-wall">
-    <div class="sacred-rules-header">
-      <span class="sacred-rules-star">✦</span>
-      <span class="sacred-rules-title">Sacred Path — Rules for Two</span>
-      <span class="sacred-rules-star">✦</span>
-    </div>
-    <ol class="sacred-rules-list">
-      <li>The phone is only the threshold. The real practice begins when you turn toward each other.</li>
-      <li>Come to bed without armor. Just your body, your breath, and your willingness to be seen.</li>
-      <li>Touch your partner as if your hands have never met their skin before — slowly, with no destination.</li>
-      <li>What you withhold from each other, you withhold from yourself. Speak the tender thing.</li>
-      <li>Disagreement is not the enemy of intimacy. Distance is. Come back, however small the step.</li>
-      <li>The most sacred gift you can offer your partner is your undivided presence. Not advice. Not fixing. Presence.</li>
-      <li>Let slowness be your teacher. The body opens only at its own sacred pace. Never rush the opening.</li>
-      <li>Your partner is not your mirror — they are your mystery. Stay curious. Stay humble.</li>
-      <li>Before any difficult conversation, breathe together first. Let the nervous system soften before the mouth opens.</li>
-      <li>What cannot be said can often be held. Let silence be sacred between you. Not every feeling needs a word.</li>
-    </ol>
-  </div>
 
 </div></div>
 
@@ -2239,6 +2223,15 @@ function closeRightNow(){
   document.getElementById('rn-overlay').style.display='none';
   document.body.style.overflow='';
 }
+function openSacredRules(){
+  document.getElementById('sr-overlay').style.display='block';
+  document.body.style.overflow='hidden';
+  document.getElementById('sr-overlay').scrollTop=0;
+}
+function closeSacredRules(){
+  document.getElementById('sr-overlay').style.display='none';
+  document.body.style.overflow='';
+}
 function pickRN(mood){
   var list = rnPractices[mood];
   var p = list[Math.floor(Math.random()*list.length)];
@@ -2449,6 +2442,30 @@ function pickRN(mood){
       <button onclick="openRightNow()" style="width:100%;padding:11px;background:rgba(200,146,74,.1);border:1px solid rgba(200,146,74,.25);border-radius:10px;color:#e4b87a;cursor:pointer;font-size:.85rem;margin-bottom:10px">&#8635; Another one</button>
       <button class="rn-close" onclick="closeRightNow()">Close</button>
     </div>
+  </div>
+</div>
+
+<!-- SACRED RULES OVERLAY -->
+<div id="sr-overlay" class="sr-overlay">
+  <div class="sr-page">
+    <button class="sr-back" onclick="closeSacredRules()"><span class="sr-back-arrow">&#8592;</span> Back</button>
+    <div class="sr-page-header">
+      <div><span class="sr-page-star">&#10022;</span>&ensp;<span class="sr-page-star">&#10022;</span>&ensp;<span class="sr-page-star">&#10022;</span></div>
+      <h2 class="sr-page-title">Sacred Path &mdash; Rules for Two</h2>
+      <span class="sr-page-sub">Ten invitations to walk together</span>
+    </div>
+    <ol class="sacred-rules-list" style="gap:14px">
+      <li>The phone is only the threshold. The real practice begins when you turn toward each other.</li>
+      <li>Come to bed without armor. Just your body, your breath, and your willingness to be seen.</li>
+      <li>Touch your partner as if your hands have never met their skin before &mdash; slowly, with no destination.</li>
+      <li>What you withhold from each other, you withhold from yourself. Speak the tender thing.</li>
+      <li>Disagreement is not the enemy of intimacy. Distance is. Come back, however small the step.</li>
+      <li>The most sacred gift you can offer your partner is your undivided presence. Not advice. Not fixing. Presence.</li>
+      <li>Let slowness be your teacher. The body opens only at its own sacred pace. Never rush the opening.</li>
+      <li>Your partner is not your mirror &mdash; they are your mystery. Stay curious. Stay humble.</li>
+      <li>Before any difficult conversation, breathe together first. Let the nervous system soften before the mouth opens.</li>
+      <li>What cannot be said can often be held. Let silence be sacred between you. Not every feeling needs a word.</li>
+    </ol>
   </div>
 </div>
 
