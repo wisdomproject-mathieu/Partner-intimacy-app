@@ -1,142 +1,227 @@
-import { navigate, state } from '../main.js'
+import { navigate } from '../main.js'
 import { bottomNav } from '../components/bottom-nav.js'
-import { showToast } from '../components/toast.js'
 
-// 6 curated positions for mobile (reduced from ~18 in the web app)
-const POSITIONS = [
-  {
-    id: 'yab-yum',
-    name: 'Yab-Yum',
-    tradition: 'Tantra',
-    level: 'beginners',
-    duration: '10–20 min',
-    glyph: '☽',
+// ─── Content ──────────────────────────────────────────────────────────────────
+
+const CONTENT = {
+  tantra: {
+    label: 'Tantra',
     color: '#c0415f',
-    desc: 'The foundational posture of Tantric sacred union. Sit face to face, legs wrapped around each other. Synchronize breath and build a shared energy circuit through all seven chakras.',
-    steps: [
-      'Active partner sits cross-legged, spine tall. Take 5 deep breaths alone first.',
-      'Receptive partner faces them, legs around the waist, arms over the shoulders. Foreheads touch.',
-      'Let your chests meet. Feel the warmth between your hearts. Stay one full minute before breathing together.',
-      'Synchronize breath: inhale 4 counts, exhale 4 counts together. Let nothing else exist.',
-      'With each inhale, visualize light rising from the base of the spine to the crown.',
-      'Continue 10–20 minutes. End with 5 minutes of complete silence.',
+    glyph: '☽',
+    wisdom: [
+      {
+        quote: 'When two people meet in love, they create a third — an energy field that is greater than both. This is the true meaning of sacred union.',
+        author: 'Osho',
+      },
+      {
+        quote: 'Tantra says: do not suppress, do not fight — transform. Every energy in you is sacred if you know how to receive it.',
+        author: 'Tantra teaching',
+      },
+      {
+        quote: 'The breath is the bridge between body and soul. When lovers synchronize their breath, they synchronize their beings.',
+        author: 'Tantric tradition',
+      },
+      {
+        quote: 'Touch your partner as if touching the divine. Because you are.',
+        author: 'Kashmir Shaivism',
+      },
+      {
+        quote: 'In Tantra, the body is not an obstacle to awakening — it is the very temple in which awakening happens.',
+        author: 'Abhinavagupta',
+      },
     ],
-    tip: 'Play Tibetan singing bowl recordings — no lyrics. Soundscapes allow presence.',
-  },
-  {
-    id: 'scissors',
-    name: 'Scissors of Stillness',
-    tradition: 'Richardson',
-    level: 'beginners',
-    duration: '15–30 min',
-    glyph: '⊹',
-    color: '#c09ae0',
-    desc: 'Lie on your sides, bodies interlaced. Neither partner exerts effort. Let energy move by itself in the space of complete rest.',
-    steps: [
-      'Lie facing each other on your sides. Legs interweave gently like scissors.',
-      'Enter softly and rest in complete stillness — no thrusting, no agenda.',
-      'Both partners breathe deeply, relaxing every muscle with each exhale.',
-      'Focus entirely on warmth and subtle inner movement.',
-      'Stay for as long as feels right. There is no goal here.',
+    positions: [
+      {
+        name: 'Yab-Yum',
+        glyph: '☽',
+        duration: '10–20 min',
+        level: 'Beginners',
+        desc: 'The foundational posture of Tantric sacred union. Sit face to face, legs wrapped around each other. Synchronize breath and build a shared energy circuit through all seven chakras. The practice is stillness — not movement. Two beings becoming one field.',
+      },
+      {
+        name: 'Shakti Wave',
+        glyph: '✺',
+        duration: '15–25 min',
+        level: 'Intermediate',
+        desc: 'The receptive partner lies back and breathes deeply into the belly, allowing energy to rise as waves through the body. The active partner places one hand on the heart, one on the womb, breathing in rhythm. No agenda — only witnessing.',
+      },
+      {
+        name: 'Firebird',
+        glyph: '✦',
+        duration: '20–30 min',
+        level: 'Intermediate',
+        desc: 'Both partners sit facing each other, not touching. Eyes open. Breathe in unison for ten minutes. Let whatever arises — emotion, trembling, tears, laughter — move through without stopping it. This is the fire. You are both the bird.',
+      },
     ],
-    tip: 'This is the deepest rest position. If you fall asleep, that is the practice working.',
   },
-  {
-    id: 'valley-orgasm',
-    name: 'Valley Orgasm',
-    tradition: 'Tao',
-    level: 'advanced',
-    duration: '30–60 min',
-    glyph: 'ॐ',
+
+  tao: {
+    label: 'Tao',
     color: '#e4b87a',
-    desc: 'A Taoist practice of building and circulating sexual energy without release. Energy is drawn upward through the body in waves rather than discharged.',
-    steps: [
-      'Begin in any still position. Breathe together slowly for 5 minutes.',
-      'As arousal builds, both partners consciously draw energy upward from the pelvis.',
-      'Use the PC muscle contraction on the inhale — imagine pulling energy up the spine.',
-      'When close to peak, slow down or stop all movement. Breathe through the wave.',
-      'Let the energy spread as warmth through the chest, hands, and crown.',
-      'Repeat this cycle 3–9 times. The "valley" is the space between peaks.',
+    glyph: 'ॐ',
+    wisdom: [
+      {
+        quote: 'The Tao that can be spoken is not the eternal Tao. But it can be felt — between two bodies, in the space of surrender.',
+        author: 'Lao Tzu, adapted',
+      },
+      {
+        quote: 'Sexual energy is your life-force. The Tao teaches not suppression but refinement — drawing it upward to nourish the whole being.',
+        author: 'Mantak Chia',
+      },
+      {
+        quote: 'In gentleness lies great strength. The softest water carves the hardest stone. Let your union be water.',
+        author: 'Tao Te Ching',
+      },
+      {
+        quote: 'Nine shallow, one deep — the rhythm of the Tao in lovemaking. The shallow strokes build presence; the deep stroke completes the circuit.',
+        author: 'Taoist sexology',
+      },
+      {
+        quote: 'When you stop chasing the peak, you discover the valley — an ocean of pleasure that has no end.',
+        author: 'Taoist teaching',
+      },
     ],
-    tip: 'Mantak Chia: "The valley orgasm lasts for hours. The peak orgasm lasts for seconds."',
-  },
-  {
-    id: 'jade-garden',
-    name: 'Jade Garden',
-    tradition: 'Tao',
-    level: 'beginners',
-    duration: '20–30 min',
-    glyph: '✿',
-    color: '#5db88a',
-    desc: 'A gentle Taoist practice emphasising slow, mindful connection. Nine shallow movements followed by one deep — a rhythm that builds presence and sensitivity.',
-    steps: [
-      'Begin lying down, face to face or in any comfortable position.',
-      'Establish a rhythm: nine slow, shallow movements followed by one deep.',
-      'Both partners count silently together — the counting becomes a shared meditation.',
-      'Between each set of nine, pause completely. Breathe. Feel.',
-      'After 9 sets, rest in stillness for several minutes.',
+    positions: [
+      {
+        name: 'Jade Garden',
+        glyph: '✿',
+        duration: '20–30 min',
+        level: 'Beginners',
+        desc: 'A gentle Taoist practice emphasizing slow, mindful connection. Nine shallow movements followed by one deep — a rhythm that builds presence and sensitivity. Between each set of nine, pause completely. Breathe. Feel. The counting becomes a shared meditation.',
+      },
+      {
+        name: 'Valley Orgasm',
+        glyph: 'ॐ',
+        duration: '30–60 min',
+        level: 'Advanced',
+        desc: 'A practice of building and circulating energy without peak release. As arousal builds, draw energy upward from the pelvis using breath and PC muscle contractions. When close to peak, slow or stop all movement. Let the energy spread as warmth through the chest, hands, and crown. Repeat the cycle 3–9 times.',
+      },
+      {
+        name: 'Taoist Cultivation',
+        glyph: '☯',
+        duration: '40–60 min',
+        level: 'Advanced',
+        desc: 'Begin with 10 minutes of synchronized breathing. Enter a position of minimal movement. Both partners visualize energy rising from the base of the spine, circulating through the microcosmic orbit — up the spine, over the crown, down the front of the body — completing the circuit with each breath cycle.',
+      },
     ],
-    tip: 'The Tao Te Ching: "In gentleness lies great strength."',
   },
-  {
-    id: 'edge-surrender',
-    name: 'Edge of Surrender',
-    tradition: 'Deida',
-    level: 'advanced',
-    duration: '20–35 min',
-    glyph: '✦',
+
+  deida: {
+    label: 'David Deida',
     color: '#9ab0e8',
-    desc: 'A Deida practice of polarity and full presence. The masculine holds unwavering stillness while the feminine moves through all her emotions freely — neither collapsing into the other.',
-    steps: [
-      'Masculine partner sits or stands — grounded, still, fully present. Eyes open.',
-      'Feminine partner moves, breathes, expresses — fully, without holding back.',
-      'Masculine: do not try to fix, manage, or match. Simply witness with complete love.',
-      'Feminine: feel into every wave of sensation, emotion, or sound. Nothing is too much.',
-      'After 10–15 minutes, switch or come together in stillness.',
-      'Sit facing each other. Look into each other\'s eyes without speaking for 3 minutes.',
+    glyph: '✦',
+    wisdom: [
+      {
+        quote: 'The feminine wants to be met — not managed, not fixed, not solved. She wants your presence to be so full that she can finally let go.',
+        author: 'David Deida',
+      },
+      {
+        quote: 'Your woman is a test of your capacity to remain present. Every emotion she moves through is an invitation — not a problem.',
+        author: 'David Deida',
+      },
+      {
+        quote: 'Masculine presence is not about doing. It is about being so fully here that nothing is needed. She can feel the difference.',
+        author: 'David Deida',
+      },
+      {
+        quote: 'The greatest gift you can give your partner is your full consciousness — not your comfort, your safety, or your approval.',
+        author: 'David Deida',
+      },
+      {
+        quote: 'Love is not enough. You must also show up with your full depth — your direction, your presence, your willingness to be destroyed and reformed by love.',
+        author: 'David Deida',
+      },
     ],
-    tip: 'Deida: "The feminine wants to be met — not managed."',
+    positions: [
+      {
+        name: 'Edge of Surrender',
+        glyph: '✦',
+        duration: '20–35 min',
+        level: 'Advanced',
+        desc: 'The masculine partner sits or stands — grounded, still, fully present, eyes open. The feminine moves, breathes, expresses — completely, without holding back. Masculine: do not try to fix, manage, or match. Simply witness with complete love. After 15 minutes, come together in stillness. Eyes open. Three minutes of silence.',
+      },
+      {
+        name: 'The Gift of Full Desire',
+        glyph: '❁',
+        duration: '15–25 min',
+        level: 'Intermediate',
+        desc: 'Both partners speak their deepest desire aloud — not the safe version, the true one. Then act on it without apology. This is a practice in removing the layer of performance and meeting each other at the level of actual want. Deida: "The suppression of desire is the suppression of love."',
+      },
+      {
+        name: 'Fire and Surrender',
+        glyph: '⊹',
+        duration: '25–40 min',
+        level: 'Intermediate',
+        desc: 'The masculine partner leads the entire experience — every transition, every touch, every moment of stillness — while remaining utterly attuned to the feminine\'s responses. The feminine practices full surrender: no directing, no planning, only receiving. Afterward, roles are acknowledged and discussed.',
+      },
+    ],
   },
-  {
-    id: 'soft-middle',
-    name: 'Soft Middle Union',
-    tradition: 'Richardson',
-    level: 'beginners',
-    duration: '15–20 min',
-    glyph: '❧',
+
+  richardson: {
+    label: 'Diana Richardson',
     color: '#c09ae0',
-    desc: 'A Diana Richardson practice for connecting without performance. Union happens softly, with no goal of arousal. The aim is pure energetic exchange.',
-    steps: [
-      'Come together very slowly and softly, with no expectation of arousal.',
-      'Lie still in whatever position feels natural. Close your eyes.',
-      'Focus attention inward — on warmth, aliveness, subtle sensation.',
-      'If the mind wanders, return to breath and body contact.',
-      'Stay for at least 15 minutes. The longer, the more profound.',
+    glyph: '❧',
+    wisdom: [
+      {
+        quote: 'Softness is not the absence of power — it is the fullest expression of trust. In softness, the deepest union becomes possible.',
+        author: 'Diana Richardson',
+      },
+      {
+        quote: 'We are taught to perform in lovemaking — to reach a peak. But the body is not a machine. It is a garden. It needs time, stillness, and presence.',
+        author: 'Diana Richardson',
+      },
+      {
+        quote: 'When you stop moving and simply rest inside each other, something extraordinary begins. The body starts to speak in its own language.',
+        author: 'Diana Richardson',
+      },
+      {
+        quote: 'The penis and vagina are polar opposites. When they meet in stillness — not in effort — they create a natural electric circuit. Presence does the work.',
+        author: 'Diana Richardson',
+      },
+      {
+        quote: 'The goal is not orgasm. The goal is union. When you stop chasing, you arrive — and what you find there has no name.',
+        author: 'Diana Richardson',
+      },
     ],
-    tip: '"Softness is not the absence of power — it is the fullest expression of trust."',
+    positions: [
+      {
+        name: 'Soft Middle Union',
+        glyph: '❧',
+        duration: '15–20 min',
+        level: 'Beginners',
+        desc: 'Come together very slowly and softly, with no expectation of arousal or performance. Lie completely still in whatever position feels natural. Close your eyes. Focus attention inward — on warmth, aliveness, the subtle sensation of contact. If the mind wanders, return to breath and body warmth. Stay for at least 15 minutes.',
+      },
+      {
+        name: 'Scissors of Stillness',
+        glyph: '⊹',
+        duration: '15–30 min',
+        level: 'Beginners',
+        desc: 'Lie on your sides, bodies interlaced, legs gently woven like scissors. Neither partner exerts effort. Enter softly and rest — no thrusting, no agenda. Both partners breathe deeply, relaxing every muscle with each exhale. Focus entirely on warmth and subtle inner movement. There is no goal. If you fall asleep, that is the practice working.',
+      },
+      {
+        name: 'The Melting Breath',
+        glyph: '☽',
+        duration: '20–30 min',
+        level: 'Beginners',
+        desc: 'Begin lying front to back, in a spooning position, not yet joined. Simply breathe together for 10 minutes — the giver breathing warmth into the receiver\'s upper back. When union happens, it is the breath that initiates it, not intention. Continue breathing in this rhythm throughout. Richardson: "Let the breath make love, not the will."',
+      },
+    ],
   },
-]
+}
 
 // ─── Main render ──────────────────────────────────────────────────────────────
 export function renderPositions(el) {
   el.innerHTML = `
-    <div class="pos-wrap">
-      <div class="pos-header pt-safe">
-        <h2 class="pos-title">Sacred Positions</h2>
-        <p class="pos-subtitle">6 practices across 4 traditions</p>
+    <div class="px-wrap">
+      <div class="px-header pt-safe">
+        <div class="px-top-tabs">
+          <button class="px-top-tab active" data-page="paths">Paths</button>
+          <button class="px-top-tab" data-page="teachers">Teachers</button>
+        </div>
       </div>
 
-      <!-- Tradition filter -->
-      <div class="trad-filter" id="trad-filter">
-        <button class="trad-btn active" data-trad="all">All</button>
-        <button class="trad-btn" data-trad="Tantra">Tantra</button>
-        <button class="trad-btn" data-trad="Tao">Tao</button>
-        <button class="trad-btn" data-trad="Richardson">Richardson</button>
-        <button class="trad-btn" data-trad="Deida">Deida</button>
-      </div>
-
-      <div class="scroll-list" id="pos-list">
-        ${POSITIONS.map(p => posCard(p)).join('')}
+      <div class="px-body" id="px-body">
+        ${renderPage('paths')}
       </div>
     </div>
 
@@ -147,107 +232,93 @@ export function renderPositions(el) {
   bindEvents(el)
 }
 
-// ─── Position card (list view) ────────────────────────────────────────────────
-function posCard(p) {
-  return `
-    <div class="pos-card" data-id="${p.id}" data-trad="${p.tradition}" style="border-color:${p.color}33">
-      <div class="pos-card-top">
-        <div class="pos-glyph" style="color:${p.color}">${p.glyph}</div>
-        <div class="pos-info">
-          <div class="pos-tags">
-            <span class="pos-tag" style="color:${p.color};background:${p.color}18;border-color:${p.color}30">${p.tradition}</span>
-            <span class="pos-level">${p.level}</span>
-          </div>
-          <h3 class="pos-name">${p.name}</h3>
-          <p class="pos-dur">⏱ ${p.duration}</p>
-        </div>
-      </div>
-      <p class="pos-desc">${p.desc}</p>
-      <button class="pos-open-btn" data-id="${p.id}">View practice →</button>
-    </div>
-  `
+// ─── Page renderer ────────────────────────────────────────────────────────────
+function renderPage(page) {
+  const traditions = page === 'paths'
+    ? [CONTENT.tantra, CONTENT.tao]
+    : [CONTENT.deida, CONTENT.richardson]
+
+  return `<div class="px-page">${traditions.map(t => renderTradition(t)).join('')}</div>`
 }
 
-// ─── Detail overlay ───────────────────────────────────────────────────────────
-function showDetail(p) {
-  const overlay = document.createElement('div')
-  overlay.className = 'pos-detail-overlay'
-  overlay.innerHTML = `
-    <div class="pos-detail" style="--accent:${p.color}">
-      <div class="pos-detail-header pt-safe">
-        <button class="pos-detail-back" id="det-back">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="22" height="22">
-            <polyline points="15 18 9 12 15 6"/>
-          </svg>
-        </button>
-        <div></div>
+function renderTradition(t) {
+  return `
+    <div class="trad-section">
+      <!-- Tradition header -->
+      <div class="trad-header" style="border-color:${t.color}44">
+        <span class="trad-glyph" style="color:${t.color}">${t.glyph}</span>
+        <h2 class="trad-name" style="color:${t.color}">${t.label}</h2>
       </div>
 
-      <div class="pos-detail-scroll">
-        <div class="pos-detail-hero">
-          <span class="pos-detail-glyph" style="color:${p.color}">${p.glyph}</span>
-          <div class="pos-tag" style="color:${p.color};background:${p.color}18;border-color:${p.color}30;margin-bottom:8px">${p.tradition} · ${p.level}</div>
-          <h2 class="pos-detail-name">${p.name}</h2>
-          <p class="pos-detail-dur">⏱ ${p.duration}</p>
-        </div>
+      <!-- 5 wisdom blocks -->
+      <div class="wisdom-list">
+        ${t.wisdom.map(w => `
+          <div class="wisdom-block" style="border-left-color:${t.color}">
+            <p class="wisdom-quote">"${w.quote}"</p>
+            <p class="wisdom-author" style="color:${t.color}">— ${w.author}</p>
+          </div>
+        `).join('')}
+      </div>
 
-        <p class="pos-detail-desc">${p.desc}</p>
-
-        <div class="pos-steps-label">Practice steps</div>
-        <ol class="pos-steps">
-          ${p.steps.map((s, i) => `
-            <li class="pos-step">
-              <span class="pos-step-n" style="background:${p.color}22;color:${p.color}">${i + 1}</span>
-              <p>${s}</p>
-            </li>
+      <!-- Positions sub-tab (accordion) -->
+      <div class="pos-subtab">
+        <button class="pos-subtab-toggle" data-open="false" style="--accent:${t.color}">
+          <span>Positions &amp; Rituals</span>
+          <svg class="subtab-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" width="18" height="18">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="pos-subtab-body" style="display:none">
+          ${t.positions.map(p => `
+            <div class="pos-block" style="border-color:${t.color}33">
+              <div class="pos-block-head">
+                <span class="pos-block-glyph" style="color:${t.color}">${p.glyph}</span>
+                <div>
+                  <div class="pos-block-meta">
+                    <span class="pos-tag" style="color:${t.color};background:${t.color}18;border-color:${t.color}30">${p.level}</span>
+                    <span class="pos-dur-small">⏱ ${p.duration}</span>
+                  </div>
+                  <h3 class="pos-block-name">${p.name}</h3>
+                </div>
+              </div>
+              <p class="pos-block-desc">${p.desc}</p>
+            </div>
           `).join('')}
-        </ol>
-
-        <div class="pos-tip">
-          <span>💡</span>
-          <p>${p.tip}</p>
         </div>
-
-        <div style="height:32px"></div>
       </div>
     </div>
   `
-
-  document.body.appendChild(overlay)
-  requestAnimationFrame(() => overlay.classList.add('visible'))
-
-  overlay.querySelector('#det-back').addEventListener('click', () => {
-    overlay.classList.remove('visible')
-    setTimeout(() => overlay.remove(), 280)
-  })
 }
 
 // ─── Events ───────────────────────────────────────────────────────────────────
 function bindEvents(el) {
-  // Tradition filter
-  el.querySelector('#trad-filter').addEventListener('click', e => {
-    const btn = e.target.closest('.trad-btn')
-    if (!btn) return
-    el.querySelectorAll('.trad-btn').forEach(b => b.classList.remove('active'))
-    btn.classList.add('active')
-    const trad = btn.dataset.trad
-    el.querySelectorAll('.pos-card').forEach(card => {
-      card.style.display = (trad === 'all' || card.dataset.trad === trad) ? '' : 'none'
-    })
+  // Top tabs: Paths ↔ Teachers
+  el.querySelector('#px-body').parentElement.addEventListener('click', e => {
+    const tab = e.target.closest('.px-top-tab')
+    if (!tab) return
+    el.querySelectorAll('.px-top-tab').forEach(t => t.classList.remove('active'))
+    tab.classList.add('active')
+    el.querySelector('#px-body').innerHTML = renderPage(tab.dataset.page)
+    bindAccordions(el)
   })
 
-  // Open detail
-  el.querySelector('#pos-list').addEventListener('click', e => {
-    const btn = e.target.closest('.pos-open-btn, .pos-card')
-    if (!btn) return
-    const id = btn.dataset.id || btn.closest('.pos-card')?.dataset.id
-    const pos = POSITIONS.find(p => p.id === id)
-    if (pos) showDetail(pos)
-  })
+  bindAccordions(el)
 
   // Bottom nav
   el.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', () => navigate(item.dataset.screen))
+  })
+}
+
+function bindAccordions(el) {
+  el.querySelectorAll('.pos-subtab-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isOpen = btn.dataset.open === 'true'
+      const body   = btn.nextElementSibling
+      btn.dataset.open = String(!isOpen)
+      body.style.display = isOpen ? 'none' : 'flex'
+      btn.querySelector('.subtab-chevron').style.transform = isOpen ? '' : 'rotate(180deg)'
+    })
   })
 }
 
@@ -257,131 +328,109 @@ function injectStyles() {
   const s = document.createElement('style')
   s.id = 'positions-css'
   s.textContent = `
-    .pos-wrap { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+    /* Wrap */
+    .px-wrap { flex:1; display:flex; flex-direction:column; overflow:hidden; }
 
-    .pos-header {
-      padding: 16px 20px 10px;
+    /* Header + top tabs */
+    .px-header {
+      flex-shrink: 0;
       border-bottom: 1px solid var(--border);
     }
-    .pos-title {
-      font-size: 22px; font-weight: 700;
-      background: linear-gradient(90deg, var(--lavender), var(--rose));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    .px-top-tabs {
+      display: flex;
     }
-    .pos-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
-
-    /* Filter */
-    .trad-filter {
-      display: flex; gap: 8px; padding: 12px 16px;
-      overflow-x: auto; border-bottom: 1px solid var(--border);
-      -webkit-overflow-scrolling: touch; flex-shrink: 0;
-    }
-    .trad-filter::-webkit-scrollbar { display: none; }
-    .trad-btn {
-      flex-shrink: 0; padding: 6px 14px;
-      border-radius: 50px; border: 1.5px solid var(--border);
-      background: none; color: var(--text-muted); font-size: 13px;
-      cursor: pointer; white-space: nowrap;
-      transition: color .15s, border-color .15s, background .15s;
+    .px-top-tab {
+      flex: 1; padding: 14px;
+      background: none; border: none; border-bottom: 2px solid transparent;
+      color: var(--text-muted); font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: color .15s, border-color .15s;
       -webkit-tap-highlight-color: transparent;
     }
-    .trad-btn.active {
-      background: rgba(192,132,252,0.12);
-      border-color: var(--purple); color: var(--purple);
+    .px-top-tab.active {
+      color: var(--purple); border-bottom-color: var(--purple);
     }
 
-    /* Card */
-    .pos-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 18px; padding: 18px;
-      cursor: pointer;
-      transition: transform .12s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .pos-card:active { transform: scale(0.98); }
-    .pos-card-top { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 10px; }
-    .pos-glyph { font-size: 32px; line-height: 1; flex-shrink: 0; }
-    .pos-info { flex: 1; }
-    .pos-tags { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
-    .pos-tag {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
-      padding: 3px 9px; border-radius: 50px; border: 1px solid;
-    }
-    .pos-level { font-size: 11px; color: var(--text-muted); }
-    .pos-name { font-size: 17px; font-weight: 700; margin-bottom: 3px; }
-    .pos-dur { font-size: 12px; color: var(--text-muted); }
-    .pos-desc {
-      font-size: 13px; color: var(--text-muted); line-height: 1.6;
-      margin-bottom: 12px;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .pos-open-btn {
-      background: none; border: none;
-      color: var(--purple); font-size: 14px; font-weight: 500;
-      cursor: pointer; padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    /* Detail overlay */
-    .pos-detail-overlay {
-      position: fixed; inset: 0; z-index: 500;
-      background: var(--bg);
-      opacity: 0; transform: translateY(24px);
-      transition: opacity .26s ease, transform .26s ease;
-      pointer-events: none;
-    }
-    .pos-detail-overlay.visible {
-      opacity: 1; transform: translateY(0); pointer-events: all;
-    }
-    .pos-detail { height: 100%; display: flex; flex-direction: column; }
-    .pos-detail-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 16px 8px;
-    }
-    .pos-detail-back {
-      background: none; border: none; color: var(--text);
-      cursor: pointer; padding: 4px;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .pos-detail-scroll {
-      flex: 1; overflow-y: auto; padding: 0 22px 40px;
+    /* Scrollable body */
+    .px-body {
+      flex: 1; overflow-y: auto; padding: 0 0 24px;
       -webkit-overflow-scrolling: touch;
     }
-    .pos-detail-hero { text-align: center; padding: 16px 0 24px; }
-    .pos-detail-glyph { font-size: 52px; line-height: 1; display: block; margin-bottom: 14px; }
-    .pos-detail-name {
-      font-size: 28px; font-weight: 800;
-      background: linear-gradient(135deg, var(--lavender), var(--rose));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin: 6px 0 4px;
+    .px-body::-webkit-scrollbar { display: none; }
+    .px-page { display: flex; flex-direction: column; }
+
+    /* Tradition section */
+    .trad-section {
+      padding: 24px 20px 8px;
+      border-bottom: 1px solid var(--border);
     }
-    .pos-detail-dur { font-size: 13px; color: var(--text-muted); }
-    .pos-detail-desc {
-      font-size: 15px; color: var(--text-muted); line-height: 1.7;
-      margin-bottom: 24px;
+    .trad-section:last-child { border-bottom: none; }
+    .trad-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid;
     }
-    .pos-steps-label {
-      font-size: 11px; font-weight: 600; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px;
+    .trad-glyph { font-size: 26px; line-height: 1; }
+    .trad-name  { font-size: 20px; font-weight: 700; }
+
+    /* Wisdom blocks */
+    .wisdom-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+    .wisdom-block {
+      border-left: 3px solid;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 0 10px 10px 0;
     }
-    .pos-steps { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
-    .pos-step {
+    .wisdom-quote {
+      font-family: Georgia, serif;
+      font-size: 14px; font-style: italic;
+      color: var(--text); line-height: 1.75;
+      margin-bottom: 7px;
+    }
+    .wisdom-author {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    /* Positions sub-tab */
+    .pos-subtab { margin-bottom: 16px; }
+    .pos-subtab-toggle {
+      width: 100%; display: flex; align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 13px 16px;
+      color: var(--text); font-size: 14px; font-weight: 600;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .subtab-chevron { transition: transform .22s ease; flex-shrink: 0; }
+
+    .pos-subtab-body {
+      flex-direction: column; gap: 12px;
+      margin-top: 10px;
+    }
+
+    /* Position block */
+    .pos-block {
+      background: var(--bg-card);
+      border: 1px solid;
+      border-radius: 16px; padding: 16px;
+    }
+    .pos-block-head {
       display: flex; gap: 12px; align-items: flex-start;
+      margin-bottom: 10px;
     }
-    .pos-step-n {
-      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 700;
+    .pos-block-glyph { font-size: 26px; line-height: 1; flex-shrink: 0; }
+    .pos-block-meta  { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .pos-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+      padding: 3px 9px; border-radius: 50px; border: 1px solid;
     }
-    .pos-step p { font-size: 14px; line-height: 1.65; color: var(--text); padding-top: 3px; }
-    .pos-tip {
-      display: flex; gap: 12px;
-      background: rgba(192,132,252,0.07);
-      border: 1px solid rgba(192,132,252,0.18);
-      border-radius: 14px; padding: 14px;
-      font-size: 13px; color: var(--text-muted); line-height: 1.6;
+    .pos-dur-small { font-size: 11px; color: var(--text-muted); }
+    .pos-block-name { font-size: 16px; font-weight: 700; }
+    .pos-block-desc {
+      font-size: 13px; color: var(--text-muted); line-height: 1.7;
     }
   `
   document.head.appendChild(s)
