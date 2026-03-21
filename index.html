@@ -1755,6 +1755,8 @@ function rv(btnId,txtId){
 rv('rv-m','tod-m');rv('rv-e','tod-e');rv('rv-g','tod-g');
 function doShare(text){
   if(!text||!text.trim()) return;
+  var suffix = '\n\n✦ Respond to me there, where we practice together:\nwww.sacredpathforcouples.com';
+  text = text.trim() + suffix;
   if(navigator.share){navigator.share({text:text}).catch(function(){});}
   else{try{navigator.clipboard.writeText(text).then(function(){alert('Copied!');});}catch(ex){alert(text);}}
 }
@@ -2887,7 +2889,7 @@ function pickRN(mood){
       if(cat)  cat.textContent  = idea.cat;
       if(shareBtn){
         shareBtn.onclick = function(){
-          var msg = idea.icon + ' Date idea for us: ' + idea.text;
+          var msg = idea.icon + ' Date idea for us: ' + idea.text + '\n\n✦ Respond to me there, where we practice together:\nwww.sacredpathforcouples.com';
           if(navigator.share){ navigator.share({title:'Sacred Path Date Idea', text:msg}); }
           else{ navigator.clipboard && navigator.clipboard.writeText(msg); alert('Copied to clipboard!'); }
         };
