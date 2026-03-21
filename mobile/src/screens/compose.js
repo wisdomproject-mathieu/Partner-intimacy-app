@@ -2,6 +2,7 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import { navigate, state } from '../main.js'
 import { sendNote } from '../firebase/notes.js'
 import { showToast } from '../components/toast.js'
+import { DEMO_MODE } from '../firebase/demo.js'
 
 const GLYPHS = ['✦', '☽', 'ॐ', '❧', '⊹', '♡', '✿', '☯', '⌖', '⋆', '✺', '❁', '☀', '♾', '✙', '⚘', '❋', '◈']
 
@@ -131,15 +132,17 @@ function bindEvents(el, getGlyph, getColor, setGlyph, setColor) {
     sendBtn.textContent = '…'
 
     try {
-      await sendNote({
-        fromUid:   state.user.uid,
-        toUid:     partnerId,
-        text,
-        glyph:     getGlyph(),
-        color:     getColor(),
-        createdAt: Date.now(),
-        starred:   false,
-      })
+      if (!DEMO_MODE) {
+        await sendNote({
+          fromUid:   state.user.uid,
+          toUid:     partnerId,
+          text,
+          glyph:     getGlyph(),
+          color:     getColor(),
+          createdAt: Date.now(),
+          starred:   false,
+        })
+      }
       try { await Haptics.impact({ style: ImpactStyle.Medium }) } catch {}
       showToast('✦ Note sent')
       setTimeout(() => navigate('feed'), 600)

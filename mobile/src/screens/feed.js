@@ -2,6 +2,7 @@ import { navigate, state } from '../main.js'
 import { listenToNotes } from '../firebase/notes.js'
 import { timeAgo } from '../components/time.js'
 import { bottomNav } from '../components/bottom-nav.js'
+import { DEMO_MODE, demoNotes } from '../firebase/demo.js'
 
 const NOTE_COLORS = {
   rose:   { bg: 'var(--note-rose)',   accent: '#f472b6' },
@@ -24,6 +25,9 @@ export function renderFeed(el) {
           ${state.user?.displayName?.[0]?.toUpperCase() || '✦'}
         </button>
       </div>
+
+      <!-- Demo banner -->
+      ${DEMO_MODE ? `<div class="demo-banner">✦ Preview mode — connect Firebase to go live</div>` : ''}
 
       <!-- Tabs: received / sent -->
       <div class="feed-tabs">
@@ -78,7 +82,19 @@ function loadNotes(el, tab) {
   if (!uid) return
 
   const isReceived = tab === 'received'
-  const targetId   = isReceived ? uid : state.user?.partnerId
+
+  // Demo mode: filter fake notes locally, no Firebase needed
+  if (DEMO_MODE) {
+    const notes = demoNotes.filter(n =>
+      isReceived ? n.toUid === uid : n.fromUid === uid
+    )
+    if (!notes.length) { list.innerHTML = emptyState(isReceived); return }
+    list.innerHTML = ''
+    notes.forEach((note, i) => list.appendChild(buildNoteCard(note, i)))
+    return
+  }
+
+  const targetId = isReceived ? uid : state.user?.partnerId
 
   unsubscribe = listenToNotes(targetId, uid, isReceived, (notes) => {
     if (!notes.length) {
@@ -157,6 +173,12 @@ function injectStyles() {
     }
     .feed-sub {
       font-size: 13px; color: var(--text-muted); margin-top: 2px;
+    }
+    .demo-banner {
+      background: rgba(251,191,36,0.12);
+      border-bottom: 1px solid rgba(251,191,36,0.25);
+      color: #fbbf24; font-size: 12px; font-weight: 500;
+      text-align: center; padding: 7px 16px; letter-spacing: 0.02em;
     }
     .feed-tabs {
       display: flex; border-bottom: 1px solid var(--border);
