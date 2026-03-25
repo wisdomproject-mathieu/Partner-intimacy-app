@@ -1,0 +1,80 @@
+{
+  "project": "sacred-path-couples",
+  "auth": {
+    "providers": ["google.com", "password"],
+    "flows": {
+      "signup": "createUserWithEmailAndPassword → write users/{uid}",
+      "signin": "signInWithEmailAndPassword",
+      "google": "signInWithCredential(GoogleAuthProvider)"
+    }
+  },
+  "firestore": {
+    "users/{uid}": {
+      "fields": {
+        "name": "string",
+        "email": "string",
+        "coupleCode": "string | null",
+        "partnerId": "string | null",
+        "createdAt": "Timestamp"
+      }
+    },
+    "couples/{coupleCode}": {
+      "fields": {
+        "user1": "string (uid)",
+        "user2": "string | null (uid)",
+        "user1Name": "string",
+        "user2Name": "string | null",
+        "createdAt": "Timestamp"
+      },
+      "subcollections": {
+        "thread/{docId}": {
+          "fields": {
+            "text": "string",
+            "authorName": "string",
+            "date": "string (human-readable)",
+            "createdAt": "Timestamp"
+          },
+          "listeners": "real-time, ordered by createdAt desc"
+        },
+        "realtime/weather": {
+          "fields": {
+            "{uid}": {
+              "mood": "string (stormy|cloudy|warm|electric|radiant)",
+              "icon": "string (emoji)",
+              "date": "string (YYYY-MM-DD)"
+            }
+          },
+          "listeners": "real-time, merge writes"
+        },
+        "realtime/challenges": {
+          "fields": {
+            "{challengeType}": {
+              "startDate": "string",
+              "entries": [{
+                "text": "string",
+                "authorName": "string",
+                "date": "string"
+              }]
+            }
+          },
+          "listeners": "real-time"
+        }
+      }
+    }
+  },
+  "coupleCodeFormat": {
+    "pattern": "XX####",
+    "description": "First 2 chars of name (uppercase) + 4 random alphanumeric",
+    "example": "MA4X2K",
+    "uniqueness": "Firestore transaction guarantees"
+  },
+  "securityRules": {
+    "note": "Web app has NO rules. Mobile MUST add rules restricting read/write to coupled partners only.",
+    "recommended": {
+      "users/{uid}": "allow read/write if request.auth.uid == uid",
+      "couples/{code}": "allow read/write if request.auth.uid in [resource.data.user1, resource.data.user2]",
+      "couples/{code}/thread/{id}": "allow read/write if request.auth.uid in [get(/databases/$(database)/documents/couples/$(code)).data.user1, get(/databases/$(database)/documents/couples/$(code)).data.user2]",
+      "couples/{code}/realtime/{doc}": "same as thread"
+    }
+  }
+}

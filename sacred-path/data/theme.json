@@ -1,0 +1,59 @@
+{
+  "colors": {
+    "ink": "#09040a",
+    "card": "#1e0f1a",
+    "surface": "#1c0e18",
+    "border": "rgba(200,140,90,0.16)",
+    "gold": "#c8924a",
+    "goldLight": "#e4b87a",
+    "rose": "#c0415f",
+    "roseLight": "#e06e88",
+    "cream": "#f0e2d0",
+    "text": "#e4cebb",
+    "muted": "#c4a882",
+    "dim": "#a07068",
+    "blue": "#9ab0e8",
+    "violet": "#c09ae0"
+  },
+  "gradients": {
+    "hero": ["#f0e2d0", "#e4b87a", "#e06e88"],
+    "tantra": ["#c0415f", "#e4b87a"],
+    "tao": ["#e4b87a", "#c8924a"],
+    "deida": ["#9ab0e8", "#c0415f"],
+    "richardson": ["#c09ae0", "#e4b87a"],
+    "goldButton": ["#c8924a", "#e4b87a"],
+    "roseButton": ["#c0415f", "#e06e88"]
+  },
+  "typography": {
+    "heading": "Georgia",
+    "body": "system",
+    "sizes": {
+      "hero": "clamp(1.8rem, 5vw, 3rem)",
+      "h1": "clamp(1.7rem, 5vw, 3rem)",
+      "h2": "clamp(1.3rem, 3.5vw, 2.2rem)",
+      "h3": "1.3rem",
+      "body": "0.91rem",
+      "small": "0.82rem",
+      "caption": "0.6rem"
+    }
+  },
+  "spacing": {
+    "xs": 4,
+    "sm": 8,
+    "md": 16,
+    "lg": 24,
+    "xl": 32
+  },
+  "radii": {
+    "sm": 8,
+    "md": 11,
+    "lg": 13,
+    "xl": 20
+  },
+  "traditions": {
+    "tantra": { "primary": "#c0415f", "light": "#e06e88", "bg": "rgba(192,65,95,0.14)", "border": "rgba(192,65,95,0.24)" },
+    "tao": { "primary": "#c8924a", "light": "#e4b87a", "bg": "rgba(200,146,74,0.12)", "border": "rgba(200,146,74,0.24)" },
+    "deida": { "primary": "#9ab0e8", "light": "#9ab0e8", "bg": "rgba(100,130,210,0.12)", "border": "rgba(100,130,210,0.22)" },
+    "richardson": { "primary": "#c09ae0", "light": "#c09ae0", "bg": "rgba(192,154,224,0.12)", "border": "rgba(192,154,224,0.22)" }
+  }
+}
