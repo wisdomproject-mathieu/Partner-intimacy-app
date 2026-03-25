@@ -158,3 +158,118 @@ export const rightNowMoods = [
   { id: 'practice', icon: '🔥', label: 'Practice', description: 'Go deeper' },
   { id: 'deepen', icon: '🌊', label: 'Deepen', description: 'Full immersion' },
 ];
+
+// ── Whispers (daily ritual prompts) ──
+
+export const whispers = [
+  { icon: '🕯️', title: 'The Sacred Arrival', text: "Sit facing each other in candlelight for five minutes. No words. Simply let your eyes soften and your breathing slow until you feel each other\u2019s presence fully.", src: 'Tantric threshold practice' },
+  { icon: '🫀', title: 'Heart Breath', text: "Place your right hand on each other\u2019s heart. Breathe together slowly for ten rounds \u2014 your inhale meeting their exhale. Feel the warmth grow between your palms.", src: 'Diana Richardson \u2014 Heart connection' },
+  { icon: '👁️', title: 'Eye Gazing', text: "Sit close. Hold each other\u2019s gaze for five full minutes without speaking. Let whatever arises \u2014 laughter, tears, love \u2014 simply move through you.", src: 'Tantric eye-gazing tradition' },
+  { icon: '🌙', title: 'The Slow Touch', text: "One gives. One receives. Seven minutes of unhurried touch \u2014 no agenda, no destination. Then gently reverse. Let slowness be your teacher.", src: 'Tantric touch practice' },
+  { icon: '🌊', title: 'Synchronized Breath', text: "Lie together in stillness. Match your breathing completely. Let your bodies soften into each other until you cannot tell where one breath ends and the other begins.", src: 'Taoist breath harmonization' },
+  { icon: '💬', title: 'The Tender Thing', text: "Each of you speaks one sentence that begins: \u201CThe thing I most want you to know tonight is\u2026\u201D Then sit in silence together for two minutes and let it land.", src: 'Sacred speech practice' },
+  { icon: '🌿', title: 'Gratitude Holding', text: "Hold each other in silence \u2014 one behind the other. The one being held receives without deflecting. The one holding gives without agenda. Stay for ten full minutes.", src: 'Osho \u2014 The Book of Secrets' },
+  { icon: '🔥', title: 'The Conscious Kiss', text: "Begin with your foreheads touching. Breathe together for one full minute. Then let the kiss arise from that stillness \u2014 slowly, with full awareness, no rush toward anything.", src: 'Margot Anand \u2014 The Art of Sexual Ecstasy' },
+];
+
+// ── Desire Card Options ──
+
+export const desireCardOptions = [
+  'A long, slow full-body massage \u2014 no agenda',
+  'Yab Yum breathing together for 10 minutes',
+  'Undress each other slowly, by candlelight',
+  'Deep eye gazing for 5 uninterrupted minutes',
+  'A bath or shower together',
+  'Read a tantric passage aloud to each other',
+  'Heart-to-heart breathing: foreheads touching',
+  'One partner gives, one fully receives \u2014 then switch',
+  'Blindfold exploration with soft touch only',
+  'Hold each other in silence for 20 minutes',
+  'Whisper one thing you truly love about their body',
+  'Dance together to one full song \u2014 no phones',
+  'Valley orgasm practice \u2014 no climax, only flow',
+  'Conscious kiss \u2014 3 full minutes, unhurried',
+  'Share one fantasy you\u2019ve never spoken aloud',
+];
+
+// ── Challenges ──
+
+export interface Challenge {
+  id: string;
+  title: string;
+  icon: string;
+  days: number;
+  subtitle: string;
+  prompt: string;
+}
+
+export const challenges: Challenge[] = [
+  { id: 'week', title: 'Week of Gratitude', icon: '🌱', days: 7, subtitle: '7 days \u00B7 One moment each day \u00B7 Both partners', prompt: 'What moment of love or beauty did you notice today?' },
+  { id: 'month', title: 'Month of Gratitude', icon: '🌕', days: 30, subtitle: '30 days \u00B7 Deeper roots \u00B7 A complete love journal', prompt: 'One thing you are grateful for in your partner or relationship today...' },
+  { id: 'presence', title: 'Week of Seeing', icon: '👁️', days: 7, subtitle: 'Notice one thing you\u2019ve never noticed before. Every day.', prompt: 'What did you notice about your partner today that you\u2019ve never noticed before?' },
+  { id: 'touch', title: 'Week of Touch', icon: '🤲', days: 7, subtitle: 'One intentional touch each day. Log how it felt.', prompt: 'What intentional touch did you share today, and how did it feel?' },
+];
+
+// ── Semen Retention Teachings ──
+
+export const semenRetention = {
+  tantra: {
+    tradition: 'Tantra',
+    title: 'The Teaching of Semen Retention',
+    summary: 'In classical Tantra, semen (called bindu or ojas) is understood as condensed vital energy. When retained and circulated, it nourishes the brain, the heart, and the entire subtle body. The man learns through breath and body awareness to bring sexual energy up the spine rather than expelling it.',
+    tags: ['bindu', 'ojas', 'brahmacharya', 'whole-body orgasm', 'vitality'],
+  },
+  tao: {
+    tradition: 'Tao',
+    title: 'Taoist Semen Retention: The Art of Conserving Jing',
+    summary: 'The ancient Taoist texts called semen jing \u2014 the densest, most precious form of vital essence. Mantak Chia modernised these teachings: the man learns to separate orgasm from ejaculation. Techniques include the Big Draw, the Microcosmic Orbit, and the Valley Orgasm.',
+    tags: ['jing', 'big draw', 'microcosmic orbit', 'valley orgasm', 'longevity'],
+  },
+  deida: {
+    tradition: 'Deida',
+    title: 'David Deida & The Direction of Sexual Energy',
+    summary: 'Deida approaches semen retention from a polarity perspective. Ejaculation represents the collapse of masculine charge. The fully evolved masculine learns to ravish without release \u2014 directing energy upward into the heart as love, and outward into the world as creative force and mission.',
+    tags: ['masculine edge', 'polarity', 'directed energy', 'creative force', 'ravishment'],
+  },
+  richardson: {
+    tradition: 'Richardson',
+    title: 'Diana Richardson on Semen Retention',
+    summary: 'When a man learns not to ejaculate every time he makes love, something profound shifts. He discovers that the energy he was spending in a moment of pleasure can instead nourish his body, deepen his love, and sustain his vitality for days afterward.',
+    tags: ['semen retention', 'energy cultivation', 'vitality'],
+  },
+};
+
+// ── 30-Day Journey (days 1-3 free, 4+ premium) ──
+
+export const journey = [
+  { day: 1, tradition: 'Tantra', title: 'The Arrival', description: "Today you do nothing except arrive. Sit facing each other for 10 minutes. No agenda. No practice. Simply be present with the person in front of you. Notice what you usually skip past.", intention: 'I am here. You are here. This is enough.', free: true },
+  { day: 2, tradition: 'Tao', title: 'The Breath', description: "Lie back to back. Breathe simultaneously for 10 minutes. Feel the warmth of the other spine against yours. Without touching more than this, you are already in one circuit.", intention: 'We breathe as one body, one energy, one life.', free: true },
+  { day: 3, tradition: 'Deida', title: 'The Gaze', description: "5 minutes of unbroken eye contact. No smiling to ease the discomfort. No looking away. Let yourself be fully seen \u2014 including the parts you usually hide. This is the practice of real intimacy.", intention: 'I let you see me. I truly see you.', free: true },
+  { day: 4, tradition: 'Richardson', title: 'The Touch', description: "One partner lies completely still while the other touches with full presence \u2014 not to arouse, but to truly feel. 10 minutes each side. The receiver does nothing. The giver gives everything.", intention: null, free: false },
+  { day: 5, tradition: 'Tantra', title: 'Chakra Awakening', description: "Moving energy from root to crown together. A guided 20-minute journey through all seven energy centres, seated in Yab-Yum.", intention: null, free: false },
+];
+
+// ── Date Night Ideas ──
+
+export const dateNightIdeas = [
+  { icon: '🕯️', text: 'Light candles, turn off all screens, and spend one hour speaking only about what you love about each other.', category: 'Presence' },
+  { icon: '🛁', text: "Draw a bath together. Add oils, candles, music. Take turns washing each other\u2019s hair in silence.", category: 'Sensual ritual' },
+  { icon: '🌙', text: "Lie outside under the sky tonight. Share one dream you\u2019ve never told anyone.", category: 'Intimacy' },
+  { icon: '🍷', text: 'Cook a meal together barefoot, with music. No phones. Feed each other the first bite.', category: 'Nourishment' },
+  { icon: '💌', text: "Each write your partner a letter. Not a text \u2014 a real letter. Read them aloud to each other.", category: 'Deep connection' },
+  { icon: '💃', text: 'Clear the floor. Dance together for 20 minutes to songs that meant something to you when you fell in love.', category: 'Playful' },
+  { icon: '🎭', text: "Take turns being blindfolded while the other offers three different sensory experiences \u2014 touch, taste, scent.", category: 'Sensory' },
+  { icon: '🧘', text: 'Sit facing each other in yab-yum or simply cross-legged. Breathe together for 15 minutes without speaking.', category: 'Sacred practice' },
+  { icon: '🌅', text: 'Set your alarm early and watch the sunrise together. Bring a blanket, hot drinks, nothing else.', category: 'Simplicity' },
+  { icon: '📖', text: "Take turns reading each other poetry or passages that move you. No explaining \u2014 just let the words land.", category: 'Soul' },
+  { icon: '🎨', text: 'Buy a single canvas. Paint something together with your hands, no brushes. Frame it afterward.', category: 'Creative' },
+  { icon: '🌊', text: 'Go somewhere with water. Sit at the edge. Say nothing. Let the sound hold you both.', category: 'Nature' },
+  { icon: '✨', text: "Revisit the place where you first fell for each other. Walk slowly. Notice what you feel in your body.", category: 'Memory' },
+  { icon: '🫀', text: "Lie down and take turns placing your hand on each other\u2019s heart. Breathe together for five minutes like that.", category: 'Heart opening' },
+  { icon: '🍓', text: 'Prepare a slow, intentional meal \u2014 just finger foods. Feed each other. Make it last an hour.', category: 'Sensual' },
+  { icon: '🌿', text: 'Spend an afternoon in nature. No destination. Let your bodies slow to the pace of the land.', category: 'Grounding' },
+  { icon: '🎵', text: 'Make a playlist of 10 songs that are yours as a couple. Play it from beginning to end, listening deeply.', category: 'Soundtrack' },
+  { icon: '🌸', text: 'Give each other a 30-minute massage. No agenda, no reciprocation expected. Just give, then receive.', category: 'Touch' },
+  { icon: '🔥', text: "Sit by candlelight and take turns completing the sentence: \u201CI feel closest to you when...\u201D", category: 'Vulnerability' },
+  { icon: '🌌', text: "Turn off every light. Lie together in the dark and just breathe. Let whatever wants to be said, be said.", category: 'Stillness' },
+];
