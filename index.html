@@ -2878,7 +2878,10 @@ function pickRN(mood){
   };
   window.ptimerTogglePanel = function(){
     var p = document.getElementById('ptimer-panel');
-    if(p) p.classList.toggle('open');
+    if(!p) return;
+    var opening = !p.classList.contains('open');
+    p.classList.toggle('open');
+    if(opening && _total === 0) window.ptimerSet(10);
   };
   function ptimerChime(){
     try {
@@ -3003,11 +3006,9 @@ function pickRN(mood){
   }
 
   window.musicToggle = function(){
-    if(_playing){ stopAll(); }
-    else { startAudio(); }
-    // Open/close panel
     var p = document.getElementById('music-panel');
-    if(p && !_playing) p.classList.remove('open');
+    if(_playing){ stopAll(); if(p) p.classList.remove('open'); }
+    else { if(p) p.classList.add('open'); startAudio(); }
   };
   window.musicSelect = function(mode, btn){
     _mode = mode;
@@ -3101,20 +3102,17 @@ function pickRN(mood){
     var cat  = document.getElementById('date-idea-cat');
     var shareBtn = document.getElementById('date-share-btn');
     if(!card) return;
-    card.style.opacity = '0';
-    setTimeout(function(){
-      if(icon) icon.textContent = idea.icon;
-      if(text) text.textContent = idea.text;
-      if(cat)  cat.textContent  = idea.cat;
-      if(shareBtn){
-        shareBtn.onclick = function(){
-          var msg = idea.icon + ' Date idea for us: ' + idea.text + '\n\n✦ Respond to me there, where we practice together:\nwww.sacredpathforcouples.com';
-          if(navigator.share){ navigator.share({title:'Sacred Path Date Idea', text:msg}); }
-          else{ navigator.clipboard && navigator.clipboard.writeText(msg); alert('Copied to clipboard!'); }
-        };
-      }
-      card.style.opacity = '1';
-    }, 200);
+    if(icon) icon.textContent = idea.icon;
+    if(text) text.textContent = idea.text;
+    if(cat)  cat.textContent  = idea.cat;
+    card.style.opacity = '1';
+    if(shareBtn){
+      shareBtn.onclick = function(){
+        var msg = idea.icon + ' Date idea for us: ' + idea.text + '\n\n✦ Respond to me there, where we practice together:\nwww.sacredpathforcouples.com';
+        if(navigator.share){ navigator.share({title:'Sacred Path Date Idea', text:msg}); }
+        else{ navigator.clipboard && navigator.clipboard.writeText(msg); alert('Copied to clipboard!'); }
+      };
+    }
   }
 
   window.shuffleDateIdea = function(){
