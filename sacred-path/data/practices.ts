@@ -61,6 +61,7 @@ export const dailyPractices: DailyPractice[] = [
   { title: "Taoist Cultivation", tradition: "Tao", description: "Sit back-to-back, hands on your lower belly. Breathe into your dantian for 10 minutes before coming together.", page: "tao" },
   { title: "Kneeling Mastery", tradition: "Tantra", description: "Both kneel, spine aligned, chest to back. Active partner wraps arms around receptive partner. Breathe in unison for 8 minutes.", page: "tantra" },
   { title: "Awakening the Inner Rod", tradition: "Richardson", description: "Men: lie alone and bring full attention to the perineum for 10 minutes. This single practice transforms your presence.", page: "richardson" },
+  { title: "SkyDancing Breath", tradition: "Anand", description: "Sit facing each other. Breathe in unison — mouth to mouth, eyes open. With each exhale, imagine golden light spiraling up both spines. 10 minutes.", page: "anand" },
 ];
 
 // ── Right Now Practices (bottom sheet categories) ──
@@ -85,6 +86,7 @@ export const rightNowPractices: Record<string, RightNowPractice[]> = {
     { tradition: "Tantra", title: "Sacred Arrival", description: "5 minutes apart, each setting a private intention. Then cross the threshold together. Let the intention guide the evening.", duration: "30 min" },
     { tradition: "Tantra", title: "Tantric Awakening", description: "Body first — 8 minutes pure sensation. Heart second — 10 minutes of appreciation and presence. Spirit last — let it emerge.", duration: "40 min" },
     { tradition: "Tao", title: "Taoist Cultivation", description: "Activate the dantian, harmonize chi, practice 4 valley cycles, close with a shared microcosmic orbit.", duration: "45 min" },
+    { tradition: "Anand", title: "SkyDancing Ceremony", description: "Light a candle. Set a shared intention aloud. Breathe together in SkyDancing rhythm for 10 minutes, then let the energy guide you.", duration: "45 min" },
   ],
 };
 
@@ -170,6 +172,7 @@ export const whispers = [
   { icon: '💬', title: 'The Tender Thing', text: "Each of you speaks one sentence that begins: \u201CThe thing I most want you to know tonight is\u2026\u201D Then sit in silence together for two minutes and let it land.", src: 'Sacred speech practice' },
   { icon: '🌿', title: 'Gratitude Holding', text: "Hold each other in silence \u2014 one behind the other. The one being held receives without deflecting. The one holding gives without agenda. Stay for ten full minutes.", src: 'Osho \u2014 The Book of Secrets' },
   { icon: '🔥', title: 'The Conscious Kiss', text: "Begin with your foreheads touching. Breathe together for one full minute. Then let the kiss arise from that stillness \u2014 slowly, with full awareness, no rush toward anything.", src: 'Margot Anand \u2014 The Art of Sexual Ecstasy' },
+  { icon: '✨', title: 'The Sacred Intention', text: "Sit facing each other. Each of you speaks one sacred intention for your time together \u2014 not a goal, but an offering. \u201CI bring my full heart to you tonight.\u201D Then bow to each other before you begin.", src: 'Margot Anand \u2014 SkyDancing Tantra ceremony' },
 ];
 
 // ── Desire Card Options ──

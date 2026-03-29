@@ -27,6 +27,7 @@ export const tradColors = {
   tao: { primary: '#c8924a', light: '#e4b87a', bg: 'rgba(200,146,74,0.12)', border: 'rgba(200,146,74,0.24)' },
   deida: { primary: '#9ab0e8', light: '#9ab0e8', bg: 'rgba(100,130,210,0.12)', border: 'rgba(100,130,210,0.22)' },
   richardson: { primary: '#c09ae0', light: '#c09ae0', bg: 'rgba(192,154,224,0.12)', border: 'rgba(192,154,224,0.22)' },
+  anand: { primary: '#d4784a', light: '#e89a6e', bg: 'rgba(212,120,74,0.12)', border: 'rgba(212,120,74,0.24)' },
 } as const;
 
 export const gradients = {
@@ -76,4 +77,4 @@ export const radii = {
   full: 999,
 } as const;
 
-export type TraditionId = 'tantra' | 'tao' | 'deida' | 'richardson';
+export type TraditionId = 'tantra' | 'tao' | 'deida' | 'richardson' | 'anand';

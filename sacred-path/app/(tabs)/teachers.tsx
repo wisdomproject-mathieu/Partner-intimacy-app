@@ -36,6 +36,14 @@ const teachers = [
     essence: 'Slowness, softness, awareness. A return to the body\'s own intelligence.',
     colorKey: 'richardson' as const,
   },
+  {
+    id: 'anand',
+    name: 'Margot Anand',
+    type: 'Teacher',
+    icon: '✨',
+    essence: 'Ecstasy as a spiritual path. SkyDancing Tantra — where pleasure, love, and awakening become one.',
+    colorKey: 'anand' as const,
+  },
 ];
 
 export default function TeachersScreen() {
