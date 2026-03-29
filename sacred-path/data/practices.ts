@@ -252,6 +252,88 @@ export const journey = [
   { day: 5, tradition: 'Tantra', title: 'Chakra Awakening', description: "Moving energy from root to crown together. A guided 20-minute journey through all seven energy centres, seated in Yab-Yum.", intention: null, free: false },
 ];
 
+// ── Teacher Rituals (per-teacher, free + locked) ──
+
+export interface TeacherRitual {
+  icon: string;
+  title: string;
+  text: string;
+  src: string;
+  free: boolean;
+}
+
+export const teacherRituals: Record<string, TeacherRitual[]> = {
+  richardson: [
+    {
+      icon: '🫀',
+      title: 'Heart Breath',
+      text: "Place your right hand on each other\u2019s heart. Breathe together slowly for ten rounds \u2014 your inhale meeting their exhale. Feel the warmth build between your palms. Stay until the outside world dissolves completely.",
+      src: 'Diana Richardson \u2014 Heart of Tantric Sex',
+      free: true,
+    },
+    {
+      icon: '🌸',
+      title: 'The Soft Entry Ceremony',
+      text: "Lie together without urgency. The man enters softly, without erection required, and both partners rest in connection. No movement, no goal. Breathe slowly and let the body respond in its own time. Fifteen minutes of sacred stillness \u2014 and discover what the body knows when the mind stops directing.",
+      src: 'Diana Richardson \u2014 Tantric Sex for Men',
+      free: false,
+    },
+    {
+      icon: '🌿',
+      title: 'The Body Scan Prayer',
+      text: "Take turns placing one hand on each part of your partner\u2019s body \u2014 crown, throat, heart, belly, hips. At each point, pause for one full breath and send wordless love into that place. No agenda. Move only when the breath naturally completes. This is prayer in its most intimate form.",
+      src: 'Diana Richardson \u2014 Slow Sex',
+      free: false,
+    },
+  ],
+  deida: [
+    {
+      icon: '👁️',
+      title: 'The Presence Hold',
+      text: "Hold your partner from behind, lips near the nape of their neck. Breathe warmth there for five full minutes. Say nothing. Simply be present \u2014 not doing, not planning, not managing the moment. Let your depth speak through stillness alone.",
+      src: 'David Deida \u2014 The Way of the Superior Man',
+      free: true,
+    },
+    {
+      icon: '⚡',
+      title: 'The Edge Practice',
+      text: "Sit alone in stillness and bring full awareness to your deepest resistances \u2014 the places you habitually close, defend, or manage. Then bring that same unguarded openness into the next intimate moment. Do not explain yourself. Do not soften the edges. Simply be present with nothing held back.",
+      src: 'David Deida \u2014 Blue Truth',
+      free: false,
+    },
+    {
+      icon: '🔥',
+      title: 'Sacred Semen Retention',
+      text: "During lovemaking, approach the peak and pause completely. Root your awareness at the perineum. Draw the energy upward through the spine \u2014 heart, throat, crown \u2014 on a slow, deep inhale. Rest in the expanded fullness for a full breath before continuing. The energy that would have been released becomes love, presence, and creative force in the world.",
+      src: 'David Deida \u2014 Intimate Communion',
+      free: false,
+    },
+  ],
+  anand: [
+    {
+      icon: '🔥',
+      title: 'The Conscious Kiss',
+      text: "Begin with your foreheads touching. Breathe together for one full minute. Then let the kiss arise from that stillness \u2014 slowly, with full awareness, no rush toward anything. Let the kiss be complete in itself. A doorway, not a beginning. Stay until you feel the whole body respond.",
+      src: 'Margot Anand \u2014 The Art of Sexual Ecstasy',
+      free: true,
+    },
+    {
+      icon: '✨',
+      title: 'The Sacred Intention',
+      text: "Sit facing each other. Each speaks one sacred intention for your time together \u2014 not a goal, but an offering. \u201CI bring my full heart to you tonight.\u201D Then bow to each other before you begin. This simple ceremony transforms lovemaking into a conscious act of devotion. What you name, you create.",
+      src: 'Margot Anand \u2014 SkyDancing Tantra ceremony',
+      free: false,
+    },
+    {
+      icon: '🌟',
+      title: 'SkyDancing Breath',
+      text: "Sit facing each other, foreheads almost touching. Breathe together \u2014 slowly, fully, mouth to mouth. With each inhale, imagine golden light rising up your spine. With each exhale, feel it cascade through your partner and return. After ten rounds, rest in stillness with your eyes open, truly seeing each other. Two people becoming one current of living light.",
+      src: 'Margot Anand \u2014 The Art of Sexual Ecstasy',
+      free: false,
+    },
+  ],
+};
+
 // ── Date Night Ideas ──
 
 export const dateNightIdeas = [
