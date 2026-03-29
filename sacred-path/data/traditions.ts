@@ -52,4 +52,14 @@ export const traditions: Tradition[] = [
     pillars: ['Slow Sex', 'Relaxation into Feeling', 'Cool Approach', 'Body Intelligence'],
     hubDescription: "A quiet revolution in how we make love. Slow down, drop all goals, and discover the body's own electromagnetic intelligence.",
   },
+  {
+    id: 'anand',
+    name: 'Margot Anand',
+    type: 'teacher',
+    icon: '✨',
+    essence: 'Ecstasy as a spiritual path. SkyDancing Tantra — where pleasure, love, and awakening become one.',
+    intro: "Margot Anand brought SkyDancing Tantra from the East to the West, teaching that ecstasy is not a distraction from the spiritual path — it is the path. Through conscious breath, sacred ceremony, and the full embrace of pleasure, couples discover that lovemaking can be a vehicle for deep awakening.",
+    pillars: ['SkyDancing Tantra', 'Ecstatic States', 'Sexual Magic', 'Love & Awakening'],
+    hubDescription: 'SkyDancing Tantra — where pleasure, love, and awakening are one path. Transform sexual energy into the most powerful creative and spiritual force in your life.',
+  },
 ];

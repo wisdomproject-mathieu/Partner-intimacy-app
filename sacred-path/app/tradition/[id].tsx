@@ -34,6 +34,13 @@ const traditions: Record<string, { name: string; type: string; icon: string; int
     intro: "Richardson invites couples to slow everything down, drop all goals, and discover the body's own electromagnetic intelligence — a quiet revolution in how we make love.",
     pillars: ['Slow Sex', 'Relaxation into Feeling', 'Cool Approach', 'Body Intelligence'],
   },
+  anand: {
+    name: 'Margot Anand',
+    type: 'Teacher',
+    icon: '✨',
+    intro: "Margot Anand brought SkyDancing Tantra from the East to the West, teaching that ecstasy is not a distraction from the spiritual path — it is the path. Through conscious breath, sacred ceremony, and the full embrace of pleasure, couples discover that lovemaking can be a vehicle for deep awakening.",
+    pillars: ['SkyDancing Tantra', 'Ecstatic States', 'Sexual Magic', 'Love & Awakening'],
+  },
 };
 
 export default function TraditionScreen() {
